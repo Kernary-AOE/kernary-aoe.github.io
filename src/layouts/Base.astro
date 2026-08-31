@@ -80,7 +80,8 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     <meta name="viewport" content="width=device-width" />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/kernary-mark.svg" />
+    <link rel="alternate icon" type="image/png" href="/favicon.png" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={new URL(enPath, siteUrl).toString()} />
     <link rel="alternate" hreflang="zh" href={new URL(zhPath, siteUrl).toString()} />
@@ -117,7 +118,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     <header class="gh-header">
       <div class="gh-header-inner">
         <a class="gh-brand" href={homeHref} aria-label="Kernary home">
-          <img src="/logo-mark.png" alt="" width="24" height="24" aria-hidden="true" />
+          <img src="/kernary-mark.svg" alt="" width="24" height="24" aria-hidden="true" />
           {PRODUCT.name}
           <span class="gh-brand-tag">v{PRODUCT.version}</span>
         </a>
