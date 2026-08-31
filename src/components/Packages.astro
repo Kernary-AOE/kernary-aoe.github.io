@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadAll } from '../lib/corpus';
+
+interface Props { lang?: 'en' | 'zh' }
+const { lang = 'en' } = Astro.props;
+const isZh = lang === 'zh';
+const { corpora: packages } = loadAll();
+const ordered = [...packages].sort((a, b) => a.slug.localeCompare(b.slug));
+const fmt = new Intl.NumberFormat(isZh ? 'zh-CN' : 'en-US');
+const prefix = (path: string) => isZh ? `/zh${path}` : path;
+---
+<Base
+  title={isZh ? 'Packages' : 'Packages'}
+  current="marketplace"
+  lang={lang}
+  description={isZh ? '浏览 Kernary 的 Model、Corpus、Adapter 与 Domain Package。' : 'Discover Model, Corpus, Adapter, and Domain Packages for Kernary.'}
+>
+  <section class="hero" style="padding: var(--s-7) var(--s-4) var(--s-6);">
+    <div class="hero-inner" style="grid-template-columns: 1fr; gap: 0;">
+      <div>
+        <p class="hero-eyebrow"><span class="pill">Kernary Registry</span> {packages.length} {isZh ? '个兼容 Corpus Snapshot' : 'compatibility corpus snapshots'}</p>
+        <h1>{isZh ? '找到一个 Package，从真实领域开始。' : 'Start from a package that owns a real domain.'}</h1>
+        <p class="lede">
+          {isZh
+            ? 'Kernary Registry 的发布单元分为 Model、Corpus、Adapter、Domain 与 Plugin。当前页面仍从旧 Corpus inventory 构建，因此下面的条目只标记为 Corpus Snapshot；不会再把所有东西都叫 Skill 或 Prime。'
+            : 'The Kernary Registry distinguishes Model, Corpus, Adapter, Domain, and Plugin packages. This page is still built from the compatibility corpus inventory, so the entries below are labelled as Corpus snapshots instead of being called Skills or Primes.'}
+        </p>
+        <p class="lede" style="margin-bottom: 0;">
+          {isZh
+            ? 'Registry 发布与 @kernary scope 尚未上线；完成外部发布前，本站不会提供假的安装命令。'
+            : 'Registry publication and the @kernary scope are not live yet. The site does not show an installation command until the external package actually exists.'}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <p class="section-eyebrow">Corpus packages</p>
+      <h2 class="section-title" style="border: 0; padding: 0; margin-top: 0;">{isZh ? '当前可检查的 Snapshot' : 'Snapshots available for inspection'}</h2>
+      <div class="pack-grid">
+        {ordered.map((entry) => {
+          const typeCount = new Set(entry.atoms.map((unit) => unit.kind)).size;
+          return (
+            <article class="pack-card" id={entry.slug}>
+              <div class="pack-head">
+                <h3 class="pack-name">{entry.slug}</h3>
+                <span class="pack-pill">corpus</span>
+                <span class="pack-pill">compat</span>
+              </div>
+              <p class="pack-desc">{entry.domain?.description || (isZh ? `${fmt.format(entry.total)} 个编译 Unit。` : `${fmt.format(entry.total)} compiled Units.`)}</p>
+              <div class="pack-stats">
+                <span>{fmt.format(entry.total)} {isZh ? '个 Unit' : 'Units'}</span>
+                <span>{typeCount} {isZh ? '种外部 Type' : 'external types'}</span>
+              </div>
+              <div class="hero-cta" style="margin-top: 16px;">
+                <a class="btn" href={`/browse?corpus=${entry.slug}`}>{isZh ? '检查内容' : 'Inspect contents'}</a>
+                {entry.slug === 'frontend-design' && <a class="btn" href={prefix('/docs/examples/frontend-design')}>{isZh ? '阅读案例' : 'Read case study'}</a>}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Base>

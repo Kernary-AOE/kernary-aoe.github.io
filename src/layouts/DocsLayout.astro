@@ -1,7 +1,7 @@
 ---
 import Base from './Base.astro';
 import DocsSidebar from '../components/DocsSidebar.astro';
-import { DOCS_FLAT, findNeighbors } from '../data/docs-tree';
+import { findNeighbors } from '../data/docs-tree';
 
 interface Props {
   title: string;
@@ -20,6 +20,11 @@ const segments = slug.split('/').filter(Boolean);
 <Base title={title} description={description} current="docs" lang={lang}>
   <div class="docs-layout">
     <DocsSidebar current={slug} lang={lang} />
+
+    <details class="docs-nav-mobile">
+      <summary>{isZh ? '浏览文档' : 'Browse docs'}</summary>
+      <DocsSidebar current={slug} lang={lang} />
+    </details>
 
     <article class="docs-content">
       <p class="docs-breadcrumb">

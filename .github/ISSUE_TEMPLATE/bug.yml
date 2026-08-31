@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a defect on the Skill Wiki website.
+description: Report a defect on the Kernary documentation site.
 title: "[bug] "
 labels: ["bug", "needs-triage"]
 body:
@@ -13,7 +13,7 @@ body:
     attributes:
       label: What happened?
       description: A clear and concise description of the defect.
-      placeholder: e.g. The /browse page renders 0 atoms after a fresh build.
+      placeholder: e.g. The /browse page renders 0 Units after a fresh build.
     validations:
       required: true
 
@@ -42,4 +42,4 @@ body:
     id: version
     attributes:
       label: Version / commit
-      placeholder: 0.1.0 or commit hash
+      placeholder: 0.2.0 or commit hash

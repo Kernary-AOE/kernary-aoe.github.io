@@ -1,4 +1,4 @@
-// Data loader — reads atom corpora from disk at build time.
+// Compatibility data loader — reads compiled v1-model Units at build time.
 //
 // Sources:
 //   release/prime-system/examples/<corpus>/primes/compiled/_index.xml
@@ -32,34 +32,33 @@ function resolveCorpusRoot(): string {
 }
 const RELEASE_ROOT = resolveCorpusRoot();
 
-// ─── Skill registry ───────────────────────────────────────────────────────────
+// ─── Package inventory ────────────────────────────────────────────────────────
 //
-// The marketplace is driven by `data/skills.yaml`. Each entry there says where
-// the Skill's compiled output lives relative to the resolved corpus root.
-// Authors PR an entry to add their Skill — see CONTRIBUTING.md.
+// `data/packages.yaml` records the compatibility Corpus snapshots this static
+// site can inspect. It is not the Kernary Registry service and does not imply
+// that a package has been published under the @kernary scope.
 
 type CorpusLocation = { rootPath: string; compiledSubdir: string };
 
-export type SkillRegistryEntry = {
+export type PackageInventoryEntry = {
   slug: string;
+  kind: 'corpus';
   repo: string;
   subpath?: string;
   compiledSubdir: string;
   description?: string;
-  flagship?: boolean;
-  featured?: boolean;
   homepage?: string;
   maintainers?: string[];
   tags?: string[];
 };
 
-const REGISTRY_PATH = join(WEBSITE_ROOT, 'data/skills.yaml');
+const REGISTRY_PATH = join(WEBSITE_ROOT, 'data/packages.yaml');
 
-function loadRegistry(): SkillRegistryEntry[] {
+function loadRegistry(): PackageInventoryEntry[] {
   if (!existsSync(REGISTRY_PATH)) return [];
   const raw = readFileSync(REGISTRY_PATH, 'utf8');
-  const parsed = parseYaml(raw) as { skills?: SkillRegistryEntry[] };
-  return Array.isArray(parsed?.skills) ? parsed.skills : [];
+  const parsed = parseYaml(raw) as { packages?: PackageInventoryEntry[] };
+  return Array.isArray(parsed?.packages) ? parsed.packages : [];
 }
 
 // Build the slug → on-disk-location map from the registry. The repo name is
@@ -69,7 +68,7 @@ function loadRegistry(): SkillRegistryEntry[] {
 // alias map to bridge the directory-name difference.
 const REPO_DIR_ALIAS: Record<string, string> = {
   // GitHub repo basename → local sibling directory name (release/<dir>)
-  'prime-corpus-frontend': 'prime-corpus-frontend-design',
+  'prime-corpus-frontend': 'prime-frontend-design',
 };
 
 function resolveRepoDir(repo: string): string {
@@ -97,8 +96,8 @@ const CORPUS_PATHS: Record<string, CorpusLocation> = buildCorpusPaths();
 
 // Re-exported for /marketplace to render registry metadata (description,
 // maintainers, tags) without re-reading the file.
-let _registryCache: SkillRegistryEntry[] | null = null;
-export function loadSkillRegistry(): SkillRegistryEntry[] {
+let _registryCache: PackageInventoryEntry[] | null = null;
+export function loadPackageInventory(): PackageInventoryEntry[] {
   if (_registryCache) return _registryCache;
   _registryCache = loadRegistry();
   return _registryCache;

@@ -1,0 +1,18 @@
+---
+import RepoDoc from '../../components/RepoDoc.astro';
+
+export function getStaticPaths() {
+  return [
+    { slug: 'start/connect-agent', title: 'Connect an Agent', source: 'docs/guides/connect-agent.md' },
+    { slug: 'concepts/package-model', title: 'Package model', source: 'docs/concepts/package-model.md' },
+    { slug: 'concepts/compilation-snapshots', title: 'Compilation and snapshots', source: 'docs/concepts/compilation-and-snapshots.md' },
+    { slug: 'concepts/selection-execution', title: 'Selection and execution', source: 'docs/concepts/selection-and-execution.md' },
+    { slug: 'build/actions-policies', title: 'Actions and policies', source: 'docs/guides/actions-and-policies.md' },
+    { slug: 'operate/releases-migrations', title: 'Releases and migrations', source: 'docs/operations/releases-and-migrations.md' },
+    { slug: 'operate/name-migration', title: 'Kernary name migration', source: 'docs/operations/kernary-name-migration.md' },
+  ].map((page) => ({ params: { slug: page.slug }, props: page }));
+}
+
+const page = Astro.props;
+---
+<RepoDoc title={page.title} slug={page.slug} source={page.source} />

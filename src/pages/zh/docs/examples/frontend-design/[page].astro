@@ -1,0 +1,23 @@
+---
+import RepoDoc from '../../../../../components/RepoDoc.astro';
+
+export function getStaticPaths() {
+  return [
+    { page: 'model', title: 'Frontend Design Model', source: 'docs/model.zh-CN.md' },
+    { page: 'corpus', title: 'Frontend Design Corpus', source: 'docs/corpus.zh-CN.md' },
+    { page: 'authoring', title: 'Source Authoring', source: 'docs/authoring.zh-CN.md' },
+    { page: 'retrieval', title: '六轴检索', source: 'docs/retrieval.zh-CN.md' },
+    { page: 'tools', title: 'Frontend Design 工具', source: 'docs/mcp-tools.zh-CN.md' },
+    { page: 'validator', title: 'HTML Validation', source: 'docs/validator-html.zh-CN.md' },
+    { page: 'scout', title: 'Scout SourceAdapter', source: 'docs/scout.zh-CN.md' },
+    { page: 'operations', title: 'Frontend Design 运维', source: 'docs/operations.zh-CN.md' },
+    { page: 'case-study', title: 'Frontend Design 架构', source: 'docs/case-study.zh-CN.md' },
+  ].map((item) => ({
+    params: { page: item.page },
+    props: { ...item, slug: `examples/frontend-design/${item.page}` },
+  }));
+}
+
+const page = Astro.props;
+---
+<RepoDoc title={page.title} slug={page.slug} source={page.source} owner="frontend-design" lang="zh" />

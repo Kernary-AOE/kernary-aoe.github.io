@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for proposing this. For protocol-level changes, open the issue against the `prime-system` repo instead.
+        Thanks for proposing this. For Kernary Engine changes, open the issue against the current compatibility `prime-system` repository instead.
 
   - type: textarea
     id: problem

@@ -1,0 +1,89 @@
+---
+import { existsSync, readFileSync } from 'node:fs';
+import { posix, resolve } from 'node:path';
+import DocsLayout from '../layouts/DocsLayout.astro';
+import { renderMarkdown } from '../lib/md';
+
+interface Props {
+  title: string;
+  slug: string;
+  source: string;
+  lang?: 'en' | 'zh';
+  description?: string;
+  owner?: 'engine' | 'frontend-design';
+}
+
+const { title, slug, source, lang = 'en', description, owner = 'engine' } = Astro.props;
+const configuredRoot = owner === 'engine'
+  ? (import.meta.env.KERNARY_ENGINE_ROOT as string | undefined)
+  : (import.meta.env.KERNARY_FRONTEND_DESIGN_ROOT as string | undefined);
+const siblingName = owner === 'engine' ? 'prime-system' : 'prime-frontend-design';
+const siblingRoot = resolve(process.cwd(), '..', siblingName);
+const vendoredRoot = resolve(process.cwd(), 'external', siblingName);
+const ownerRoot = configuredRoot
+  ? resolve(process.cwd(), configuredRoot)
+  : existsSync(siblingRoot) ? siblingRoot : vendoredRoot;
+const sourcePath = resolve(ownerRoot, source);
+if (!sourcePath.startsWith(`${ownerRoot}/`)) {
+  throw new Error(`Kernary docs source escapes owning repository: ${source}`);
+}
+
+let markdown: string;
+try {
+  markdown = readFileSync(sourcePath, 'utf8');
+} catch (error) {
+  throw new Error(`Kernary docs source is required but unavailable: ${sourcePath}\n${String(error)}`);
+}
+const routeBySource: Record<string, string> = {
+  'docs/start/index.md': '/docs',
+  'docs/start/index.zh-CN.md': '/zh/docs',
+  'docs/guides/connect-agent.md': '/docs/start/connect-agent',
+  'docs/guides/connect-agent.zh-CN.md': '/zh/docs/start/connect-agent',
+  'docs/concepts/package-model.md': '/docs/concepts/package-model',
+  'docs/concepts/package-model.zh-CN.md': '/zh/docs/concepts/package-model',
+  'docs/concepts/compilation-and-snapshots.md': '/docs/concepts/compilation-snapshots',
+  'docs/concepts/compilation-and-snapshots.zh-CN.md': '/zh/docs/concepts/compilation-snapshots',
+  'docs/concepts/selection-and-execution.md': '/docs/concepts/selection-execution',
+  'docs/concepts/selection-and-execution.zh-CN.md': '/zh/docs/concepts/selection-execution',
+  'docs/guides/actions-and-policies.md': '/docs/build/actions-policies',
+  'docs/guides/actions-and-policies.zh-CN.md': '/zh/docs/build/actions-policies',
+  'docs/operations/releases-and-migrations.md': '/docs/operate/releases-migrations',
+  'docs/operations/releases-and-migrations.zh-CN.md': '/zh/docs/operate/releases-migrations',
+  'docs/operations/kernary-name-migration.md': '/docs/operate/name-migration',
+  'docs/operations/kernary-name-migration.zh-CN.md': '/zh/docs/operate/name-migration',
+  'docs/overview.md': '/docs/examples/frontend-design',
+  'docs/overview.zh-CN.md': '/zh/docs/examples/frontend-design',
+  'docs/model.md': '/docs/examples/frontend-design/model',
+  'docs/model.zh-CN.md': '/zh/docs/examples/frontend-design/model',
+  'docs/corpus.md': '/docs/examples/frontend-design/corpus',
+  'docs/corpus.zh-CN.md': '/zh/docs/examples/frontend-design/corpus',
+  'docs/authoring.md': '/docs/examples/frontend-design/authoring',
+  'docs/authoring.zh-CN.md': '/zh/docs/examples/frontend-design/authoring',
+  'docs/retrieval.md': '/docs/examples/frontend-design/retrieval',
+  'docs/retrieval.zh-CN.md': '/zh/docs/examples/frontend-design/retrieval',
+  'docs/mcp-tools.md': '/docs/examples/frontend-design/tools',
+  'docs/mcp-tools.zh-CN.md': '/zh/docs/examples/frontend-design/tools',
+  'docs/validator-html.md': '/docs/examples/frontend-design/validator',
+  'docs/validator-html.zh-CN.md': '/zh/docs/examples/frontend-design/validator',
+  'docs/scout.md': '/docs/examples/frontend-design/scout',
+  'docs/scout.zh-CN.md': '/zh/docs/examples/frontend-design/scout',
+  'docs/operations.md': '/docs/examples/frontend-design/operations',
+  'docs/operations.zh-CN.md': '/zh/docs/examples/frontend-design/operations',
+  'docs/case-study.md': '/docs/examples/frontend-design/case-study',
+  'docs/case-study.zh-CN.md': '/zh/docs/examples/frontend-design/case-study',
+};
+const html = renderMarkdown(markdown).replace(
+  /href="([^"#]+\.md)(#[^"]*)?"/g,
+  (match, href: string, hash = '') => {
+    const targetSource = posix.normalize(posix.join(posix.dirname(source), href));
+    const targetRoute = routeBySource[targetSource];
+    return targetRoute ? `href="${targetRoute}${hash}"` : match;
+  },
+);
+---
+<DocsLayout title={title} slug={slug} lang={lang} description={description}>
+  <div class="repo-doc" set:html={html}></div>
+  <p style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border-default); color: var(--fg-muted); font-size: 13px;">
+    {lang === 'zh' ? '本页在构建时读取所属仓库中的版本化 Markdown。' : 'This page is rendered at build time from versioned Markdown in its owning repository.'}
+  </p>
+</DocsLayout>

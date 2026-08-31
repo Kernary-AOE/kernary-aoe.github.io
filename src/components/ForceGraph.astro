@@ -26,7 +26,7 @@ const data = JSON.stringify({ nodes, edges });
   <canvas class="fg-canvas" id="fg-canvas" aria-label="Atom graph"></canvas>
 </div>
 
-<script type="application/json" id="fg-data" set:html={data}></script>
+<script is:inline type="application/json" id="fg-data" set:html={data}></script>
 
 <script>
   type Node = {
@@ -116,7 +116,7 @@ const data = JSON.stringify({ nodes, edges });
 
     const ctx = canvas.getContext('2d')!;
     const resize = () => {
-      const rect = canvas.getBoundingClientRect();
+      const rect = canvas!.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
       cx = w / 2;
@@ -270,7 +270,7 @@ const data = JSON.stringify({ nodes, edges });
 
     // Pointer interactions.
     function eventCoord(ev: PointerEvent | MouseEvent | WheelEvent) {
-      const rect = canvas.getBoundingClientRect();
+      const rect = canvas!.getBoundingClientRect();
       return {
         x: (('clientX' in ev ? ev.clientX : 0) - rect.left - cx - panX) / zoom,
         y: (('clientY' in ev ? ev.clientY : 0) - rect.top - cy - panY) / zoom,
@@ -321,7 +321,7 @@ const data = JSON.stringify({ nodes, edges });
         canvas.style.cursor = hovered ? 'pointer' : 'grab';
       }
     });
-    canvas.addEventListener('pointerup', (ev) => {
+    canvas.addEventListener('pointerup', () => {
       if (dragging) {
         // Was it a click? (no significant motion)
         selected = dragging;

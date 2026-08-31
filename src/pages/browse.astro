@@ -30,18 +30,18 @@ const kindCounts = countBy(allAtoms, (a) => a.kind);
 const domainCounts = countBy(allAtoms, (a) => a.domain);
 const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.type))]);
 ---
-<Base title="Browse atoms" current="marketplace">
+<Base title="Browse compatibility Units" current="marketplace">
   <div class="browse-wrap">
   <p class="docs-breadcrumb">
     <a href="/marketplace">Marketplace</a>
     {' / '}
-    <span style="color: var(--fg-default)">Browse atoms</span>
+    <span style="color: var(--fg-default)">Browse Units</span>
   </p>
-  <h1>Browse atoms</h1>
+  <h1>Browse compatibility Units</h1>
   <p style="color: var(--fg-muted); max-width: 70ch;">
-    {allAtoms.length} atoms across {corpora.length} Skills.
-    Filter by Skill, kind, domain, or edge verb in the sidebar.
-    Click a card to inspect projection levels and edges.
+    {allAtoms.length} compiled Units across {corpora.length} compatibility Corpus snapshots.
+    Filter by Corpus, external type, domain, or relation in the sidebar.
+    These inventories use the v1 Atom model; Atom is not a Kernary Core type.
   </p>
 
   <p id="active-filters" hidden style="margin-bottom: var(--s-4);">
@@ -64,7 +64,7 @@ const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.typ
         ))}
       </ul>
 
-      <h3>Kind</h3>
+      <h3>External type</h3>
       <ul>
         <li><a href="/browse" data-filter="kind" data-value="">All</a></li>
         {kinds.map((k) => (
@@ -88,7 +88,7 @@ const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.typ
         ))}
       </ul>
 
-      <h3>Edge verb</h3>
+      <h3>Relation</h3>
       <ul>
         <li><a href="/browse" data-filter="verb" data-value="">All</a></li>
         {verbs.map((v) => (
@@ -104,7 +104,7 @@ const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.typ
     <section aria-live="polite">
       <p style="color: var(--fg-muted); font-size: 13px; margin-bottom: var(--s-3);">
         Showing <strong id="result-count">{allAtoms.length}</strong>
-        <span id="result-noun">atoms</span>.
+        <span id="result-noun">Units</span>.
       </p>
       <div id="card-grid" class="card-grid">
         {allAtoms.map((atom) => (
@@ -118,7 +118,7 @@ const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.typ
           </div>
         ))}
       </div>
-      <p id="no-results" hidden>No atoms match these filters. <a href="/browse">Clear all</a>.</p>
+      <p id="no-results" hidden>No Units match these filters. <a href="/browse">Clear all</a>.</p>
     </section>
   </div>
   </div>
@@ -155,7 +155,7 @@ const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.typ
       const count = document.getElementById('result-count');
       const noun = document.getElementById('result-noun');
       if (count) count.textContent = String(visible);
-      if (noun) noun.textContent = visible === 1 ? 'atom' : 'atoms';
+      if (noun) noun.textContent = visible === 1 ? 'Unit' : 'Units';
 
       const noRes = document.getElementById('no-results');
       if (noRes) noRes.hidden = visible !== 0;

@@ -1,34 +1,37 @@
-# Skill Wiki — 网站
+# Kernary 文档站
 
-Skill Wiki / Prime 原子语料库的静态发现站点。
+Kernary 的静态文档与 Package 发现站。Kernary 是模型驱动的 Agent Knowledge
+Runtime。
 
-## 快速开始
+## 本地开发
 
-```bash
-bun install     # 或：npm install
-bun run dev     # 本地预览，地址：http://localhost:4321
-bun run build   # 生成 dist/——可部署至任何地方
+当前兼容布局要求 Kernary Engine 与 Frontend Design Domain Package 位于：
+
+```text
+../prime-system
+../prime-frontend-design
 ```
 
-## 架构
+其他 Checkout 布局可以设置 `KERNARY_ENGINE_ROOT` 和
+`KERNARY_FRONTEND_DESIGN_ROOT`。
 
-- **Astro 4** — 基于文件的路由，默认零 JS，输出静态 HTML。
-- **数据加载器**位于 `src/lib/corpus.ts`，在构建时从每个语料库读取 `_index.xml`、`atom.yaml` 和 `chunks/{summary,core,full}.md`。
-- **语料库**位于 `release/prime-system/examples/<corpus>/primes/` 下。加载器通过相对路径自动发现，无需环境变量。
+```bash
+bun install --frozen-lockfile
+bun run check
+bun run build
+```
 
-## 页面
+所属仓库的文档 Source 缺失时，网站构建会直接失败。站点不再维护 Engine 与
+Domain Reference 的手写副本。
 
-| 路径 | 源文件 |
-|---|---|
-| `/` | `src/pages/index.astro` |
-| `/browse` | `src/pages/browse.astro` |
-| `/atom/<corpus>/<id>` | `src/pages/atom/[corpus]/[id].astro` |
-| `/domain/<name>` | `src/pages/domain/[name].astro` |
-| `/get-started` | `src/pages/get-started.astro` |
-| `/about` | `src/pages/about.astro` |
+## 内容 Owner
 
-## 不是什么
+- Homepage、About、Package discovery、Blog 与导航由网站仓拥有。
+- Engine Guide、Concept 与 Reference 来自 `prime-system/docs/`。
+- Frontend Design 案例来自 `prime-frontend-design/docs/overview.zh-CN.md`。
+- `data/packages.yaml` 只定位用于检查的兼容 Corpus Snapshot，不是 Registry
+  Service，也不表示 Package 已发布。
+- 旧 Skill Wiki / Prime v1 Route 保留兼容提示和 `noindex`，不再出现在当前导航。
 
-- 不是发布门户。发布通过 `prime publish --remote …` 进行。
-- 不含分析埋点。零追踪器。
-- 不是搜索引擎。语料库足够小，可直接浏览。
+外部域名与 GitHub Pages 迁移完成前，配置的站点地址仍是
+`https://skill-wiki.github.io`。

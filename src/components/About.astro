@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config/site';
+interface Props { lang?: 'en' | 'zh' }
+const { lang = 'en' } = Astro.props;
+const isZh = lang === 'zh';
+---
+<Base title={isZh ? '关于 Kernary' : 'About Kernary'} current="about" lang={lang}>
+  <article class="article">
+    <p class="article-meta">{SITE.category}</p>
+    <h1>{isZh ? '知识不该只是一组塞进 Prompt 的文件。' : 'Knowledge should be more than files loaded into a prompt.'}</h1>
+
+    <p style="font-size: 18px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 32px;">
+      {isZh
+        ? 'Kernary 把外部领域模型和语料编译成带版本与 identity 的 Runtime。Agent 可以查询它、获得可解释的 Selection Plan，也可以通过独立授权路径调用 Action。'
+        : 'Kernary compiles external domain models and corpora into identified, versioned runtimes. An Agent can query them, receive an explainable Selection Plan, and call Actions through a separate authorization path.'}
+    </p>
+
+    <h2>{isZh ? '引擎拥有的边界' : 'What the engine owns'}</h2>
+    <p>{isZh
+      ? 'Kernary Core 拥有声明 meta-schema、稳定 IR、Compiler、Snapshot 验证、Query/Constraint Runtime、Action/Policy/Event Runtime、SDK、Transport 与 Conformance。'
+      : 'Kernary Core owns the declaration meta-schema, stable IR, compiler, snapshot verification, query and constraint runtime, action, policy, and event runtime, SDKs, transports, and conformance.'}</p>
+
+    <h2>{isZh ? '留在引擎外的内容' : 'What stays outside'}</h2>
+    <p>{isZh
+      ? '领域 Type、Field、Relation、Projection、Retrieval Profile、Action、Validator、Unit、Asset 和 License Policy 属于外部 Package。Frontend Design 是一个完整案例，不是内置本体。'
+      : 'Domain types, fields, relations, projections, retrieval profiles, actions, validators, Units, assets, and licence policy belong to external packages. Frontend Design is a complete case study, not a built-in ontology.'}</p>
+
+    <h2>{isZh ? '它不是什么' : 'What it is not'}</h2>
+    <p>{isZh
+      ? 'Kernary 不是向量数据库，也不是 Agent 编排框架。它不替你选择模型，不把所有知识强制改成固定 Atom kind，也不会因为 Agent 能查询就自动授予写权限。'
+      : 'Kernary is not a vector database or an Agent orchestration framework. It does not choose a model for you, force every domain into fixed Atom kinds, or turn query access into write authority.'}</p>
+
+    <h2>{isZh ? '名字迁移' : 'Name migration'}</h2>
+    <p>{isZh
+      ? 'Kernary 是当前产品名。Skill Wiki 是旧品牌；Prime 保留给 `.prime`、`prime/*`、旧 CLI alias 和历史协议。GitHub remote、npm scope 和域名只有在外部迁移真实完成后才会更新。'
+      : 'Kernary is the current product name. Skill Wiki is the former brand. Prime remains for `.prime`, `prime/*`, the legacy CLI alias, and historical protocols. GitHub remotes, npm scopes, and domains change only after their external migrations actually complete.'}</p>
+
+    <h2>{isZh ? '开源与参与' : 'Open source and contribution'}</h2>
+    <p>
+      {isZh ? 'Kernary 使用 Apache-2.0。当前代码仍位于兼容 GitHub 地址：' : 'Kernary is Apache-2.0 licensed. The code remains at its compatibility GitHub location while remote migration is pending: '}
+      <a href={SITE.github} rel="noopener">{SITE.github.replace('https://', '')}</a>.
+    </p>
+  </article>
+</Base>

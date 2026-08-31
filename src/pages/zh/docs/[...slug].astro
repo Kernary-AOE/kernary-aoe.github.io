@@ -1,0 +1,18 @@
+---
+import RepoDoc from '../../../components/RepoDoc.astro';
+
+export function getStaticPaths() {
+  return [
+    { slug: 'start/connect-agent', title: '连接 Agent', source: 'docs/guides/connect-agent.zh-CN.md' },
+    { slug: 'concepts/package-model', title: 'Package 模型', source: 'docs/concepts/package-model.zh-CN.md' },
+    { slug: 'concepts/compilation-snapshots', title: '编译与 Snapshot', source: 'docs/concepts/compilation-and-snapshots.zh-CN.md' },
+    { slug: 'concepts/selection-execution', title: 'Selection 与 Execution', source: 'docs/concepts/selection-and-execution.zh-CN.md' },
+    { slug: 'build/actions-policies', title: 'Action 与 Policy', source: 'docs/guides/actions-and-policies.zh-CN.md' },
+    { slug: 'operate/releases-migrations', title: 'Release 与 Migration', source: 'docs/operations/releases-and-migrations.zh-CN.md' },
+    { slug: 'operate/name-migration', title: 'Kernary 名称迁移', source: 'docs/operations/kernary-name-migration.zh-CN.md' },
+  ].map((page) => ({ params: { slug: page.slug }, props: page }));
+}
+
+const page = Astro.props;
+---
+<RepoDoc title={page.title} slug={page.slug} source={page.source} lang="zh" />

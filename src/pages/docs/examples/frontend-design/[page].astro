@@ -1,0 +1,23 @@
+---
+import RepoDoc from '../../../../components/RepoDoc.astro';
+
+export function getStaticPaths() {
+  return [
+    { page: 'model', title: 'Frontend Design model', source: 'docs/model.md' },
+    { page: 'corpus', title: 'Frontend Design corpus', source: 'docs/corpus.md' },
+    { page: 'authoring', title: 'Source authoring', source: 'docs/authoring.md' },
+    { page: 'retrieval', title: 'Six-axis retrieval', source: 'docs/retrieval.md' },
+    { page: 'tools', title: 'Frontend Design tools', source: 'docs/mcp-tools.md' },
+    { page: 'validator', title: 'HTML validation', source: 'docs/validator-html.md' },
+    { page: 'scout', title: 'Scout SourceAdapter', source: 'docs/scout.md' },
+    { page: 'operations', title: 'Frontend Design operations', source: 'docs/operations.md' },
+    { page: 'case-study', title: 'Frontend Design architecture', source: 'docs/case-study.md' },
+  ].map((item) => ({
+    params: { page: item.page },
+    props: { ...item, slug: `examples/frontend-design/${item.page}` },
+  }));
+}
+
+const page = Astro.props;
+---
+<RepoDoc title={page.title} slug={page.slug} source={page.source} owner="frontend-design" />

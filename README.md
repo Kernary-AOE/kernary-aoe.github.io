@@ -1,40 +1,54 @@
-# Skill Wiki — Website
+# Kernary docs site
 
-Static discovery site for the Skill Wiki / Prime atom corpora.
+Static documentation and package-discovery site for Kernary, the model-driven
+knowledge runtime for Agents.
 
-## Quickstart
+## Develop
 
-```bash
-bun install     # or: npm install
-bun run dev     # local preview at http://localhost:4321
-bun run build   # produces dist/ — deploy anywhere
+This repository expects the Kernary Engine and Frontend Design Domain Package at
+their current sibling compatibility paths:
+
+```text
+../prime-system
+../prime-frontend-design
 ```
 
-## Architecture
+Override them with `KERNARY_ENGINE_ROOT` and
+`KERNARY_FRONTEND_DESIGN_ROOT` when the checkout layout differs.
 
-- **Astro 4** — file-based routing, zero JS by default, ships static HTML.
-- **Data loader** at `src/lib/corpus.ts` reads `_index.xml`, `atom.yaml`, and
-  `chunks/{summary,core,full}.md` from each corpus at build time.
-- **Corpora** live under `release/prime-system/examples/<corpus>/primes/`.
-  The loader picks them up by relative path; no environment variables.
+```bash
+bun install --frozen-lockfile
+bun run check
+bun run build
+```
+
+The build fails when an owning documentation source is missing. The website does
+not keep handwritten copies of Engine and Domain reference pages.
+
+## Content ownership
+
+- Homepage, About, package discovery, Blog, and navigation are site-owned.
+- Engine guides, concepts, and reference come from `prime-system/docs/`.
+- The Frontend Design case study comes from
+  `prime-frontend-design/docs/overview.md`.
+- `data/packages.yaml` locates compatibility Corpus snapshots for inspection. It
+  is not the Kernary Registry service and is not a publication claim.
+- Old Skill Wiki / Prime v1 routes remain available with a compatibility notice
+  and `noindex`; they are not present in current navigation.
+
+The configured site URL remains `https://skill-wiki.github.io` until the
+external domain and GitHub Pages migration is complete.
 
 ## Pages
 
-| Path                    | Source                                           |
-|-------------------------|--------------------------------------------------|
-| `/`                     | `src/pages/index.astro`                          |
-| `/browse`               | `src/pages/browse.astro`                         |
-| `/atom/<corpus>/<id>`   | `src/pages/atom/[corpus]/[id].astro`             |
-| `/domain/<name>`        | `src/pages/domain/[name].astro`                  |
-| `/get-started`          | `src/pages/get-started.astro`                    |
-| `/about`                | `src/pages/about.astro`                          |
-
-## What this is not
-
-- Not a publishing portal. Publishing happens via `prime publish --remote …`.
-- Not analytics-instrumented. Zero trackers.
-- Not a search engine. The corpus is small enough to browse.
+| Path | Purpose |
+|---|---|
+| `/` | Kernary product introduction |
+| `/docs` | Current documentation rendered from owning repositories |
+| `/marketplace` | Typed package discovery; compatibility Corpus inventory today |
+| `/browse` | Inspect Units in compatibility snapshots |
+| `/about` | Product boundary and name migration |
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a pull request, and follow the [PR template](./.github/PULL_REQUEST_TEMPLATE.md). For questions and ideas, use [Discussions](https://github.com/skill-wiki/skill-wiki.github.io/discussions); for defects or proposals, use [Issues](https://github.com/skill-wiki/skill-wiki.github.io/issues).
+Read [CONTRIBUTING.md](CONTRIBUTING.md). Kernary is Apache-2.0 licensed.

@@ -46,7 +46,7 @@ const data = JSON.stringify(SHIP);
   </div>
 </div>
 
-<script type="application/json" id="pg-data" set:html={data}></script>
+<script is:inline type="application/json" id="pg-data" set:html={data}></script>
 
 <script>
   type Hit = { id: string; k: string; d: string; p: string; t: number; q: number };
