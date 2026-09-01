@@ -21,7 +21,7 @@ jobs:
       - name: Checkout website
         uses: actions/checkout@v4
 
-      # Read the compatibility package inventory and vendor the owning repos.
+      # Read the package inventory and vendor the owning repositories.
       # Engine and Frontend Design documentation is rendered directly from
       # these checkouts; a missing owner therefore fails the build.
       - name: Resolve package inventory
