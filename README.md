@@ -32,7 +32,7 @@ not keep handwritten copies of Engine and Domain reference pages.
 - Homepage, About, package discovery, Blog, and navigation are site-owned.
 - Engine guides, concepts, and reference come from `kernary-engine/docs/`.
 - The Frontend Design case study comes from
-  `prime-frontend-design/docs/overview.md`.
+  `kernary-frontend-design/docs/overview.md`.
 - `data/packages.yaml` locates compatibility Corpus snapshots for inspection. It
   is not the Kernary Registry service and is not a publication claim.
 - Old Skill Wiki / Prime v1 routes remain available with a compatibility notice

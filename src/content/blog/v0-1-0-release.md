@@ -1,132 +1,92 @@
 ---
-title: "Skill Wiki v0.1.0 — the protocol is shipping"
-date: "2026-05-10"
-excerpt: "Today we're releasing v0.1.0 of the Prime protocol — a typed knowledge graph for AI agents. 28 atom kinds, 14 edge verbs, 3 projection levels, a generic MCP server, and a 898-atom reference frontend-design Prime. Apache-2.0."
+title: "Kernary v0.2 — the ontology engine is taking shape"
+date: "2026-09-01"
+excerpt: "Kernary is a model-driven ontology engine: external models and corpora compile into verified snapshots, then serve typed query plans and governed actions through an SDK, MCP, or HTTP."
 ---
 
-# Skill Wiki v0.1.0 — the protocol is shipping
+# Kernary v0.2 — the ontology engine is taking shape
 
-We're shipping **Skill Wiki v0.1.0** today — the marketplace home of the
-**Prime protocol**, our open spec for putting typed, addressable domain
-knowledge in the reach of AI agents without bulk-loading SKILL.md files
-into every turn. Prime is the protocol and CLI; Skill Wiki is the site
-and community marketplace.
+Kernary is the next chapter of this project. The product is no longer a
+design-specific knowledge collection or a fixed set of atom kinds. It is a
+model-driven ontology engine: a small, deterministic core that lets a team
+define a domain outside the engine, compile that definition with its corpus,
+and expose the result to agents and applications through stable contracts.
 
-Background: [the spec overview](/docs/spec/overview) and the [bulk-loading problem](/docs/background/problem).
+The current site and repositories are being migrated under the Kernary name.
+The old Prime and Skill Wiki identifiers remain only where they are needed for
+compatibility with existing checkouts, package names, and protocol URLs.
 
 ## What ships
 
-**The protocol** — frozen at v1.0:
+The engine is split into a few deliberately boring boundaries:
 
-- **28 atom kinds** across 5 layers: Data, Behaviour, Composition, Style, Meta. Authors pick a subset; unused kinds simply don't appear.
-- **14 typed edge verbs** — `requires`, `validates-with`, `contradicts`, `specializes`, … — with allowed source/target kinds and L3-checkable semantics.
-- **3 projection levels** — `summary` (~30 tok), `core` (~150 tok), `full` (~380 tok). Kind-aware chunker.
-- **Composition contracts** — `must-include` / `must-avoid` / `conditionally-required` declarations on methods, personas, and scopes.
-- **Registry contract** — HTTP-only, four endpoints. Reference impl is one file.
+- **Model Package** — types, fields, relations, projections, retrieval
+  profiles, functions, actions, policies, validators, and migrations.
+- **Corpus Package** — units, assets, provenance, licensing, and release
+  identity. A corpus is data supplied by a domain owner, not a built-in
+  database.
+- **Compiler and verified snapshots** — declarations become deterministic IR,
+  projections, an index, a manifest, and a content digest. Runtime refuses a
+  tampered or incomplete snapshot.
+- **Query path** — selection plans explain candidates, features, constraints,
+  relation closure, load order, and token budgets.
+- **Action path** — preflight, capability checks, policy, approval, idempotency,
+  retries, and append-only evidence are separate from read-only query.
+- **SDK and transports** — the same contracts are available embedded, through
+  MCP, or over HTTP. The transport does not decide domain semantics.
 
-**Reference implementation** — 7 npm packages under `@skill-wiki`:
+The reference implementation lives in
+[`skill-wiki/kernary-engine`](https://github.com/skill-wiki/kernary-engine).
+The Frontend Design repository is now a separate external Domain Package, not
+part of the engine:
+[`skill-wiki/kernary-frontend-design`](https://github.com/skill-wiki/kernary-frontend-design).
 
-- `@skill-wiki/parser` — hand-written recursive-descent parser, 125 tests.
-- `@skill-wiki/compiler` — L1 schema, L2 (opt-in LLM), L3 cross-atom checkers; chunker; emitters.
-- `@skill-wiki/runtime` — atom loader, projection resolver, edge walker.
-- `@skill-wiki/mcp-server-core` — generic MCP server with 5 tools.
-- `@skill-wiki/registry` — HTTP registry; SQLite-backed; ~600 LOC.
-- `@skill-wiki/cli` — `prime init / compile / check / show / publish / install / …`.
-- `@skill-wiki/types` — shared AST + protocol types.
+## The important boundary
 
-**Reference Prime** — `@frontend-design`:
+Kernary Core knows how to load and verify a model. It does not know what a
+Ticket, Recipe, ColorToken, or DesignPrinciple is. Those names, fields, and
+relations arrive from the Model Package. Units arrive from the Corpus Package.
+That is the conformance test: adding a new domain should require new package
+data, not a new `if` branch in the engine.
 
-- 898 typed atoms across 9 design sub-domains.
-- 5 namespaces: `@community`, `@impeccable`, `@anthropic-impeccable`, `@nielsen`, `@w3c`.
-- Domain-specific MCP wrapper with 4 extra tools.
-- 31 personas, 30 task taxonomies, 20-task benchmark fixtures.
-
-**Tooling**:
-
-- `prime-decompose` Claude Code skill — AI-assisted SKILL.md → atoms decomposition.
-- L2 cache (DeepSeek by default; configurable).
-- Docs site — 30 pages, dark + light, MIT (the docs themselves; the code is Apache-2.0).
-
-## What it replaces
-
-If you've been using bulk-loaded SKILL.md files as your knowledge layer for
-agents, the failures stack up at scale:
-
-| Problem | SKILL.md | Prime |
-|---|---|---|
-| Token cost grows with skill count | Yes | Bounded by what loads |
-| Bad knowledge pollutes every turn | Yes | Filtered per-turn |
-| Validator can reason over relationships | No | Yes (14 typed verbs) |
-| Can compose without recompiling | No | Yes (contracts) |
-| Cross-corpus references possible | No | Yes (`@scope/...` refs) |
-
-The full argument is in [the bulk-loading problem](/docs/background/problem)
-page; the measurement we ran on the 20-task benchmark gave a −13 quality-score
-delta between bulk-loaded and on-demand conditions, on the same atoms.
-
-## What's good
-
-The protocol is small enough that you can read it in an afternoon and the
-implementation is small enough that you can read it in a weekend. We
-deliberately did not build:
-
-- A vector store. The retriever ranks by typed-graph metrics.
-- A custom LLM. The L2 checker uses DeepSeek by default; swap it if you want.
-- A lock-in registry. The HTTP contract is four endpoints; mirror or self-host trivially.
-
-The reference Primes are small (the trivial `@hello-world` is 8 atoms; the
-example `@recipes` is 47) so you can read every atom and see how kinds
-compose. The flagship `@frontend-design` is intentionally larger — 898
-atoms — so you can see what the architecture looks like at scale.
-
-## What's missing in v0.1.0
-
-We froze the spec at v1.0 but didn't claim 100% implementation. Honest gaps:
-
-- **Lifecycle / `deprecated` warnings** are partially enforced. v0.2 will harden this.
-- **Type-expression AST**. The `type` kind currently uses a string body; v0.2 will introduce a structured AST so types can be checked statically.
-- **Domain plugin protocol** is config-driven (`domain.yaml`) but doesn't yet have a formal Type-1 plugin contract for shipping JS-defined L1/L5 logic. Most use cases work without it; the wrapper-MCP-server pattern fills the gap until v0.2.
-- **`prime outdated`** was specified but not implemented. Removed from the CLI for v0.1.0; will return in v0.2.
-
-The full roadmap is in [`docs/legacy/community/roadmap.md`](https://github.com/skill-wiki/kernary-engine/blob/main/docs/legacy/community/roadmap.md)
-on the source repo.
-
-## How to try it
-
-Install in 30 seconds:
-
-```bash
-bun add -g @skill-wiki/cli
-prime install @recipes
-PRIME_DIR=./.primes/@recipes bunx @skill-wiki/mcp-server-core
+```text
+Model + Corpus + Adapters
+            │
+            ▼
+   parser → IR → compiler → verified snapshot
+            │                    │
+       query plan          governed action
+            └──────── SDK · MCP · HTTP ────────┘
 ```
 
-Then [wire it into Claude Code](/docs/usage/mcp-claude) (or Cursor, Continue,
-Aider — anything that speaks MCP).
+## Try the maintained example
 
-To publish a Prime of your own, see [Publish & install](/docs/usage/publish-install).
+Kernary uses Bun for the workspace toolchain. From the engine repository:
 
-To extend the protocol with a custom kind or verb, see [Custom kinds](/docs/extending/custom-kinds).
+```bash
+bun install --frozen-lockfile
+bun run typecheck
+bun run test
+bun run build
+```
 
-## What we want feedback on
+The repository includes small compatibility examples so that the complete
+compile-to-runtime path can be inspected locally. They are examples, not the
+ontology shipped by Core. For a deployable domain, start with the
+[package model](/docs/concepts/package-model) and the
+[authoring guide](/docs/guides/authoring-a-domain).
 
-A few open questions where authoritative input would change v0.2 priorities:
+## What is deliberately not promised yet
 
-1. **Domain plugin shape**. Is `domain.yaml` enough, or do you want a JS plugin with `intent(brief) → IntentObject` and `validate(artifact) → verdict` hooks?
-2. **Token-count tightness**. Empirically the 30/150/380 split fits most kinds; we've seen `method` atoms strain at 380. Bump the upper bound, add a fourth level, or live with it?
-3. **L2 checker model choice**. DeepSeek (~$0.0001/atom) is the default. We've tried Claude Haiku and DeepSeek — quality is comparable. Other defaults worth supporting?
+Kernary is usable as an engine and SDK, but it is not pretending that every
+ecosystem service is finished. The hosted registry, first-party evaluation
+harness, and optional observability integrations are follow-on products. The
+protocol keeps their extension points external so they can evolve without
+turning the engine into a marketplace or a single vendor's agent runtime.
 
-Issues + discussions: [github.com/skill-wiki/kernary-engine](https://github.com/skill-wiki/kernary-engine).
-
-## Thanks
-
-The protocol carries direct lineage from the [Anthropic Impeccable design
-guidelines](https://github.com/skill-wiki/kernary-frontend-design) — the
-typed-atom shape grew out of decomposing those into individually-addressable
-units. The Wikipedia analogy in the design philosophy is borrowed, accurately,
-from Wikipedia. The Voyager paper's skill-library pattern was a direct
-influence on the registry shape.
-
-The full lineage is in [Prior art](/docs/background/prior-art).
+If you are migrating from the old names, read the
+[name and product-boundary ADR](https://github.com/skill-wiki/kernary-engine/blob/main/docs/adr/0001-kernary-name-and-product-boundary.md).
+For issues and implementation discussion, use the
+[Kernary Engine repository](https://github.com/skill-wiki/kernary-engine).
 
 —

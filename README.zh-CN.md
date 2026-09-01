@@ -27,7 +27,7 @@ Domain Reference 的手写副本。
 
 - Homepage、About、Package discovery、Blog 与导航由网站仓拥有。
 - Engine Guide、Concept 与 Reference 来自 `kernary-engine/docs/`。
-- Frontend Design 案例来自 `prime-frontend-design/docs/overview.zh-CN.md`。
+- Frontend Design 案例来自 `kernary-frontend-design/docs/overview.zh-CN.md`。
 - `data/packages.yaml` 只定位用于检查的兼容 Corpus Snapshot，不是 Registry
   Service，也不表示 Package 已发布。
 - 旧 Skill Wiki / Prime v1 Route 保留兼容提示和 `noindex`，不再出现在当前导航。
