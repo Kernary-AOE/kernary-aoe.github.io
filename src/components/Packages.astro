@@ -19,17 +19,17 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
   <section class="hero" style="padding: var(--s-7) var(--s-4) var(--s-6);">
     <div class="hero-inner" style="grid-template-columns: 1fr; gap: 0;">
       <div>
-        <p class="hero-eyebrow"><span class="pill">Kernary Registry</span> {packages.length} {isZh ? '个兼容 Corpus Snapshot' : 'compatibility corpus snapshots'}</p>
+        <p class="hero-eyebrow"><span class="pill">Kernary Packages</span> {packages.length} {isZh ? '个公开示例 Package' : 'public example packages'}</p>
         <h1>{isZh ? '找到一个 Package，从真实领域开始。' : 'Start from a package that owns a real domain.'}</h1>
         <p class="lede">
           {isZh
-            ? 'Kernary Registry 的发布单元分为 Model、Corpus、Adapter、Domain 与 Plugin。当前页面仍从旧 Corpus inventory 构建，因此下面的条目只标记为 Corpus Snapshot；不会再把所有东西都叫 Skill 或 Prime。'
-            : 'The Kernary Registry distinguishes Model, Corpus, Adapter, Domain, and Plugin packages. This page is still built from the compatibility corpus inventory, so the entries below are labelled as Corpus snapshots instead of being called Skills or Primes.'}
+            ? '这里展示可以直接阅读和运行的外部 Package。每个条目都有自己的 Model、Corpus、来源与发布责任；它们不是 Kernary Core 内置内容。'
+            : 'These are external packages you can read and run. Each package owns its Model, Corpus, sources, and release responsibility; none of the domain vocabulary is built into Kernary Core.'}
         </p>
         <p class="lede" style="margin-bottom: 0;">
           {isZh
-            ? 'Registry 发布与 @kernary scope 尚未上线；完成外部发布前，本站不会提供假的安装命令。'
-            : 'Registry publication and the @kernary scope are not live yet. The site does not show an installation command until the external package actually exists.'}
+            ? '先浏览内容和来源，再按条目 README 中的方式在本地编译或接入。'
+            : 'Browse the content and sources first, then use the package README to compile or connect it locally.'}
         </p>
       </div>
     </div>
@@ -47,7 +47,6 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
               <div class="pack-head">
                 <h3 class="pack-name">{entry.slug}</h3>
                 <span class="pack-pill">corpus</span>
-                <span class="pack-pill">compat</span>
               </div>
               <p class="pack-desc">{entry.domain?.description || (isZh ? `${fmt.format(entry.total)} 个编译 Unit。` : `${fmt.format(entry.total)} compiled Units.`)}</p>
               <div class="pack-stats">

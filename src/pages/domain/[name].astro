@@ -35,7 +35,7 @@ const sample = atoms.slice(0, 12);
   </p>
   <h1>{domainName}</h1>
   <p style="font-size: 1.05rem; color: var(--fg-muted); max-width: 70ch;">
-    {registered?.description || `Domain inferred from ${atoms.length} compatibility Units.`}
+    {registered?.description || `Domain package with ${atoms.length} compiled Units.`}
   </p>
   <div style="display:flex; gap:8px; flex-wrap: wrap; margin-bottom: var(--s-5);">
     {registered ? <span class="badge">v{registered.version}</span> : null}

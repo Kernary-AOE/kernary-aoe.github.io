@@ -26,19 +26,19 @@ const isZh = lang === 'zh';
       ? '领域本体中的 Type、Field、Relation、Projection、Retrieval Profile、Action、Validator，以及 Corpus 中的 Unit、Asset 和 License Policy 都属于外部 Package。Frontend Design 是一个完整案例，不是内置本体。'
       : 'Domain ontology types, fields, relations, projections, retrieval profiles, actions, validators, plus Corpus Units, assets, and licence policy belong to external packages. Frontend Design is a complete case study, not a built-in ontology.'}</p>
 
-    <h2>{isZh ? '它不是什么' : 'What it is not'}</h2>
+    <h2>{isZh ? '你可以用它做什么' : 'What you can build'}</h2>
     <p>{isZh
-      ? 'Kernary 不是向量数据库，也不是 Agent 编排框架。它不替你选择模型，不把所有领域强制改成固定 Type，也不会因为 Agent 能查询就自动授予写权限。'
-      : 'Kernary is not a vector database or an Agent orchestration framework. It does not choose a model for you, force every domain into fixed types, or turn query access into write authority.'}</p>
+      ? '用 Kernary 构建能理解领域对象的客服助手、合规审查工具、运维知识库、数据目录或内部工作流。Model Package 定义你的世界，Corpus Package 提供内容，Engine 负责编译、查询和受控执行。'
+      : 'Use Kernary for a support assistant, compliance review tool, operations knowledge base, data catalogue, or internal workflow that needs to understand domain objects. Your Model Package defines the world, your Corpus Package supplies the material, and the Engine compiles, queries, and governs it.'}</p>
 
-    <h2>{isZh ? '名字迁移' : 'Name migration'}</h2>
+    <h2>{isZh ? '从哪里开始' : 'Start here'}</h2>
     <p>{isZh
-      ? 'Kernary 是当前产品名。Skill Wiki 是旧品牌；Prime 保留给 `.prime`、`prime/*`、旧 CLI alias 和历史协议。GitHub remote、npm scope 和域名只有在外部迁移真实完成后才会更新。'
-      : 'Kernary is the current product name. Skill Wiki is the former brand. Prime remains for `.prime`, `prime/*`, the legacy CLI alias, and historical protocols. GitHub remotes, npm scopes, and domains change only after their external migrations actually complete.'}</p>
+      ? '先看 Package 模型，了解如何组织 Model、Corpus 与 Adapter；然后用五分钟指南构建一个 Snapshot，再选择 SDK、MCP 或 HTTP 接入你的应用。'
+      : 'Begin with the Package model to see how Model, Corpus, and Adapter pieces fit together. Then follow the five-minute guide to build a Snapshot and choose SDK, MCP, or HTTP for your application.'}</p>
 
     <h2>{isZh ? '开源与参与' : 'Open source and contribution'}</h2>
     <p>
-      {isZh ? 'Kernary 使用 Apache-2.0。当前代码仍位于兼容 GitHub 地址：' : 'Kernary is Apache-2.0 licensed. The code remains at its compatibility GitHub location while remote migration is pending: '}
+      {isZh ? 'Kernary 使用 Apache-2.0。代码与问题追踪位于：' : 'Kernary is Apache-2.0 licensed. Source code and issues live at: '}
       <a href={SITE.github} rel="noopener">{SITE.github.replace('https://', '')}</a>.
     </p>
   </article>

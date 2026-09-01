@@ -28,8 +28,7 @@ const copy = isZh ? {
     ['运维 Runtime', '处理 Lock、Activation、Migration、Rollback 与 Event replay。', '/docs/operate/releases-migrations'],
   ],
   examplesTitle: '例子，不是内置',
-  examplesText: 'Ticket、Recipe、Security 与 Frontend Design 只是外部 Package。它们共同证明 Core 不依赖某个领域 schema。',
-  compatibility: '`.prime`、`prime/*`、`prime` CLI alias 与 `@skill-wiki/*` 在 v0.2 作为兼容标识保留。',
+  examplesText: 'Ticket、Recipe、Security 与 Frontend Design 都是外部 Package。你可以从这些例子开始，也可以带着自己的 Model 与 Corpus 接入。',
 } : {
   eyebrow: 'Model-driven ontology infrastructure',
   title: 'An ontology your software can run.',
@@ -51,8 +50,7 @@ const copy = isZh ? {
     ['Operate a Runtime', 'Manage locks, activation, migration, rollback, and event replay.', '/docs/operate/releases-migrations'],
   ],
   examplesTitle: 'Examples, not built-ins',
-  examplesText: 'Ticket, Recipe, Security, and Frontend Design are external packages. Together they prove that Core does not depend on one domain schema.',
-  compatibility: '`.prime`, `prime/*`, the `prime` CLI alias, and `@skill-wiki/*` remain v0.2 compatibility identifiers.',
+  examplesText: 'Ticket, Recipe, Security, and Frontend Design are external packages. Start with one of these examples or bring a Model and Corpus of your own.',
 };
 ---
 <Base title={SITE.name} current="home" lang={lang} description={isZh ? SITE.descriptionZh : SITE.description}>
@@ -121,7 +119,6 @@ const copy = isZh ? {
       <h2 class="section-title" style="border: 0; padding: 0; margin-top: 0;">{copy.examplesTitle}</h2>
       <p class="section-lede">{copy.examplesText}</p>
       <div class="chips" style="margin: 24px 0;"><code>Ticket</code><code>Recipe</code><code>Security</code><code>Frontend Design</code></div>
-      <p style="color: var(--fg-muted); font-size: 14px;">{copy.compatibility}</p>
     </div>
   </section>
 </Base>

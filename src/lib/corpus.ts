@@ -1,4 +1,4 @@
-// Compatibility data loader — reads compiled v1-model Units at build time.
+// Package data loader — reads compiled Corpus Units at build time.
 //
 // Sources:
 //   sibling Kernary engine/domain repositories or CI's external/ vendor tree
@@ -31,9 +31,8 @@ const RELEASE_ROOT = resolveCorpusRoot();
 
 // ─── Package inventory ────────────────────────────────────────────────────────
 //
-// `data/packages.yaml` records the compatibility Corpus snapshots this static
-// site can inspect. It is not the Kernary Registry service and does not imply
-// that a package has been published under the @kernary scope.
+// `data/packages.yaml` records the public Corpus Packages this static site can
+// inspect. It is discovery metadata, not the Registry service.
 
 type CorpusLocation = { rootPath: string; compiledSubdir: string };
 
@@ -58,19 +57,9 @@ function loadRegistry(): PackageInventoryEntry[] {
   return Array.isArray(parsed?.packages) ? parsed.packages : [];
 }
 
-// Build the slug → on-disk-location map from the registry. The repo name is
-// the second segment of `repo` (e.g. `skill-wiki/kernary-engine` → `kernary-engine`),
-// which is the directory name our deploy.yml uses when it clones each repo
-// under external/. For the dev fallback (sibling release/), we use a small
-// alias map to bridge the directory-name difference.
-const REPO_DIR_ALIAS: Record<string, string> = {
-  // GitHub repo basename → local sibling directory name (release/<dir>)
-  'prime-corpus-frontend': 'kernary-frontend-design',
-};
-
 function resolveRepoDir(repo: string): string {
   const base = repo.split('/').pop() ?? repo;
-  return REPO_DIR_ALIAS[base] ?? base;
+  return base;
 }
 
 function buildCorpusPaths(): Record<string, CorpusLocation> {

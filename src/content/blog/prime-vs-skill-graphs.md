@@ -80,6 +80,3 @@ For the implementation details, start with the
 [package model](/docs/concepts/package-model), then read
 [compilation and snapshots](/docs/concepts/compilation-and-snapshots) and
 [selection and execution](/docs/concepts/selection-and-execution).
-
-The old Prime v1 documents remain in the engine repository's legacy area for
-archival purposes. They are not the current product definition.

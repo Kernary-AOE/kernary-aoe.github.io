@@ -72,6 +72,3 @@ Agent Skill 是边界上的一个 Adapter。它可以教 Agent 如何编写 Mode
 [Package Model](/zh/docs/concepts/package-model) 开始，再阅读
 [编译与快照](/zh/docs/concepts/compilation-and-snapshots) 以及
 [Selection 与执行](/zh/docs/concepts/selection-and-execution)。
-
-旧的 Prime v1 文档仍保存在 Engine 仓库的 legacy 区域，供历史查阅；它们不
-再代表当前产品定义。

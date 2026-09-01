@@ -9,7 +9,6 @@ export function getStaticPaths() {
     { slug: 'concepts/selection-execution', title: 'Selection and execution', source: 'docs/concepts/selection-and-execution.md' },
     { slug: 'build/actions-policies', title: 'Actions and policies', source: 'docs/guides/actions-and-policies.md' },
     { slug: 'operate/releases-migrations', title: 'Releases and migrations', source: 'docs/operations/releases-and-migrations.md' },
-    { slug: 'operate/name-migration', title: 'Kernary name migration', source: 'docs/operations/kernary-name-migration.md' },
   ].map((page) => ({ params: { slug: page.slug }, props: page }));
 }
 

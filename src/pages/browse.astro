@@ -30,16 +30,16 @@ const kindCounts = countBy(allAtoms, (a) => a.kind);
 const domainCounts = countBy(allAtoms, (a) => a.domain);
 const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.type))]);
 ---
-<Base title="Browse compatibility Units" current="marketplace">
+<Base title="Browse Corpus Units" current="marketplace">
   <div class="browse-wrap">
   <p class="docs-breadcrumb">
     <a href="/marketplace">Marketplace</a>
     {' / '}
     <span style="color: var(--fg-default)">Browse Units</span>
   </p>
-  <h1>Browse compatibility Units</h1>
+  <h1>Browse Corpus Units</h1>
   <p style="color: var(--fg-muted); max-width: 70ch;">
-    {allAtoms.length} compiled Units across {corpora.length} compatibility Corpus snapshots.
+    {allAtoms.length} compiled Units across {corpora.length} external Corpus Packages.
     Filter by Corpus, external type, domain, or relation in the sidebar.
     These inventories use the v1 Atom model; Atom is not a Kernary Core type.
   </p>

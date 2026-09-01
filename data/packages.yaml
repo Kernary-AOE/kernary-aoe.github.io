@@ -1,9 +1,9 @@
-# Compatibility package inventory for the static Kernary site.
+# Public package inventory for the static Kernary site.
 #
 # This file locates compiled Corpus snapshots at build time. It is not the
 # Registry API and does not prove that a package has been published. Every entry
-# is explicitly typed; future Model, Adapter, Domain, and Plugin records belong
-# in the Registry contract rather than being called Skills or Primes.
+# is explicitly typed; Model, Adapter, Domain, and Plugin records can be added
+# here when their owning packages are ready.
 
 packages:
   - slug: frontend-design
@@ -11,9 +11,9 @@ packages:
     repo: skill-wiki/kernary-frontend-design
     compiledSubdir: corpus/dist
     description: >-
-      The 797-unit release from the Kernary Frontend Design Domain Package.
-      Its model, adapters, seven tools, validator, and optional Skill live in the
-      owning domain repository.
+      A 797-unit reference release from the Kernary Frontend Design Domain
+      Package. Its model, adapters, tools, validator, and optional Skill live in
+      the owning domain repository.
     homepage: https://github.com/skill-wiki/kernary-frontend-design
     maintainers: [skill-wiki]
     tags: [frontend, design, accessibility, typography, motion]
@@ -23,7 +23,7 @@ packages:
     repo: skill-wiki/kernary-engine
     subpath: examples/recipes
     compiledSubdir: primes/compiled
-    description: A small cooking Corpus used to exercise an external model.
+    description: A small cooking Corpus that demonstrates an external model.
     maintainers: [skill-wiki]
     tags: [example, cooking]
 
@@ -32,7 +32,7 @@ packages:
     repo: skill-wiki/kernary-engine
     subpath: examples/coding-style
     compiledSubdir: primes/compiled
-    description: A compatibility Corpus for team coding-style knowledge.
+    description: A team coding-style Corpus Package example.
     maintainers: [skill-wiki]
     tags: [example, coding, style]
 
@@ -41,7 +41,7 @@ packages:
     repo: skill-wiki/kernary-engine
     subpath: examples/hello-world
     compiledSubdir: primes/compiled
-    description: The smallest maintained compatibility Corpus and build example.
+    description: The smallest maintained Corpus Package and build example.
     maintainers: [skill-wiki]
     tags: [example, learning]
 
@@ -49,7 +49,7 @@ packages:
     kind: corpus
     repo: skill-wiki/kernary-corpus-backend
     compiledSubdir: compiled
-    description: A compatibility Corpus for backend and distributed-system guidance.
+    description: A Corpus Package for backend and distributed-system guidance.
     homepage: https://github.com/skill-wiki/kernary-corpus-backend
     maintainers: [skill-wiki]
     tags: [backend, microservices, architecture]
@@ -58,7 +58,7 @@ packages:
     kind: corpus
     repo: skill-wiki/kernary-corpus-security
     compiledSubdir: compiled
-    description: A compatibility Corpus for application-security guidance.
+    description: A Corpus Package for application-security guidance.
     homepage: https://github.com/skill-wiki/kernary-corpus-security
     maintainers: [skill-wiki]
     tags: [security, owasp, web, backend]
@@ -67,7 +67,7 @@ packages:
     kind: corpus
     repo: skill-wiki/kernary-corpus-web-style
     compiledSubdir: compiled
-    description: A compatibility Corpus for JavaScript and web style guidance.
+    description: A Corpus Package for JavaScript and web style guidance.
     homepage: https://github.com/skill-wiki/kernary-corpus-web-style
     maintainers: [skill-wiki]
     tags: [web, javascript, style]
@@ -76,7 +76,7 @@ packages:
     kind: corpus
     repo: skill-wiki/kernary-corpus-android-compose
     compiledSubdir: compiled
-    description: A compatibility Corpus for Jetpack Compose and Material guidance.
+    description: A Corpus Package for Jetpack Compose and Material guidance.
     homepage: https://github.com/skill-wiki/kernary-corpus-android-compose
     maintainers: [skill-wiki]
     tags: [android, compose, material3, mobile]
@@ -85,7 +85,7 @@ packages:
     kind: corpus
     repo: skill-wiki/kernary-corpus-ios-swift
     compiledSubdir: compiled
-    description: A compatibility Corpus for Swift API and style guidance.
+    description: A Corpus Package for Swift API and style guidance.
     homepage: https://github.com/skill-wiki/kernary-corpus-ios-swift
     maintainers: [skill-wiki]
     tags: [ios, swift, mobile, api-design]

@@ -12,9 +12,7 @@ model-driven ontology engine: a small, deterministic core that lets a team
 define a domain outside the engine, compile that definition with its corpus,
 and expose the result to agents and applications through stable contracts.
 
-The current site and repositories are being migrated under the Kernary name.
-The old Prime and Skill Wiki identifiers remain only where they are needed for
-compatibility with existing checkouts, package names, and protocol URLs.
+The current site and repositories now use the Kernary name throughout.
 
 ## What ships
 
@@ -70,7 +68,7 @@ bun run test
 bun run build
 ```
 
-The repository includes small compatibility examples so that the complete
+The repository includes small example packages so that the complete
 compile-to-runtime path can be inspected locally. They are examples, not the
 ontology shipped by Core. For a deployable domain, start with the
 [package model](/docs/concepts/package-model) and the
@@ -84,8 +82,6 @@ harness, and optional observability integrations are follow-on products. The
 protocol keeps their extension points external so they can evolve without
 turning the engine into a marketplace or a single vendor's agent runtime.
 
-If you are migrating from the old names, read the
-[name and product-boundary ADR](https://github.com/skill-wiki/kernary-engine/blob/main/docs/adr/0001-kernary-name-and-product-boundary.md).
 For issues and implementation discussion, use the
 [Kernary Engine repository](https://github.com/skill-wiki/kernary-engine).
 

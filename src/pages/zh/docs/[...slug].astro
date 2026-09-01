@@ -9,7 +9,6 @@ export function getStaticPaths() {
     { slug: 'concepts/selection-execution', title: 'Selection 与 Execution', source: 'docs/concepts/selection-and-execution.zh-CN.md' },
     { slug: 'build/actions-policies', title: 'Action 与 Policy', source: 'docs/guides/actions-and-policies.zh-CN.md' },
     { slug: 'operate/releases-migrations', title: 'Release 与 Migration', source: 'docs/operations/releases-and-migrations.zh-CN.md' },
-    { slug: 'operate/name-migration', title: 'Kernary 名称迁移', source: 'docs/operations/kernary-name-migration.zh-CN.md' },
   ].map((page) => ({ params: { slug: page.slug }, props: page }));
 }
 

@@ -17,7 +17,7 @@ export const DOCS_TREE: DocSection[] = [
     heading: 'Start',
     zhHeading: '开始',
     pages: [
-      { slug: '', title: 'Define and run a domain ontology', zhTitle: '定义并运行领域本体' },
+      { slug: '', title: 'Build your first domain runtime', zhTitle: '构建你的第一个领域 Runtime' },
       { slug: 'start/connect-agent', title: 'Connect an Agent', zhTitle: '连接 Agent' },
     ],
   },
@@ -41,15 +41,14 @@ export const DOCS_TREE: DocSection[] = [
     heading: 'Operate',
     zhHeading: '运维',
     pages: [
-      { slug: 'operate/releases-migrations', title: 'Releases and migrations', zhTitle: 'Release 与 Migration' },
-      { slug: 'operate/name-migration', title: 'Kernary name migration', zhTitle: 'Kernary 名称迁移' },
+      { slug: 'operate/releases-migrations', title: 'Release operations', zhTitle: 'Release 运维' },
     ],
   },
   {
     heading: 'Reference',
     zhHeading: '参考',
     pages: [
-      { slug: 'reference/cli', title: 'CLI compatibility', zhTitle: 'CLI 兼容面' },
+      { slug: 'reference/cli', title: 'CLI', zhTitle: 'CLI' },
       { slug: 'reference/mcp', title: 'MCP transport', zhTitle: 'MCP Transport' },
       { slug: 'reference/http-registry', title: 'HTTP and registry', zhTitle: 'HTTP 与 Registry' },
     ],

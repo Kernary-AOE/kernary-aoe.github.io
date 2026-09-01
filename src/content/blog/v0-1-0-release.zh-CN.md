@@ -11,8 +11,7 @@ Kernary 是这个项目的新阶段。它不再是面向设计领域的知识集
 引擎：团队在引擎外定义领域模型，用自己的语料编译出可验证快照，再通过
 稳定的协议把结果提供给 Agent 和应用。
 
-当前网站与仓库正在统一迁移到 Kernary 名称。旧的 Prime 和 Skill Wiki
-标识只在兼容既有 checkout、包名和协议 URL 时保留；它们不是新的产品定位。
+当前网站与仓库已经统一使用 Kernary 名称。
 
 ## 这次交付了什么
 
@@ -64,7 +63,7 @@ bun run test
 bun run build
 ```
 
-Engine 里保留了小型兼容示例，用于本地查看完整的“编译到 Runtime”路径。
+Engine 里保留了小型示例 Package，用于本地查看完整的“编译到 Runtime”路径。
 它们是示例，不是 Core 自带的本体。要构建自己的领域，请从
 [Package Model](/zh/docs/concepts/package-model) 与
 [领域编写指南](/zh/docs/guides/authoring-a-domain) 开始。
@@ -75,8 +74,6 @@ Kernary 作为 Engine 与 SDK 已经可以使用，但托管 Registry、第一�
 Harness 和可选的可观测性集成仍是后续产品。协议为这些能力保留扩展点，避免
 把引擎变成 Marketplace 或某一家 Agent Runtime 的专属实现。
 
-从旧名称迁移时，请阅读
-[名称与产品边界 ADR](https://github.com/skill-wiki/kernary-engine/blob/main/docs/adr/0001-kernary-name-and-product-boundary.md)。
 问题与实现讨论请进入
 [Kernary Engine 仓库](https://github.com/skill-wiki/kernary-engine)。
 
