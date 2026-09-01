@@ -6,14 +6,13 @@ excerpt: "AOE is an Agent Ontology Engine: external models and corpora compile i
 
 # AOE v0.2 — the Agent Ontology Engine is taking shape
 
-AOE is the next chapter of this project. The product is now an Agent Ontology
-design-specific knowledge collection or a fixed set of atom kinds. It is a
-model-driven ontology engine: a small, deterministic core that lets a team
+AOE is an Agent Ontology Engine. It is not a design-specific knowledge
+collection or a fixed set of atom kinds. It is a small, deterministic core that lets a team
 define a domain outside the engine, compile that definition with its corpus,
 and expose the result to agents and applications through stable contracts.
 
-The current site and repositories now identify the product as AOE, maintained
-by the AOE organization.
+The current site and repositories identify the product as AOE, maintained by
+the Kernary-AOE organization.
 
 ## What ships
 
