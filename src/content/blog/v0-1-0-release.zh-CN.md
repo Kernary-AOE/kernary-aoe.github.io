@@ -81,7 +81,7 @@ excerpt: "今天发布 Skill Wiki 协议 v0.1.0 —— 一个面向 AI agent 的
 - **领域插件协议**目前是配置驱动（`domain.yaml`），还没正式的 Type-1 JS 插件契约（用来 ship 自定义的 L1/L5 逻辑）。大多数场景目前用"包装一个 MCP server"的模式就够，v0.2 会补齐。
 - **`prime outdated`** 规范里有，实现里没做。v0.1.0 的 CLI 暂时去掉，v0.2 回归。
 
-完整 roadmap 在源仓库的 [`docs/community/roadmap.md`](https://github.com/skill-wiki/prime-system/blob/main/docs/community/roadmap.md)。
+完整 roadmap 在源仓库的 [`docs/legacy/community/roadmap.md`](https://github.com/skill-wiki/kernary-engine/blob/main/docs/legacy/community/roadmap.md)。
 
 ## 怎么试
 
@@ -107,11 +107,11 @@ PRIME_DIR=./.primes/@recipes bunx @skill-wiki/mcp-server-core
 2. **token 数是否合适**。30/150/380 这套对大多 kind 够用，但 `method` 经常顶到 380。把上限抬高？加第四级？还是接受现状？
 3. **L2 检查器默认模型**。现在默认 DeepSeek（约 $0.0001/原子）。我们也试过 Claude Haiku，质量接近。还有别的默认值值得支持？
 
-Issue / 讨论：[github.com/skill-wiki/prime-system](https://github.com/skill-wiki/prime-system)。
+Issue / 讨论：[github.com/skill-wiki/kernary-engine](https://github.com/skill-wiki/kernary-engine)。
 
 ## 致谢
 
-协议直接继承自 [Anthropic Impeccable 设计指南](https://github.com/skill-wiki/prime-corpus-frontend) ——
+协议直接继承自 [Anthropic Impeccable 设计指南](https://github.com/skill-wiki/kernary-frontend-design) ——
 类型化原子的形状就是从把那套指南拆成可单独寻址的单元里长出来的。
 "存在 ≠ 内容" 的 Wikipedia 类比直接借自 Wikipedia 本身。
 Voyager 论文的 skill 库模式直接影响了 registry 的形态。

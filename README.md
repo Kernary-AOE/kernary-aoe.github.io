@@ -11,8 +11,8 @@ This repository expects the Kernary Engine and Frontend Design Domain Package at
 their current sibling compatibility paths:
 
 ```text
-../prime-system
-../prime-frontend-design
+../kernary-engine
+../kernary-frontend-design
 ```
 
 Override them with `KERNARY_ENGINE_ROOT` and
@@ -30,7 +30,7 @@ not keep handwritten copies of Engine and Domain reference pages.
 ## Content ownership
 
 - Homepage, About, package discovery, Blog, and navigation are site-owned.
-- Engine guides, concepts, and reference come from `prime-system/docs/`.
+- Engine guides, concepts, and reference come from `kernary-engine/docs/`.
 - The Frontend Design case study comes from
   `prime-frontend-design/docs/overview.md`.
 - `data/packages.yaml` locates compatibility Corpus snapshots for inspection. It

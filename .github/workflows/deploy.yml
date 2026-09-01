@@ -32,7 +32,7 @@ jobs:
           # Map each repo basename to the directory name our corpus loader
           # expects (the loader has a matching alias on its side).
           declare -A ALIAS
-          ALIAS[prime-corpus-frontend]=prime-frontend-design
+          ALIAS[prime-corpus-frontend]=kernary-frontend-design
           # Extract unique "owner/repo" → "dir" pairs from data/packages.yaml.
           # We use a tiny awk parser so we don't need yq/python in the runner.
           mapfile -t REPOS < <(awk '
@@ -73,8 +73,8 @@ jobs:
 
       - name: Verify documentation owners
         run: |
-          test -f external/prime-system/docs/start/index.md
-          test -f external/prime-frontend-design/docs/overview.md
+          test -f external/kernary-engine/docs/start/index.md
+          test -f external/kernary-frontend-design/docs/overview.md
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -85,8 +85,8 @@ jobs:
 
       - name: Build
         env:
-          KERNARY_ENGINE_ROOT: external/prime-system
-          KERNARY_FRONTEND_DESIGN_ROOT: external/prime-frontend-design
+          KERNARY_ENGINE_ROOT: external/kernary-engine
+          KERNARY_FRONTEND_DESIGN_ROOT: external/kernary-frontend-design
         run: bun run build
 
       - name: Upload artifact

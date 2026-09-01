@@ -17,7 +17,7 @@ const { title, slug, source, lang = 'en', description, owner = 'engine' } = Astr
 const configuredRoot = owner === 'engine'
   ? (import.meta.env.KERNARY_ENGINE_ROOT as string | undefined)
   : (import.meta.env.KERNARY_FRONTEND_DESIGN_ROOT as string | undefined);
-const siblingName = owner === 'engine' ? 'prime-system' : 'prime-frontend-design';
+const siblingName = owner === 'engine' ? 'kernary-engine' : 'kernary-frontend-design';
 const siblingRoot = resolve(process.cwd(), '..', siblingName);
 const vendoredRoot = resolve(process.cwd(), 'external', siblingName);
 const ownerRoot = configuredRoot

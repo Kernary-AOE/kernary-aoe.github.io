@@ -6,7 +6,7 @@ Thank you for helping keep Skill Wiki users safe.
 
 Please report security issues privately. Do **not** open a public GitHub issue.
 
-- Open a [GitHub security advisory](https://github.com/skill-wiki/skill-wiki.github.io/security/advisories/new) — preferred channel.
+- Open a [GitHub security advisory](https://github.com/skill-wiki/skill-wiki.github.io/security/advisories/new) — preferred channel while the Pages repository keeps its compatibility name.
 - Or email **security@skill-wiki** *(placeholder — to be replaced with the real address before v1.0)*.
 
 Please include:

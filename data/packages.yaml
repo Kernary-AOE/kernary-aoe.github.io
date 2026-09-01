@@ -8,19 +8,19 @@
 packages:
   - slug: frontend-design
     kind: corpus
-    repo: skill-wiki/prime-corpus-frontend
+    repo: skill-wiki/kernary-frontend-design
     compiledSubdir: corpus/dist
     description: >-
       The 797-unit release from the Kernary Frontend Design Domain Package.
       Its model, adapters, seven tools, validator, and optional Skill live in the
       owning domain repository.
-    homepage: https://github.com/skill-wiki/prime-corpus-frontend
+    homepage: https://github.com/skill-wiki/kernary-frontend-design
     maintainers: [skill-wiki]
     tags: [frontend, design, accessibility, typography, motion]
 
   - slug: recipes
     kind: corpus
-    repo: skill-wiki/prime-system
+    repo: skill-wiki/kernary-engine
     subpath: examples/recipes
     compiledSubdir: primes/compiled
     description: A small cooking Corpus used to exercise an external model.
@@ -29,7 +29,7 @@ packages:
 
   - slug: coding-style
     kind: corpus
-    repo: skill-wiki/prime-system
+    repo: skill-wiki/kernary-engine
     subpath: examples/coding-style
     compiledSubdir: primes/compiled
     description: A compatibility Corpus for team coding-style knowledge.
@@ -38,7 +38,7 @@ packages:
 
   - slug: hello-world
     kind: corpus
-    repo: skill-wiki/prime-system
+    repo: skill-wiki/kernary-engine
     subpath: examples/hello-world
     compiledSubdir: primes/compiled
     description: The smallest maintained compatibility Corpus and build example.
@@ -47,45 +47,45 @@ packages:
 
   - slug: backend-architecture
     kind: corpus
-    repo: skill-wiki/skill-corpus-backend
+    repo: skill-wiki/kernary-corpus-backend
     compiledSubdir: compiled
     description: A compatibility Corpus for backend and distributed-system guidance.
-    homepage: https://github.com/skill-wiki/skill-corpus-backend
+    homepage: https://github.com/skill-wiki/kernary-corpus-backend
     maintainers: [skill-wiki]
     tags: [backend, microservices, architecture]
 
   - slug: security-appsec
     kind: corpus
-    repo: skill-wiki/skill-corpus-security
+    repo: skill-wiki/kernary-corpus-security
     compiledSubdir: compiled
     description: A compatibility Corpus for application-security guidance.
-    homepage: https://github.com/skill-wiki/skill-corpus-security
+    homepage: https://github.com/skill-wiki/kernary-corpus-security
     maintainers: [skill-wiki]
     tags: [security, owasp, web, backend]
 
   - slug: web-style
     kind: corpus
-    repo: skill-wiki/skill-corpus-web-style
+    repo: skill-wiki/kernary-corpus-web-style
     compiledSubdir: compiled
     description: A compatibility Corpus for JavaScript and web style guidance.
-    homepage: https://github.com/skill-wiki/skill-corpus-web-style
+    homepage: https://github.com/skill-wiki/kernary-corpus-web-style
     maintainers: [skill-wiki]
     tags: [web, javascript, style]
 
   - slug: android-compose
     kind: corpus
-    repo: skill-wiki/skill-corpus-android-compose
+    repo: skill-wiki/kernary-corpus-android-compose
     compiledSubdir: compiled
     description: A compatibility Corpus for Jetpack Compose and Material guidance.
-    homepage: https://github.com/skill-wiki/skill-corpus-android-compose
+    homepage: https://github.com/skill-wiki/kernary-corpus-android-compose
     maintainers: [skill-wiki]
     tags: [android, compose, material3, mobile]
 
   - slug: ios-swift
     kind: corpus
-    repo: skill-wiki/skill-corpus-ios-swift
+    repo: skill-wiki/kernary-corpus-ios-swift
     compiledSubdir: compiled
     description: A compatibility Corpus for Swift API and style guidance.
-    homepage: https://github.com/skill-wiki/skill-corpus-ios-swift
+    homepage: https://github.com/skill-wiki/kernary-corpus-ios-swift
     maintainers: [skill-wiki]
     tags: [ios, swift, mobile, api-design]

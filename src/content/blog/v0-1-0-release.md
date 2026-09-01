@@ -88,7 +88,7 @@ We froze the spec at v1.0 but didn't claim 100% implementation. Honest gaps:
 - **Domain plugin protocol** is config-driven (`domain.yaml`) but doesn't yet have a formal Type-1 plugin contract for shipping JS-defined L1/L5 logic. Most use cases work without it; the wrapper-MCP-server pattern fills the gap until v0.2.
 - **`prime outdated`** was specified but not implemented. Removed from the CLI for v0.1.0; will return in v0.2.
 
-The full roadmap is in [`docs/community/roadmap.md`](https://github.com/skill-wiki/prime-system/blob/main/docs/community/roadmap.md)
+The full roadmap is in [`docs/legacy/community/roadmap.md`](https://github.com/skill-wiki/kernary-engine/blob/main/docs/legacy/community/roadmap.md)
 on the source repo.
 
 ## How to try it
@@ -116,12 +116,12 @@ A few open questions where authoritative input would change v0.2 priorities:
 2. **Token-count tightness**. Empirically the 30/150/380 split fits most kinds; we've seen `method` atoms strain at 380. Bump the upper bound, add a fourth level, or live with it?
 3. **L2 checker model choice**. DeepSeek (~$0.0001/atom) is the default. We've tried Claude Haiku and DeepSeek — quality is comparable. Other defaults worth supporting?
 
-Issues + discussions: [github.com/skill-wiki/prime-system](https://github.com/skill-wiki/prime-system).
+Issues + discussions: [github.com/skill-wiki/kernary-engine](https://github.com/skill-wiki/kernary-engine).
 
 ## Thanks
 
 The protocol carries direct lineage from the [Anthropic Impeccable design
-guidelines](https://github.com/skill-wiki/prime-corpus-frontend) — the
+guidelines](https://github.com/skill-wiki/kernary-frontend-design) — the
 typed-atom shape grew out of decomposing those into individually-addressable
 units. The Wikipedia analogy in the design philosophy is borrowed, accurately,
 from Wikipedia. The Voyager paper's skill-library pattern was a direct

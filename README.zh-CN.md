@@ -7,8 +7,8 @@ Kernary 的静态文档与 Package 发现站。Kernary 是模型驱动的本体�
 当前兼容布局要求 Kernary Engine 与 Frontend Design Domain Package 位于：
 
 ```text
-../prime-system
-../prime-frontend-design
+../kernary-engine
+../kernary-frontend-design
 ```
 
 其他 Checkout 布局可以设置 `KERNARY_ENGINE_ROOT` 和
@@ -26,7 +26,7 @@ Domain Reference 的手写副本。
 ## 内容 Owner
 
 - Homepage、About、Package discovery、Blog 与导航由网站仓拥有。
-- Engine Guide、Concept 与 Reference 来自 `prime-system/docs/`。
+- Engine Guide、Concept 与 Reference 来自 `kernary-engine/docs/`。
 - Frontend Design 案例来自 `prime-frontend-design/docs/overview.zh-CN.md`。
 - `data/packages.yaml` 只定位用于检查的兼容 Corpus Snapshot，不是 Registry
   Service，也不表示 Package 已发布。

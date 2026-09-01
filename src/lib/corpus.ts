@@ -1,12 +1,9 @@
 // Compatibility data loader — reads compiled v1-model Units at build time.
 //
 // Sources:
-//   release/prime-system/examples/<corpus>/primes/compiled/_index.xml
-//   release/prime-system/examples/<corpus>/primes/compiled/<prefix>/<atom-id>/atom.yaml
-//   release/prime-system/examples/<corpus>/primes/compiled/<prefix>/<atom-id>/chunks/{summary,core,full}.md
-//   release/prime-system/examples/<corpus>/domain.yaml
+//   sibling Kernary engine/domain repositories or CI's external/ vendor tree
 //
-// Falls back to release/prime-corpus-frontend-design if compiled, otherwise skips.
+// Falls back to the sibling Kernary domain checkout if compiled, otherwise skips.
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -25,9 +22,9 @@ const WEBSITE_ROOT = resolve(new URL('../..', import.meta.url).pathname);
 // We prefer `external/` if present, otherwise fall back to `..`.
 function resolveCorpusRoot(): string {
   const external = resolve(WEBSITE_ROOT, 'external');
-  if (existsSync(join(external, 'prime-system'))) return external;
+  if (existsSync(join(external, 'kernary-engine'))) return external;
   const sibling = resolve(WEBSITE_ROOT, '..');
-  if (existsSync(join(sibling, 'prime-system'))) return sibling;
+  if (existsSync(join(sibling, 'kernary-engine'))) return sibling;
   return external; // doesn't exist either, so loadAll() will skip all corpora
 }
 const RELEASE_ROOT = resolveCorpusRoot();
@@ -62,13 +59,13 @@ function loadRegistry(): PackageInventoryEntry[] {
 }
 
 // Build the slug → on-disk-location map from the registry. The repo name is
-// the second segment of `repo` (e.g. `skill-wiki/prime-system` → `prime-system`),
+// the second segment of `repo` (e.g. `skill-wiki/kernary-engine` → `kernary-engine`),
 // which is the directory name our deploy.yml uses when it clones each repo
 // under external/. For the dev fallback (sibling release/), we use a small
 // alias map to bridge the directory-name difference.
 const REPO_DIR_ALIAS: Record<string, string> = {
   // GitHub repo basename → local sibling directory name (release/<dir>)
-  'prime-corpus-frontend': 'prime-frontend-design',
+  'prime-corpus-frontend': 'kernary-frontend-design',
 };
 
 function resolveRepoDir(repo: string): string {
@@ -329,7 +326,7 @@ function loadAtomDetails(corpusSlug: string, prefix: string, shortId: string, at
     version,
     createdAt,
     tokens: { summary: qSummary, core: qCore, full: qFull },
-    sourcePath: `prime-system/examples/${corpusSlug}/primes/compiled/${prefix}/${shortId}/atom.yaml`,
+    sourcePath: `kernary-engine/examples/${corpusSlug}/primes/compiled/${prefix}/${shortId}/atom.yaml`,
   };
 }
 
