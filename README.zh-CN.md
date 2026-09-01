@@ -1,7 +1,6 @@
 # Kernary 文档站
 
-Kernary 的静态文档与 Package 发现站。Kernary 是模型驱动的 Agent Knowledge
-Runtime。
+Kernary 的静态文档与 Package 发现站。Kernary 是模型驱动的本体引擎。
 
 ## 本地开发
 

@@ -17,7 +17,7 @@ export const DOCS_TREE: DocSection[] = [
     heading: 'Start',
     zhHeading: '开始',
     pages: [
-      { slug: '', title: 'Build a knowledge runtime', zhTitle: '构建知识 Runtime' },
+      { slug: '', title: 'Define and run a domain ontology', zhTitle: '定义并运行领域本体' },
       { slug: 'start/connect-agent', title: 'Connect an Agent', zhTitle: '连接 Agent' },
     ],
   },

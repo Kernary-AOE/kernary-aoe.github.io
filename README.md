@@ -3,7 +3,7 @@
 <img src="public/kernary-logo.svg" alt="Kernary" width="540">
 
 Static documentation and package-discovery site for Kernary, the model-driven
-knowledge runtime for Agents.
+ontology engine for Agents and domain-aware software.
 
 ## Develop
 
