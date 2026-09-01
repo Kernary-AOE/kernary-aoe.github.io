@@ -8,84 +8,84 @@
 packages:
   - slug: frontend-design
     kind: corpus
-    repo: skill-wiki/kernary-frontend-design
+    repo: kernary-aoe/aoe-frontend-design
     compiledSubdir: corpus/dist
     description: >-
       A 797-unit reference release from the AOE Frontend Design Domain
       Package. Its model, adapters, tools, validator, and optional Skill live in
       the owning domain repository.
-    homepage: https://github.com/skill-wiki/kernary-frontend-design
-    maintainers: [skill-wiki]
+    homepage: https://github.com/kernary-aoe/aoe-frontend-design
+    maintainers: [kernary-aoe]
     tags: [frontend, design, accessibility, typography, motion]
 
   - slug: recipes
     kind: corpus
-    repo: skill-wiki/kernary-engine
+    repo: kernary-aoe/aoe-engine
     subpath: examples/recipes
     compiledSubdir: primes/compiled
     description: A small cooking Corpus that demonstrates an external model.
-    maintainers: [skill-wiki]
+    maintainers: [kernary-aoe]
     tags: [example, cooking]
 
   - slug: coding-style
     kind: corpus
-    repo: skill-wiki/kernary-engine
+    repo: kernary-aoe/aoe-engine
     subpath: examples/coding-style
     compiledSubdir: primes/compiled
     description: A team coding-style Corpus Package example.
-    maintainers: [skill-wiki]
+    maintainers: [kernary-aoe]
     tags: [example, coding, style]
 
   - slug: hello-world
     kind: corpus
-    repo: skill-wiki/kernary-engine
+    repo: kernary-aoe/aoe-engine
     subpath: examples/hello-world
     compiledSubdir: primes/compiled
     description: The smallest maintained Corpus Package and build example.
-    maintainers: [skill-wiki]
+    maintainers: [kernary-aoe]
     tags: [example, learning]
 
   - slug: backend-architecture
     kind: corpus
-    repo: skill-wiki/kernary-corpus-backend
+    repo: kernary-aoe/aoe-corpus-backend
     compiledSubdir: compiled
     description: A Corpus Package for backend and distributed-system guidance.
-    homepage: https://github.com/skill-wiki/kernary-corpus-backend
-    maintainers: [skill-wiki]
+    homepage: https://github.com/kernary-aoe/aoe-corpus-backend
+    maintainers: [kernary-aoe]
     tags: [backend, microservices, architecture]
 
   - slug: security-appsec
     kind: corpus
-    repo: skill-wiki/kernary-corpus-security
+    repo: kernary-aoe/aoe-corpus-security
     compiledSubdir: compiled
     description: A Corpus Package for application-security guidance.
-    homepage: https://github.com/skill-wiki/kernary-corpus-security
-    maintainers: [skill-wiki]
+    homepage: https://github.com/kernary-aoe/aoe-corpus-security
+    maintainers: [kernary-aoe]
     tags: [security, owasp, web, backend]
 
   - slug: web-style
     kind: corpus
-    repo: skill-wiki/kernary-corpus-web-style
+    repo: kernary-aoe/aoe-corpus-web-style
     compiledSubdir: compiled
     description: A Corpus Package for JavaScript and web style guidance.
-    homepage: https://github.com/skill-wiki/kernary-corpus-web-style
-    maintainers: [skill-wiki]
+    homepage: https://github.com/kernary-aoe/aoe-corpus-web-style
+    maintainers: [kernary-aoe]
     tags: [web, javascript, style]
 
   - slug: android-compose
     kind: corpus
-    repo: skill-wiki/kernary-corpus-android-compose
+    repo: kernary-aoe/aoe-corpus-android-compose
     compiledSubdir: compiled
     description: A Corpus Package for Jetpack Compose and Material guidance.
-    homepage: https://github.com/skill-wiki/kernary-corpus-android-compose
-    maintainers: [skill-wiki]
+    homepage: https://github.com/kernary-aoe/aoe-corpus-android-compose
+    maintainers: [kernary-aoe]
     tags: [android, compose, material3, mobile]
 
   - slug: ios-swift
     kind: corpus
-    repo: skill-wiki/kernary-corpus-ios-swift
+    repo: kernary-aoe/aoe-corpus-ios-swift
     compiledSubdir: compiled
     description: A Corpus Package for Swift API and style guidance.
-    homepage: https://github.com/skill-wiki/kernary-corpus-ios-swift
-    maintainers: [skill-wiki]
+    homepage: https://github.com/kernary-aoe/aoe-corpus-ios-swift
+    maintainers: [kernary-aoe]
     tags: [ios, swift, mobile, api-design]

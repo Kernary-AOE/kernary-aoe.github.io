@@ -66,8 +66,8 @@ jobs:
 
       - name: Verify documentation owners
         run: |
-          test -f external/kernary-engine/docs/start/index.md
-          test -f external/kernary-frontend-design/docs/overview.md
+          test -f external/aoe-engine/docs/start/index.md
+          test -f external/aoe-frontend-design/docs/overview.md
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -78,8 +78,8 @@ jobs:
 
       - name: Build
         env:
-          KERNARY_ENGINE_ROOT: external/kernary-engine
-          KERNARY_FRONTEND_DESIGN_ROOT: external/kernary-frontend-design
+          AOE_ENGINE_ROOT: external/aoe-engine
+          AOE_FRONTEND_DESIGN_ROOT: external/aoe-frontend-design
         run: bun run build
 
       - name: Upload artifact

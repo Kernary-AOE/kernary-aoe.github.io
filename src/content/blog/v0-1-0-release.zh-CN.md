@@ -31,9 +31,9 @@ AOE 是这个项目的新阶段。它不再是面向设计领域的知识集合�
   Transport 不决定领域语义。
 
 参考实现位于
-[`skill-wiki/kernary-engine`](https://github.com/skill-wiki/kernary-engine)。
+[`kernary-aoe/aoe-engine`](https://github.com/kernary-aoe/aoe-engine)。
 Frontend Design 现在是独立的外部 Domain Package，不属于引擎本体：
-[`skill-wiki/kernary-frontend-design`](https://github.com/skill-wiki/kernary-frontend-design)。
+[`kernary-aoe/aoe-frontend-design`](https://github.com/kernary-aoe/aoe-frontend-design)。
 
 ## 最重要的边界
 
@@ -75,6 +75,6 @@ Harness 和可选的可观测性集成仍是后续产品。协议为这些能力
 把引擎变成 Marketplace 或某一家 Agent Runtime 的专属实现。
 
 问题与实现讨论请进入
-[AOE Engine 仓库](https://github.com/skill-wiki/kernary-engine)。
+[AOE Engine 仓库](https://github.com/kernary-aoe/aoe-engine)。
 
 —

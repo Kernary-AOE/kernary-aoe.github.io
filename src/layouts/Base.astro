@@ -26,7 +26,7 @@ const isZh = lang === 'zh';
 const fullTitle = title === PRODUCT.name ? title : `${title} · ${PRODUCT.name}`;
 const desc = description ?? (isZh ? PRODUCT.descriptionZh : PRODUCT.description);
 
-const siteUrl = (import.meta.env.SITE as string | undefined) ?? 'https://skill-wiki.github.io';
+const siteUrl = (import.meta.env.SITE as string | undefined) ?? 'https://kernary-aoe.github.io';
 const pathname = Astro.url.pathname;
 const canonicalUrl = new URL(pathname, siteUrl).toString();
 const ogImage = new URL(image, siteUrl).toString();

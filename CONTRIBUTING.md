@@ -7,9 +7,9 @@ repository that owns the corresponding code or schema.
 ## Choose the owner
 
 - Kernary engine concepts, guides, CLI, SDK, MCP, HTTP, Registry, and operations:
-  change `skill-wiki/kernary-engine`.
+  change `kernary-aoe/aoe-engine`.
 - Frontend Design model, corpus, retrieval, tools, validation, and case study:
-  change `skill-wiki/kernary-frontend-design`.
+  change `kernary-aoe/aoe-frontend-design`.
 - Site navigation, layout, Homepage, About, or Blog: change this repository.
 
 ## Package inventory

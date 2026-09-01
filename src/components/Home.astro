@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArchitectureViz from './ArchitectureViz.astro';
 import { SITE } from '../config/site';
 
 interface Props { lang?: 'en' | 'zh' }
@@ -8,18 +9,18 @@ const isZh = lang === 'zh';
 const prefix = (path: string) => isZh ? `/zh${path}` : path;
 
 const copy = isZh ? {
-  eyebrow: '模型驱动的本体基础设施',
-  title: '给你的领域一个可以运行的本体。',
+  eyebrow: 'Agent Ontology Engine',
+  title: '定义领域，编译 Runtime。',
   lede: 'AOE 把外部领域本体与语料编译成可验证 Runtime。Agent 和应用可以查询 Snapshot、构建带约束的计划，并通过 SDK、MCP 或 HTTP 执行经过审批的 Action。',
   primary: '从文档开始', secondary: '理解 Package',
-  fromTitle: '从本体到 Runtime',
-  fromText: 'Model Package 定义本体、语义与行为，Corpus Package 提供内容与发布策略。Compiler 生成带 identity 的不可变 Snapshot；Query 与 Action Runtime 在同一套 Contract 上工作。',
-  schemaTitle: '你的本体留在引擎外',
-  schemaText: 'Ticket 和 Frontend Design 可以声明完全不同的 Type、Relation、Projection 与 Action。新增领域不需要修改 Parser、Compiler 或 Runtime。',
-  splitTitle: 'Selection 不是 Permission',
-  splitText: 'Query 返回 Selection Plan。Action 还要经过 Principal、Capability、Preflight、Policy、Approval、Idempotency 与 Event evidence。读取能力不会自动变成写权限。',
-  transportTitle: '一个 Runtime，三种 Transport',
-  transportText: 'Embedded SDK、MCP 与 HTTP 暴露同一 Snapshot 和 Plan Contract。Transport 解决部署问题，不复制领域逻辑。',
+  fromTitle: '把领域接入 Agent 工作流',
+  fromText: 'Model Package 描述类型、关系与行为，Corpus Package 提供可追溯内容。AOE 将两者编译为带 identity 的 Snapshot，供 Query、Plan 与 Action 使用。',
+  schemaTitle: '用 Model 描述领域',
+  schemaText: '从客服、合规、运维到设计，领域可以声明自己的 Type、Relation、Projection 与 Action，并沿用同一套 Engine。',
+  splitTitle: '从选择进入行动',
+  splitText: 'Query 生成 Selection Plan；需要改变状态时，再按 Principal、Capability、Policy、Approval 与 Evidence 执行 Action。',
+  transportTitle: '一套契约，适配不同部署',
+  transportText: 'Embedded SDK、MCP 与 HTTP 共享 Snapshot、Plan、Query 与 Action 契约，按部署方式选择接入层。',
   pathsTitle: '从你拥有的边界开始',
   paths: [
     ['连接 Agent', '使用已有 Domain Package，通过 SDK、MCP 或 HTTP 接入。', '/docs/start/connect-agent'],
@@ -30,18 +31,18 @@ const copy = isZh ? {
   examplesTitle: '从真实领域开始',
   examplesText: 'Ticket、Recipe、Security 与 Frontend Design 都是外部 Package。你可以从这些例子开始，也可以带着自己的 Model 与 Corpus 接入。',
 } : {
-  eyebrow: 'Model-driven ontology infrastructure',
-  title: 'An ontology your software can run.',
+  eyebrow: 'Agent Ontology Engine',
+  title: 'Define a domain. Compile a runtime.',
   lede: 'AOE is an Agent Ontology Engine. It compiles an external domain ontology and corpus into a verified runtime that agents and applications can query, plan against, and act through SDK, MCP, or HTTP.',
   primary: 'Start with the docs', secondary: 'Understand packages',
-  fromTitle: 'From ontology to runtime',
-  fromText: 'A Model Package defines the ontology and behavior. A Corpus Package supplies content and release policy. The compiler produces an immutable, identified snapshot used by both query and action runtimes.',
-  schemaTitle: 'Your ontology stays outside the engine',
-  schemaText: 'Ticket and Frontend Design can declare unrelated types, relations, projections, and actions. Adding a domain does not require a parser, compiler, or runtime change.',
-  splitTitle: 'Selection is not permission',
-  splitText: 'Query returns a Selection Plan. Action still requires principal, capability, preflight, policy, approval, idempotency, and event evidence. Read access never becomes write authority by implication.',
-  transportTitle: 'One runtime, three transports',
-  transportText: 'The embedded SDK, MCP, and HTTP expose the same snapshot and plan contracts. A transport solves deployment; it does not duplicate domain logic.',
+  fromTitle: 'Bring a domain into an agent workflow',
+  fromText: 'A Model Package describes types, relations, and behavior. A Corpus Package supplies traceable content. AOE compiles both into an identified Snapshot for Query, Plan, and Action.',
+  schemaTitle: 'Model the domain you know',
+  schemaText: 'Support, compliance, operations, and design domains can declare their own types, relations, projections, and actions on the same Engine.',
+  splitTitle: 'Move from selection to action',
+  splitText: 'Query produces a Selection Plan. When state must change, an Action follows principal, capability, policy, approval, and evidence requirements.',
+  transportTitle: 'One contract, any host',
+  transportText: 'Embedded SDK, MCP, and HTTP share Snapshot, Plan, Query, and Action contracts. Choose the integration layer that fits the deployment.',
   pathsTitle: 'Start from the boundary you own',
   paths: [
     ['Connect an Agent', 'Use an existing Domain Package through SDK, MCP, or HTTP.', '/docs/start/connect-agent'],
@@ -69,20 +70,18 @@ const copy = isZh ? {
           External schemas · Reproducible snapshots · Policy-gated actions · SDK · MCP · HTTP
         </p>
       </div>
-      <div class="hero-snippet" aria-label={isZh ? 'AOE 数据流' : 'AOE data flow'}>
-        <div class="hero-snippet-head"><span>aoe</span><span>package → runtime</span></div>
-        <pre><code>{`Model Package + Corpus Package
-               │
-       compiler + checks
-               │
-       immutable snapshot
-          ┌────┴────┐
- Selection Plan  Execution Plan
-          └────┬────┘
-        SDK · MCP · HTTP`}</code></pre>
+      <div class="hero-signal" aria-label={isZh ? 'AOE Runtime 信号' : 'AOE runtime signal'}>
+        <div class="signal-top"><span>aoe / runtime</span><span class="signal-live"><i></i> live contract</span></div>
+        <div class="signal-lines" aria-hidden="true">
+          <span class="signal-line line-one"></span><span class="signal-line line-two"></span><span class="signal-line line-three"></span>
+          <span class="signal-node node-model">Model</span><span class="signal-node node-snapshot">Snapshot</span><span class="signal-node node-action">Action</span>
+        </div>
+        <div class="signal-caption">{isZh ? '外部声明 · 可复现构建 · 受控执行' : 'External declarations · reproducible builds · governed execution'}</div>
       </div>
     </div>
   </section>
+
+  <ArchitectureViz lang={lang} />
 
   <section class="section">
     <div class="section-inner">
@@ -122,3 +121,24 @@ const copy = isZh ? {
     </div>
   </section>
 </Base>
+
+<style>
+  .hero-signal { min-height: 300px; border: 1px solid var(--border-default); border-radius: 14px; background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--accent-emphasis) 12%, transparent), transparent 56%), var(--bg-subtle); overflow: hidden; position: relative; }
+  .signal-top { display: flex; justify-content: space-between; padding: 14px 16px; color: var(--fg-muted); font: 11px var(--font-mono); letter-spacing: .05em; text-transform: uppercase; border-bottom: 1px solid var(--border-muted); }
+  .signal-live { color: var(--success-fg); }
+  .signal-live i { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 18%, transparent); animation: signal-pulse 1.8s ease-in-out infinite; }
+  .signal-lines { position: relative; min-height: 230px; }
+  .signal-line { position: absolute; height: 1px; transform-origin: left center; background: linear-gradient(90deg, transparent, var(--accent-emphasis), transparent); opacity: .8; animation: signal-flow 2.8s ease-in-out infinite; }
+  .line-one { left: 23%; top: 48%; width: 27%; transform: rotate(-20deg); }
+  .line-two { left: 28%; top: 54%; width: 45%; }
+  .line-three { left: 54%; top: 56%; width: 25%; transform: rotate(-26deg); animation-delay: .45s; }
+  .signal-node { position: absolute; display: grid; place-items: center; border: 1px solid var(--accent-emphasis); color: var(--fg-default); background: var(--bg-canvas); border-radius: 12px; padding: 15px 18px; font: 13px var(--font-mono); box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-emphasis) 8%, transparent); }
+  .node-model { left: 12%; top: 38%; }
+  .node-snapshot { left: 43%; top: 48%; border-color: #6f7bf7; box-shadow: 0 0 0 6px color-mix(in srgb, #6f7bf7 12%, transparent); }
+  .node-action { right: 12%; top: 31%; border-color: var(--success-fg); box-shadow: 0 0 0 6px color-mix(in srgb, var(--success-fg) 10%, transparent); }
+  .signal-caption { position: absolute; bottom: 16px; left: 16px; right: 16px; color: var(--fg-muted); font-size: 12px; line-height: 1.5; }
+  @keyframes signal-flow { 0%, 100% { opacity: .28; } 50% { opacity: 1; } }
+  @keyframes signal-pulse { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+  @media (max-width: 720px) { .hero-signal { min-height: 260px; } .node-model { left: 8%; } .node-action { right: 8%; } .node-snapshot { left: 38%; } }
+  @media (prefers-reduced-motion: reduce) { .signal-line, .signal-live i { animation: none; } }
+</style>

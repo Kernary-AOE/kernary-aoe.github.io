@@ -22,9 +22,9 @@ const WEBSITE_ROOT = resolve(new URL('../..', import.meta.url).pathname);
 // We prefer `external/` if present, otherwise fall back to `..`.
 function resolveCorpusRoot(): string {
   const external = resolve(WEBSITE_ROOT, 'external');
-  if (existsSync(join(external, 'kernary-engine'))) return external;
+  if (existsSync(join(external, 'aoe-engine'))) return external;
   const sibling = resolve(WEBSITE_ROOT, '..');
-  if (existsSync(join(sibling, 'kernary-engine'))) return sibling;
+  if (existsSync(join(sibling, 'aoe-engine'))) return sibling;
   return external; // doesn't exist either, so loadAll() will skip all corpora
 }
 const RELEASE_ROOT = resolveCorpusRoot();
@@ -315,7 +315,7 @@ function loadAtomDetails(corpusSlug: string, prefix: string, shortId: string, at
     version,
     createdAt,
     tokens: { summary: qSummary, core: qCore, full: qFull },
-    sourcePath: `kernary-engine/examples/${corpusSlug}/primes/compiled/${prefix}/${shortId}/atom.yaml`,
+    sourcePath: `aoe-engine/examples/${corpusSlug}/primes/compiled/${prefix}/${shortId}/atom.yaml`,
   };
 }
 

@@ -35,10 +35,10 @@ The engine is split into a few deliberately boring boundaries:
   MCP, or over HTTP. The transport does not decide domain semantics.
 
 The reference implementation lives in
-[`skill-wiki/kernary-engine`](https://github.com/skill-wiki/kernary-engine).
+[`kernary-aoe/aoe-engine`](https://github.com/kernary-aoe/aoe-engine).
 The Frontend Design repository is now a separate external Domain Package, not
 part of the engine:
-[`skill-wiki/kernary-frontend-design`](https://github.com/skill-wiki/kernary-frontend-design).
+[`kernary-aoe/aoe-frontend-design`](https://github.com/kernary-aoe/aoe-frontend-design).
 
 ## The important boundary
 
@@ -84,6 +84,6 @@ protocol keeps their extension points external so they can evolve without
 turning the engine into a marketplace or a single vendor's agent runtime.
 
 For issues and implementation discussion, use the
-[AOE Engine repository](https://github.com/skill-wiki/kernary-engine).
+[AOE Engine repository](https://github.com/kernary-aoe/aoe-engine).
 
 —

@@ -15,9 +15,9 @@ interface Props {
 
 const { title, slug, source, lang = 'en', description, owner = 'engine' } = Astro.props;
 const configuredRoot = owner === 'engine'
-  ? (import.meta.env.KERNARY_ENGINE_ROOT as string | undefined)
-  : (import.meta.env.KERNARY_FRONTEND_DESIGN_ROOT as string | undefined);
-const siblingName = owner === 'engine' ? 'kernary-engine' : 'kernary-frontend-design';
+  ? (import.meta.env.AOE_ENGINE_ROOT as string | undefined)
+  : (import.meta.env.AOE_FRONTEND_DESIGN_ROOT as string | undefined);
+const siblingName = owner === 'engine' ? 'aoe-engine' : 'aoe-frontend-design';
 const siblingRoot = resolve(process.cwd(), '..', siblingName);
 const vendoredRoot = resolve(process.cwd(), 'external', siblingName);
 const ownerRoot = configuredRoot

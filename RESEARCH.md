@@ -1,7 +1,7 @@
-# Skill Wiki — Marketplace Research
+# AOE — Marketplace Research
 
 A survey of eight existing skill / module / package marketplaces, captured to
-inform the Skill Wiki website's information architecture. For each market we
+inform the AOE website's information architecture. For each market we
 record the URL, the dominant UX pattern, three ideas worth borrowing, and one
 thing to avoid. Pages were inspected via WebFetch and supplemented with web
 search where requests were rate-limited.
@@ -35,7 +35,7 @@ detail pages show install command, README, sidebar with version /
 dependencies / dependents / weekly-downloads / maintainers / keywords.
 
 **Borrow:** (1) Prominent copy-pastable install command at the top of every
-detail page (`prime install @recipes/method-pan-sauce`). (2) Sidebar metadata
+detail page (`aoe install @recipes/method-pan-sauce`). (2) Sidebar metadata
 panel as a stable affordance — version, kind, domain, edges-out count, file
 size. (3) Versions tab — showing every published version with date.
 
@@ -123,7 +123,7 @@ the spec asks us to mirror — hero strip, category grid, dense card layout.
 Each card has title, short description, tags, copy-rule button. Mobile
 collapses to single column.
 
-**Borrow:** (1) Copy-button on every card (`prime install ...` ready to
+**Borrow:** (1) Copy-button on every card (`aoe install ...` ready to
 paste). (2) Category-as-page (`/category/cooking`) mirrors what we want for
 domains. (3) Quiet, monochrome design — content carries the signal, no
 gradient hero or marketing fluff.
@@ -153,7 +153,7 @@ marketplace.
 
 ---
 
-## Synthesis for Skill Wiki v0.1.0
+## Synthesis for AOE v0.1.0
 
 - **Browse-first**, not search-first. Corpus is small (<1000 atoms).
 - **Filter sidebar** with three axes only: kind, domain, edge-verb.

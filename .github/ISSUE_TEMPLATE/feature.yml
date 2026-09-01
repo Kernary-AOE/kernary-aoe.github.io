@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for proposing this. For Kernary Engine changes, open the issue against the `kernary-engine` repository instead.
+        Thanks for proposing this. For Kernary Engine changes, open the issue against the `aoe-engine` repository instead.
 
   - type: textarea
     id: problem

@@ -15,12 +15,12 @@ This repository expects the AOE Engine and Frontend Design Domain Package at
 their sibling paths:
 
 ```text
-../kernary-engine
-../kernary-frontend-design
+../aoe-engine
+../aoe-frontend-design
 ```
 
-Override them with `KERNARY_ENGINE_ROOT` and
-`KERNARY_FRONTEND_DESIGN_ROOT` when the checkout layout differs.
+Override them with `AOE_ENGINE_ROOT` and
+`AOE_FRONTEND_DESIGN_ROOT` when the checkout layout differs.
 
 ```bash
 bun install --frozen-lockfile
@@ -34,13 +34,13 @@ not keep handwritten copies of Engine and Domain reference pages.
 ## Content ownership
 
 - Homepage, About, package discovery, Blog, and navigation are site-owned.
-- Engine guides, concepts, and reference come from `kernary-engine/docs/`.
+- Engine guides, concepts, and reference come from `aoe-engine/docs/`.
 - The Frontend Design case study comes from
-  `kernary-frontend-design/docs/overview.md`.
+  `aoe-frontend-design/docs/overview.md`.
 - `data/packages.yaml` locates public Corpus Packages for inspection. It is not
   the AOE Registry service and is not a publication claim.
 
-The site currently deploys at `https://skill-wiki.github.io`; the product name,
+The site currently deploys at `https://kernary-aoe.github.io`; the product name,
 metadata, and public routes are AOE.
 
 ## Pages
