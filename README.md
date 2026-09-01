@@ -7,7 +7,7 @@
 </picture>
 
 Static documentation and package-discovery site for AOE, the Agent Ontology
-Engine maintained by the Kernary organization.
+Engine maintained by the Kernary-AOE organization.
 
 ## Develop
 

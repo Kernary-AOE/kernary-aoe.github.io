@@ -1,6 +1,6 @@
 # AOE 文档站
 
-AOE 的静态文档与 Package 发现站。AOE 是面向 Agent 的本体引擎，由 Kernary 组织维护。
+AOE 的静态文档与 Package 发现站。AOE 是面向 Agent 的本体引擎，由 Kernary-AOE 组织维护。
 
 ## 本地开发
 
