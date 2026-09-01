@@ -1,6 +1,10 @@
 # Kernary docs site
 
-<img src="public/kernary-logo.svg" alt="Kernary" width="540">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="public/kernary-logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="public/kernary-logo.svg">
+  <img src="public/kernary-logo.svg" alt="Kernary" width="540">
+</picture>
 
 Static documentation and package-discovery site for Kernary, the model-driven
 ontology engine for Agents and domain-aware software.
