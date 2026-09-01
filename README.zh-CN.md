@@ -1,10 +1,10 @@
-# Kernary 文档站
+# AOE 文档站
 
-Kernary 的静态文档与 Package 发现站。Kernary 是模型驱动的本体引擎。
+AOE 的静态文档与 Package 发现站。AOE 是面向 Agent 的本体引擎，由 Kernary 组织维护。
 
 ## 本地开发
 
-当前布局要求 Kernary Engine 与 Frontend Design Domain Package 位于：
+当前布局要求 AOE Engine 与 Frontend Design Domain Package 位于：
 
 ```text
 ../kernary-engine
@@ -32,4 +32,4 @@ Domain Reference 的手写副本。
   Service，也不表示 Package 已发布。
 
 当前站点部署在 `https://skill-wiki.github.io`；产品名称、Metadata 和公开 Route
-均使用 Kernary。
+均使用 AOE。

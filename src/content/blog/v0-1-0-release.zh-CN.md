@@ -1,17 +1,17 @@
 ---
-title: "Kernary v0.2 —— 本体引擎开始成形"
+title: "AOE v0.2 —— Agent Ontology Engine 开始成形"
 date: "2026-09-01"
-excerpt: "Kernary 是模型驱动的本体引擎：外部模型与语料编译成可验证快照，再通过 SDK、MCP 或 HTTP 暴露类型化查询计划与受治理的 Action。"
+excerpt: "AOE 是面向 Agent 的本体引擎：外部模型与语料编译成可验证快照，再通过 SDK、MCP 或 HTTP 暴露类型化查询计划与受治理的 Action。"
 ---
 
-# Kernary v0.2 —— 本体引擎开始成形
+# AOE v0.2 —— Agent Ontology Engine 开始成形
 
-Kernary 是这个项目的新阶段。它不再是面向设计领域的知识集合，也不再
-把固定的 atom kind 当作产品本身。Kernary 的核心是一个模型驱动的本体
+AOE 是这个项目的新阶段。它不再是面向设计领域的知识集合，也不再
+把固定的 atom kind 当作产品本身。AOE 的核心是一个模型驱动的本体
 引擎：团队在引擎外定义领域模型，用自己的语料编译出可验证快照，再通过
 稳定的协议把结果提供给 Agent 和应用。
 
-当前网站与仓库已经统一使用 Kernary 名称。
+当前网站与仓库已经统一使用 AOE 产品名称，由 AOE 组织维护。
 
 ## 这次交付了什么
 
@@ -37,7 +37,7 @@ Frontend Design 现在是独立的外部 Domain Package，不属于引擎本体�
 
 ## 最重要的边界
 
-Kernary Core 只负责加载并验证 Model。它不知道 Ticket、Recipe、ColorToken
+AOE Core 只负责加载并验证 Model。它不知道 Ticket、Recipe、ColorToken
 或 DesignPrinciple 是什么；这些名字、字段和关系来自 Model Package，单元
 来自 Corpus Package。真正的通用性测试是：新增领域只需要新增包数据，而不需要
 在引擎里增加新的 `if` 分支。
@@ -54,7 +54,7 @@ Model + Corpus + Adapter
 
 ## 如何试用维护中的示例
 
-Kernary 的 workspace 使用 Bun。在 Engine 仓库中运行：
+AOE 的 workspace 使用 Bun。在 Engine 仓库中运行：
 
 ```bash
 bun install --frozen-lockfile
@@ -70,11 +70,11 @@ Engine 里保留了小型示例 Package，用于本地查看完整的“编译�
 
 ## 目前没有假装完成的部分
 
-Kernary 作为 Engine 与 SDK 已经可以使用，但托管 Registry、第一方评估
+AOE 作为 Engine 与 SDK 已经可以使用，但托管 Registry、第一方评估
 Harness 和可选的可观测性集成仍是后续产品。协议为这些能力保留扩展点，避免
 把引擎变成 Marketplace 或某一家 Agent Runtime 的专属实现。
 
 问题与实现讨论请进入
-[Kernary Engine 仓库](https://github.com/skill-wiki/kernary-engine)。
+[AOE Engine 仓库](https://github.com/skill-wiki/kernary-engine)。
 
 —

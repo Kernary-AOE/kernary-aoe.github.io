@@ -1,7 +1,7 @@
 ---
 title: "为什么本体引擎不同于技能库"
 date: "2026-09-01"
-excerpt: "Skill 可以是有用的使用指南；Kernary 负责让领域知识具备类型、版本、查询、验证和受控执行能力。"
+excerpt: "Skill 可以是有用的使用指南；AOE 负责让领域知识具备类型、版本、查询、验证和受控执行能力。"
 ---
 
 # 为什么本体引擎不同于技能库
@@ -11,7 +11,7 @@ excerpt: "Skill 可以是有用的使用指南；Kernary 负责让领域知识�
 它可以告诉 Agent 尝试什么，却不会自动定义领域里的类型、类型之间的关系、
 结果背后的证据，或者改变状态所需的权限。
 
-Kernary 从更底层的问题开始。它是一个本体引擎：为领域模型与领域语料
+AOE 从更底层的问题开始。它是一个本体引擎：为领域模型与领域语料
 提供编译、查询、验证和受治理执行的 Runtime。Domain Package 仍然可以
 附带面向 Agent 的 Skill，但 Skill 是这个 Package 的使用入口，不是 Schema
 或安全边界。
@@ -23,7 +23,7 @@ Model Package       Corpus Package       Adapter / Tool Package
 （类型、关系）       （单元、来源）        （Provider、Validator）
         \                 |                  /
          \                |                 /
-          └────── Kernary compiler ────────┘
+          └──────── AOE compiler ─────────┘
                          │
                 可验证、可版本化快照
                          │

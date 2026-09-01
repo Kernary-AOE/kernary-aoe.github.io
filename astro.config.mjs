@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// The public site contains only the current Kernary information architecture.
+// The public site contains only the current AOE information architecture.
 // Historical Prime/Skill Wiki material lives in the Engine repository's
 // legacy area and is intentionally not built into the public sitemap.
 export default defineConfig({

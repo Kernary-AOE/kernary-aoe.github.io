@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Kernary documentation and package discovery site.",
+  "description": "AOE documentation and package discovery site.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

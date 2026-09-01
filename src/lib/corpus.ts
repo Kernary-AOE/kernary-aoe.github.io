@@ -1,9 +1,9 @@
 // Package data loader — reads compiled Corpus Units at build time.
 //
 // Sources:
-//   sibling Kernary engine/domain repositories or CI's external/ vendor tree
+//   sibling AOE engine/domain repositories or CI's external/ vendor tree
 //
-// Falls back to the sibling Kernary domain checkout if compiled, otherwise skips.
+// Falls back to the sibling AOE domain checkout if compiled, otherwise skips.
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';

@@ -5,31 +5,31 @@ interface Props { lang?: 'en' | 'zh' }
 const { lang = 'en' } = Astro.props;
 const isZh = lang === 'zh';
 ---
-<Base title={isZh ? '关于 Kernary' : 'About Kernary'} current="about" lang={lang}>
+<Base title={isZh ? '关于 AOE' : 'About AOE'} current="about" lang={lang}>
   <article class="article">
     <p class="article-meta">{SITE.category}</p>
     <h1>{isZh ? '知识不该只是一组塞进 Prompt 的文件。' : 'Knowledge should be more than files loaded into a prompt.'}</h1>
 
     <p style="font-size: 18px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 32px;">
       {isZh
-        ? 'Kernary 把外部领域本体和语料编译成带版本与 identity 的 Runtime。Agent 或应用可以查询它、获得可解释的 Selection Plan，也可以通过独立授权路径调用 Action。'
-        : 'Kernary compiles external domain ontologies and corpora into identified, versioned runtimes. An Agent or application can query them, receive an explainable Selection Plan, and call Actions through a separate authorization path.'}
+        ? 'AOE 把外部领域本体和语料编译成带版本与 identity 的 Runtime。Agent 或应用可以查询它、获得可解释的 Selection Plan，也可以通过独立授权路径调用 Action。'
+        : 'AOE compiles external domain ontologies and corpora into identified, versioned runtimes. An Agent or application can query them, receive an explainable Selection Plan, and call Actions through a separate authorization path.'}
     </p>
 
     <h2>{isZh ? '引擎拥有的边界' : 'What the engine owns'}</h2>
     <p>{isZh
-      ? 'Kernary Core 拥有声明 meta-schema、稳定 IR、本体与语料 Compiler、Snapshot 验证、Query/Constraint Runtime、Action/Policy/Event Runtime、SDK、Transport 与 Conformance。'
-      : 'Kernary Core owns the declaration meta-schema, stable IR, ontology-and-corpus compiler, snapshot verification, query and constraint runtime, action, policy, and event runtime, SDKs, transports, and conformance.'}</p>
+      ? 'AOE Core 提供声明 meta-schema、稳定 IR、本体与语料 Compiler、Snapshot 验证、Query/Constraint Runtime、Action/Policy/Event Runtime、SDK、Transport 与 Conformance。'
+      : 'AOE Core provides the declaration meta-schema, stable IR, ontology-and-corpus compiler, snapshot verification, query and constraint runtime, action, policy, and event runtime, SDKs, transports, and conformance.'}</p>
 
     <h2>{isZh ? '留在引擎外的内容' : 'What stays outside'}</h2>
     <p>{isZh
-      ? '领域本体中的 Type、Field、Relation、Projection、Retrieval Profile、Action、Validator，以及 Corpus 中的 Unit、Asset 和 License Policy 都属于外部 Package。Frontend Design 是一个完整案例，不是内置本体。'
-      : 'Domain ontology types, fields, relations, projections, retrieval profiles, actions, validators, plus Corpus Units, assets, and licence policy belong to external packages. Frontend Design is a complete case study, not a built-in ontology.'}</p>
+      ? '领域本体中的 Type、Field、Relation、Projection、Retrieval Profile、Action、Validator，以及 Corpus 中的 Unit、Asset 和 License Policy 都由外部 Package 提供。Frontend Design 是一个完整参考案例。'
+      : 'Domain ontology types, fields, relations, projections, retrieval profiles, actions, validators, plus Corpus Units, assets, and licence policy come from external packages. Frontend Design is a complete reference case.'}</p>
 
     <h2>{isZh ? '你可以用它做什么' : 'What you can build'}</h2>
     <p>{isZh
-      ? '用 Kernary 构建能理解领域对象的客服助手、合规审查工具、运维知识库、数据目录或内部工作流。Model Package 定义你的世界，Corpus Package 提供内容，Engine 负责编译、查询和受控执行。'
-      : 'Use Kernary for a support assistant, compliance review tool, operations knowledge base, data catalogue, or internal workflow that needs to understand domain objects. Your Model Package defines the world, your Corpus Package supplies the material, and the Engine compiles, queries, and governs it.'}</p>
+      ? '用 AOE 构建能理解领域对象的客服助手、合规审查工具、运维知识库、数据目录或内部工作流。Model Package 定义你的世界，Corpus Package 提供内容，Engine 负责编译、查询和受控执行。'
+      : 'Use AOE for a support assistant, compliance review tool, operations knowledge base, data catalogue, or internal workflow that needs to understand domain objects. Your Model Package defines the world, your Corpus Package supplies the material, and the Engine compiles, queries, and governs it.'}</p>
 
     <h2>{isZh ? '从哪里开始' : 'Start here'}</h2>
     <p>{isZh
@@ -38,7 +38,7 @@ const isZh = lang === 'zh';
 
     <h2>{isZh ? '开源与参与' : 'Open source and contribution'}</h2>
     <p>
-      {isZh ? 'Kernary 使用 Apache-2.0。代码与问题追踪位于：' : 'Kernary is Apache-2.0 licensed. Source code and issues live at: '}
+      {isZh ? 'AOE 使用 Apache-2.0。代码与问题追踪位于 Kernary 组织：' : 'AOE is Apache-2.0 licensed. Source code and issues live in the Kernary organization: '}
       <a href={SITE.github} rel="noopener">{SITE.github.replace('https://', '')}</a>.
     </p>
   </article>

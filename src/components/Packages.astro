@@ -14,17 +14,17 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
   title={isZh ? 'Packages' : 'Packages'}
   current="marketplace"
   lang={lang}
-  description={isZh ? '浏览 Kernary 的 Model、Corpus、Adapter 与 Domain Package。' : 'Discover Model, Corpus, Adapter, and Domain Packages for Kernary.'}
+  description={isZh ? '浏览 AOE 的 Model、Corpus、Adapter 与 Domain Package。' : 'Discover Model, Corpus, Adapter, and Domain Packages for AOE.'}
 >
   <section class="hero" style="padding: var(--s-7) var(--s-4) var(--s-6);">
     <div class="hero-inner" style="grid-template-columns: 1fr; gap: 0;">
       <div>
-        <p class="hero-eyebrow"><span class="pill">Kernary Packages</span> {packages.length} {isZh ? '个公开示例 Package' : 'public example packages'}</p>
+        <p class="hero-eyebrow"><span class="pill">AOE Packages</span> {packages.length} {isZh ? '个公开示例 Package' : 'public example packages'}</p>
         <h1>{isZh ? '找到一个 Package，从真实领域开始。' : 'Start from a package that owns a real domain.'}</h1>
         <p class="lede">
           {isZh
-            ? '这里展示可以直接阅读和运行的外部 Package。每个条目都有自己的 Model、Corpus、来源与发布责任；它们不是 Kernary Core 内置内容。'
-            : 'These are external packages you can read and run. Each package owns its Model, Corpus, sources, and release responsibility; none of the domain vocabulary is built into Kernary Core.'}
+            ? '这里展示可以直接阅读和运行的外部 Package。每个条目都有自己的 Model、Corpus、来源与发布责任。'
+            : 'Browse external packages you can read and run. Each package owns its Model, Corpus, sources, and release responsibility.'}
         </p>
         <p class="lede" style="margin-bottom: 0;">
           {isZh

@@ -1,17 +1,17 @@
-# Kernary docs site
+# AOE docs site
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="public/kernary-logo-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="public/kernary-logo.svg">
-  <img src="public/kernary-logo.svg" alt="Kernary" width="540">
+<source media="(prefers-color-scheme: dark)" srcset="public/aoe-logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="public/aoe-logo.svg">
+  <img src="public/aoe-logo.svg" alt="AOE" width="540">
 </picture>
 
-Static documentation and package-discovery site for Kernary, the model-driven
-ontology engine for Agents and domain-aware software.
+Static documentation and package-discovery site for AOE, the Agent Ontology
+Engine maintained by the Kernary organization.
 
 ## Develop
 
-This repository expects the Kernary Engine and Frontend Design Domain Package at
+This repository expects the AOE Engine and Frontend Design Domain Package at
 their sibling paths:
 
 ```text
@@ -38,21 +38,21 @@ not keep handwritten copies of Engine and Domain reference pages.
 - The Frontend Design case study comes from
   `kernary-frontend-design/docs/overview.md`.
 - `data/packages.yaml` locates public Corpus Packages for inspection. It is not
-  the Kernary Registry service and is not a publication claim.
+  the AOE Registry service and is not a publication claim.
 
 The site currently deploys at `https://skill-wiki.github.io`; the product name,
-metadata, and public routes are Kernary.
+metadata, and public routes are AOE.
 
 ## Pages
 
 | Path | Purpose |
 |---|---|
-| `/` | Kernary product introduction |
+| `/` | AOE product introduction |
 | `/docs` | Current documentation rendered from owning repositories |
 | `/marketplace` | Browse external Model, Corpus, Adapter, and Domain Packages |
 | `/browse` | Inspect Units in published Corpus snapshots |
-| `/about` | Understand Kernary and choose a starting point |
+| `/about` | Understand AOE and choose a starting point |
 
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md). Kernary is Apache-2.0 licensed.
+Read [CONTRIBUTING.md](CONTRIBUTING.md). AOE is Apache-2.0 licensed.

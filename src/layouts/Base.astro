@@ -80,7 +80,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     <meta name="viewport" content="width=device-width" />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
-    <link rel="icon" type="image/svg+xml" href="/kernary-mark.svg" />
+    <link rel="icon" type="image/svg+xml" href="/aoe-mark.svg" />
     <link rel="alternate icon" type="image/png" href="/favicon.png" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={new URL(enPath, siteUrl).toString()} />
@@ -103,7 +103,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     <script is:inline>
       (() => {
         try {
-          const saved = localStorage.getItem('kernary-theme') || localStorage.getItem('sw-theme');
+          const saved = localStorage.getItem('aoe-theme') || localStorage.getItem('sw-theme');
           const dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
           document.documentElement.dataset.theme = saved === 'dark' ? 'dark' : saved === 'light' ? 'light' : dark ? 'dark' : 'light';
         } catch {}
@@ -117,8 +117,8 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     <a class="skip" href="#main">Skip to content</a>
     <header class="gh-header">
       <div class="gh-header-inner">
-        <a class="gh-brand" href={homeHref} aria-label="Kernary home">
-          <img src="/kernary-mark.svg" alt="" width="24" height="24" aria-hidden="true" />
+        <a class="gh-brand" href={homeHref} aria-label="AOE home">
+          <img src="/aoe-mark.svg" alt="" width="24" height="24" aria-hidden="true" />
           {PRODUCT.name}
           <span class="gh-brand-tag">v{PRODUCT.version}</span>
         </a>
@@ -135,7 +135,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
         <div class="gh-meta">
           <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" type="button">◐</button>
           <a href={isZh ? '/' : '/zh'} aria-label="Switch language">{labels.switch}</a>
-          <a href={PRODUCT.github} rel="noopener" aria-label="Kernary engine on GitHub">GitHub ↗</a>
+          <a href={PRODUCT.github} rel="noopener" aria-label="AOE engine on GitHub">GitHub ↗</a>
         </div>
       </div>
     </header>
@@ -176,8 +176,8 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
         </div>
       </div>
       <div class="gh-footer-bottom">
-        <span>© 2026 Kernary contributors. Apache-2.0.</span>
-        <span>{isZh ? 'Kernary · 模型驱动的本体引擎' : 'Kernary · model-driven ontology engine'}</span>
+        <span>© 2026 AOE contributors. Apache-2.0.</span>
+        <span>{isZh ? 'AOE · 面向 Agent 的本体引擎' : 'AOE · Agent Ontology Engine'}</span>
       </div>
     </footer>
 
@@ -185,7 +185,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
       document.getElementById('theme-toggle')?.addEventListener('click', () => {
         const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
         document.documentElement.dataset.theme = next;
-        try { localStorage.setItem('kernary-theme', next); } catch {}
+          try { localStorage.setItem('aoe-theme', next); } catch {}
       });
 
       const labels = document.documentElement.lang.startsWith('zh')

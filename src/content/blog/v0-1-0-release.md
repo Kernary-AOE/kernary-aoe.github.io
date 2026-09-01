@@ -1,18 +1,19 @@
 ---
-title: "Kernary v0.2 — the ontology engine is taking shape"
+title: "AOE v0.2 — the Agent Ontology Engine is taking shape"
 date: "2026-09-01"
-excerpt: "Kernary is a model-driven ontology engine: external models and corpora compile into verified snapshots, then serve typed query plans and governed actions through an SDK, MCP, or HTTP."
+excerpt: "AOE is an Agent Ontology Engine: external models and corpora compile into verified snapshots, then serve typed query plans and governed actions through an SDK, MCP, or HTTP."
 ---
 
-# Kernary v0.2 — the ontology engine is taking shape
+# AOE v0.2 — the Agent Ontology Engine is taking shape
 
-Kernary is the next chapter of this project. The product is no longer a
+AOE is the next chapter of this project. The product is now an Agent Ontology
 design-specific knowledge collection or a fixed set of atom kinds. It is a
 model-driven ontology engine: a small, deterministic core that lets a team
 define a domain outside the engine, compile that definition with its corpus,
 and expose the result to agents and applications through stable contracts.
 
-The current site and repositories now use the Kernary name throughout.
+The current site and repositories now identify the product as AOE, maintained
+by the AOE organization.
 
 ## What ships
 
@@ -41,7 +42,7 @@ part of the engine:
 
 ## The important boundary
 
-Kernary Core knows how to load and verify a model. It does not know what a
+AOE Core knows how to load and verify a model. It does not know what a
 Ticket, Recipe, ColorToken, or DesignPrinciple is. Those names, fields, and
 relations arrive from the Model Package. Units arrive from the Corpus Package.
 That is the conformance test: adding a new domain should require new package
@@ -59,7 +60,7 @@ Model + Corpus + Adapters
 
 ## Try the maintained example
 
-Kernary uses Bun for the workspace toolchain. From the engine repository:
+AOE uses Bun for the workspace toolchain. From the engine repository:
 
 ```bash
 bun install --frozen-lockfile
@@ -76,13 +77,13 @@ ontology shipped by Core. For a deployable domain, start with the
 
 ## What is deliberately not promised yet
 
-Kernary is usable as an engine and SDK, but it is not pretending that every
+AOE is usable as an engine and SDK, but it is not pretending that every
 ecosystem service is finished. The hosted registry, first-party evaluation
 harness, and optional observability integrations are follow-on products. The
 protocol keeps their extension points external so they can evolve without
 turning the engine into a marketplace or a single vendor's agent runtime.
 
 For issues and implementation discussion, use the
-[Kernary Engine repository](https://github.com/skill-wiki/kernary-engine).
+[AOE Engine repository](https://github.com/skill-wiki/kernary-engine).
 
 —

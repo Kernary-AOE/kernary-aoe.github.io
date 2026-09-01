@@ -41,7 +41,7 @@ const verbCounts = countBy(allAtoms, (a) => [...new Set(a.edges.map((e) => e.typ
   <p style="color: var(--fg-muted); max-width: 70ch;">
     {allAtoms.length} compiled Units across {corpora.length} external Corpus Packages.
     Filter by Corpus, external type, domain, or relation in the sidebar.
-    These inventories use the v1 Atom model; Atom is not a Kernary Core type.
+    These inventories use the package's declared Unit model.
   </p>
 
   <p id="active-filters" hidden style="margin-bottom: var(--s-4);">

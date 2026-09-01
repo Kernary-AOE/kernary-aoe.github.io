@@ -1,7 +1,7 @@
 ---
 title: "Why an ontology engine is different from a skill library"
 date: "2026-09-01"
-excerpt: "A skill can be useful guidance. Kernary is the layer that makes domain knowledge typed, versioned, queryable, verifiable, and safe to act on."
+excerpt: "A skill can be useful guidance. AOE is the layer that makes domain knowledge typed, versioned, queryable, verifiable, and safe to act on."
 ---
 
 # Why an ontology engine is different from a skill library
@@ -13,7 +13,7 @@ but it does not by itself define the types in a domain, the relationships
 between them, the evidence behind a result, or the permissions required to
 change state.
 
-Kernary starts one layer below that question. It is an ontology engine: a
+AOE starts one layer below that question. It is an ontology engine: a
 runtime for a domain model and its corpus. A Domain Package can still ship an
 Agent Skill as a human-friendly entry point, but the skill is a consumer of the
 package, not the package's schema or security boundary.
@@ -25,7 +25,7 @@ Model Package       Corpus Package       Adapter / Tool Package
 (types, relations)  (units, sources)     (providers, validators)
         \                 |                  /
          \                |                 /
-          └────── Kernary compiler ────────┘
+          └──────── AOE compiler ─────────┘
                          │
                verified, versioned snapshot
                          │

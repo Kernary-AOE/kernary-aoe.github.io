@@ -1,4 +1,4 @@
-# Public package inventory for the static Kernary site.
+# Public package inventory for the static AOE site.
 #
 # This file locates compiled Corpus snapshots at build time. It is not the
 # Registry API and does not prove that a package has been published. Every entry
@@ -11,7 +11,7 @@ packages:
     repo: skill-wiki/kernary-frontend-design
     compiledSubdir: corpus/dist
     description: >-
-      A 797-unit reference release from the Kernary Frontend Design Domain
+      A 797-unit reference release from the AOE Frontend Design Domain
       Package. Its model, adapters, tools, validator, and optional Skill live in
       the owning domain repository.
     homepage: https://github.com/skill-wiki/kernary-frontend-design

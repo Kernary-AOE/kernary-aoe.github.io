@@ -10,7 +10,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
 const copy = isZh ? {
   eyebrow: '模型驱动的本体基础设施',
   title: '给你的领域一个可以运行的本体。',
-  lede: 'Kernary 把外部领域本体与语料编译成可验证 Runtime。Agent 和应用可以查询 Snapshot、构建带约束的计划，并通过 SDK、MCP 或 HTTP 执行经过审批的 Action。',
+  lede: 'AOE 把外部领域本体与语料编译成可验证 Runtime。Agent 和应用可以查询 Snapshot、构建带约束的计划，并通过 SDK、MCP 或 HTTP 执行经过审批的 Action。',
   primary: '从文档开始', secondary: '理解 Package',
   fromTitle: '从本体到 Runtime',
   fromText: 'Model Package 定义本体、语义与行为，Corpus Package 提供内容与发布策略。Compiler 生成带 identity 的不可变 Snapshot；Query 与 Action Runtime 在同一套 Contract 上工作。',
@@ -27,12 +27,12 @@ const copy = isZh ? {
     ['发布 Corpus', '管理 Source、Provenance、License、Release 与签名。', '/docs/concepts/compilation-snapshots'],
     ['运维 Runtime', '处理 Lock、Activation、Migration、Rollback 与 Event replay。', '/docs/operate/releases-migrations'],
   ],
-  examplesTitle: '例子，不是内置',
+  examplesTitle: '从真实领域开始',
   examplesText: 'Ticket、Recipe、Security 与 Frontend Design 都是外部 Package。你可以从这些例子开始，也可以带着自己的 Model 与 Corpus 接入。',
 } : {
   eyebrow: 'Model-driven ontology infrastructure',
   title: 'An ontology your software can run.',
-  lede: 'Kernary is a model-driven ontology engine. It compiles an external domain ontology and corpus into a verified runtime that agents and applications can query, plan against, and act through SDK, MCP, or HTTP.',
+  lede: 'AOE is an Agent Ontology Engine. It compiles an external domain ontology and corpus into a verified runtime that agents and applications can query, plan against, and act through SDK, MCP, or HTTP.',
   primary: 'Start with the docs', secondary: 'Understand packages',
   fromTitle: 'From ontology to runtime',
   fromText: 'A Model Package defines the ontology and behavior. A Corpus Package supplies content and release policy. The compiler produces an immutable, identified snapshot used by both query and action runtimes.',
@@ -49,7 +49,7 @@ const copy = isZh ? {
     ['Publish a Corpus', 'Own sources, provenance, licences, releases, and signing.', '/docs/concepts/compilation-snapshots'],
     ['Operate a Runtime', 'Manage locks, activation, migration, rollback, and event replay.', '/docs/operate/releases-migrations'],
   ],
-  examplesTitle: 'Examples, not built-ins',
+  examplesTitle: 'Start with a domain you know',
   examplesText: 'Ticket, Recipe, Security, and Frontend Design are external packages. Start with one of these examples or bring a Model and Corpus of your own.',
 };
 ---
@@ -69,8 +69,8 @@ const copy = isZh ? {
           External schemas · Reproducible snapshots · Policy-gated actions · SDK · MCP · HTTP
         </p>
       </div>
-      <div class="hero-snippet" aria-label={isZh ? 'Kernary 数据流' : 'Kernary data flow'}>
-        <div class="hero-snippet-head"><span>kernary</span><span>package → runtime</span></div>
+      <div class="hero-snippet" aria-label={isZh ? 'AOE 数据流' : 'AOE data flow'}>
+        <div class="hero-snippet-head"><span>aoe</span><span>package → runtime</span></div>
         <pre><code>{`Model Package + Corpus Package
                │
        compiler + checks

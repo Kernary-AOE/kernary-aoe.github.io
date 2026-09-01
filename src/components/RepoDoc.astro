@@ -25,14 +25,14 @@ const ownerRoot = configuredRoot
   : existsSync(siblingRoot) ? siblingRoot : vendoredRoot;
 const sourcePath = resolve(ownerRoot, source);
 if (!sourcePath.startsWith(`${ownerRoot}/`)) {
-  throw new Error(`Kernary docs source escapes owning repository: ${source}`);
+  throw new Error(`AOE docs source escapes owning repository: ${source}`);
 }
 
 let markdown: string;
 try {
   markdown = readFileSync(sourcePath, 'utf8');
 } catch (error) {
-  throw new Error(`Kernary docs source is required but unavailable: ${sourcePath}\n${String(error)}`);
+  throw new Error(`AOE docs source is required but unavailable: ${sourcePath}\n${String(error)}`);
 }
 const routeBySource: Record<string, string> = {
   'docs/start/index.md': '/docs',
