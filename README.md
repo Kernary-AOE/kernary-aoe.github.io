@@ -12,7 +12,7 @@ ontology engine for Agents and domain-aware software.
 ## Develop
 
 This repository expects the Kernary Engine and Frontend Design Domain Package at
-their current sibling compatibility paths:
+their sibling paths:
 
 ```text
 ../kernary-engine
@@ -37,13 +37,11 @@ not keep handwritten copies of Engine and Domain reference pages.
 - Engine guides, concepts, and reference come from `kernary-engine/docs/`.
 - The Frontend Design case study comes from
   `kernary-frontend-design/docs/overview.md`.
-- `data/packages.yaml` locates compatibility Corpus snapshots for inspection. It
-  is not the Kernary Registry service and is not a publication claim.
-- Old Skill Wiki / Prime v1 routes remain available with a compatibility notice
-  and `noindex`; they are not present in current navigation.
+- `data/packages.yaml` locates public Corpus Packages for inspection. It is not
+  the Kernary Registry service and is not a publication claim.
 
-The configured site URL remains `https://skill-wiki.github.io` until the
-external domain and GitHub Pages migration is complete.
+The site currently deploys at `https://skill-wiki.github.io`; the product name,
+metadata, and public routes are Kernary.
 
 ## Pages
 
@@ -51,9 +49,9 @@ external domain and GitHub Pages migration is complete.
 |---|---|
 | `/` | Kernary product introduction |
 | `/docs` | Current documentation rendered from owning repositories |
-| `/marketplace` | Typed package discovery; compatibility Corpus inventory today |
-| `/browse` | Inspect Units in compatibility snapshots |
-| `/about` | Product boundary and name migration |
+| `/marketplace` | Browse external Model, Corpus, Adapter, and Domain Packages |
+| `/browse` | Inspect Units in published Corpus snapshots |
+| `/about` | Understand Kernary and choose a starting point |
 
 ## Contributing
 

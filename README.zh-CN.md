@@ -4,7 +4,7 @@ Kernary 的静态文档与 Package 发现站。Kernary 是模型驱动的本体�
 
 ## 本地开发
 
-当前兼容布局要求 Kernary Engine 与 Frontend Design Domain Package 位于：
+当前布局要求 Kernary Engine 与 Frontend Design Domain Package 位于：
 
 ```text
 ../kernary-engine
@@ -28,9 +28,8 @@ Domain Reference 的手写副本。
 - Homepage、About、Package discovery、Blog 与导航由网站仓拥有。
 - Engine Guide、Concept 与 Reference 来自 `kernary-engine/docs/`。
 - Frontend Design 案例来自 `kernary-frontend-design/docs/overview.zh-CN.md`。
-- `data/packages.yaml` 只定位用于检查的兼容 Corpus Snapshot，不是 Registry
+- `data/packages.yaml` 只定位用于检查的公开 Corpus Package，不是 Registry
   Service，也不表示 Package 已发布。
-- 旧 Skill Wiki / Prime v1 Route 保留兼容提示和 `noindex`，不再出现在当前导航。
 
-外部域名与 GitHub Pages 迁移完成前，配置的站点地址仍是
-`https://skill-wiki.github.io`。
+当前站点部署在 `https://skill-wiki.github.io`；产品名称、Metadata 和公开 Route
+均使用 Kernary。
