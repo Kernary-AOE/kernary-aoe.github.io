@@ -10,7 +10,6 @@ const previews = HOME_PREVIEW[Astro.props.lang];
 
 <section class="aoe-hero">
   <div class="hero-noise" aria-hidden="true"></div>
-  <div class="hero-banner"><span class="announcement-dot"></span><span>{copy.announcement}</span><a href={prefix('/blog')}>{isZh ? '查看更新' : 'Read the update'} ↗</a></div>
   <div class="hero-inner aoe-hero-inner">
     <div class="hero-copy" data-reveal>
       <p class="hero-eyebrow"><span class="hero-kicker">{copy.eyebrow}</span></p>
@@ -20,7 +19,6 @@ const previews = HOME_PREVIEW[Astro.props.lang];
         <a class="btn btn-primary btn-large" href={prefix('/docs')}>{copy.primary} <span>↗</span></a>
         <a class="btn btn-dark-ghost btn-large" href={prefix('/marketplace')}>{copy.secondary}</a>
       </div>
-      <div class="hero-trail"><span>External Model</span><i>·</i><span>Verified Snapshot</span><i>·</i><span>Governed Action</span></div>
     </div>
 
     <div class="package-preview" data-reveal aria-label={isZh ? 'AOE Package 预览' : 'AOE package preview'}>

@@ -115,6 +115,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
   </head>
   <body class:list={{ 'aoe-home-body': current === 'home' }}>
     <a class="skip" href="#main">Skip to content</a>
+    {current === 'home' && <div class="home-announcement"><span>{isZh ? 'AOE 0.2 · Agent Ontology Engine' : 'AOE 0.2 · Agent Ontology Engine'}</span><a href={prefix('/blog')}>{isZh ? '查看更新 ↗' : 'Read the update ↗'}</a></div>}
     <header class="gh-header">
       <div class="gh-header-inner">
         <a class="gh-brand" href={homeHref} aria-label="AOE home">
