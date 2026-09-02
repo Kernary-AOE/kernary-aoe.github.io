@@ -1,59 +1,50 @@
 ---
+interface StageDetail {
+  id: string;
+  label: string;
+  title: string;
+  body: string;
+  facts: readonly [string, string][];
+  tokens: readonly [string, string][];
+}
+
 interface Props { lang?: 'en' | 'zh' }
 const { lang = 'en' } = Astro.props;
 const isZh = lang === 'zh';
-
-const steps = isZh
+const details: readonly StageDetail[] = isZh
   ? [
-      ['model', 'Model Package', '类型、关系、投影、检索与 Action 的声明。', 'Vocabulary'],
-      ['compile', 'Compile', '解析、校验、生成并绑定内容摘要。', 'Build'],
-      ['snapshot', 'Verified Snapshot', '可定位、可复现、可验证的运行时输入。', 'State'],
-      ['serve', 'Query & Action', '按同一契约查询、规划并执行受控操作。', 'Interface'],
+      { id: 'model', label: 'Model Package', title: '词汇由领域 Owner 定义。', body: 'Type、Relation、Projection、Retrieval 和 Action 都来自外部 Model Package。Engine 只读取声明，不预设领域对象。', facts: [['输入', 'types.yaml + relations.yaml'], ['产出', 'SchemaIR + model.lock'], ['变更', '领域包发布新版本']], tokens: [['Type', 'Ticket'], ['Relation', 'blocks'], ['Action', 'resolve']] },
+      { id: 'compile', label: 'Compiler', title: '声明变成可复现的构建。', body: 'Parser、IR 和 Compiler 把模型与 Source Unit 组合起来，生成投影、索引、manifest 和内容摘要。', facts: [['检查', 'schema · relation · licence'], ['产出', 'Unit artifacts + _index.xml'], ['保证', '同一输入得到同一字节']], tokens: [['IR', '2.0'], ['Digest', 'sha256'], ['Index', 'deterministic']] },
+      { id: 'snapshot', label: 'Verified Snapshot', title: 'Runtime 只接受完整快照。', body: 'Snapshot identity 绑定 Model、Corpus、Release 和 Digest。文件、索引或签名不匹配时，Runtime 在服务前拒绝加载。', facts: [['身份', 'tenant · corpus · release'], ['验证', 'manifest + content digest'], ['状态', 'immutable / addressable']], tokens: [['Model', 'locked'], ['Corpus', 'verified'], ['Release', 'active']] },
+      { id: 'serve', label: 'Query & Action', title: '读取和写入走不同路径。', body: 'Query 生成带约束的 Selection Plan；Action 还要通过 Principal、Capability、Policy、Approval、Idempotency 和 Evidence。', facts: [['读取', 'SDK · MCP · HTTP'], ['规划', 'constraints + budget'], ['执行', 'policy-gated effects']], tokens: [['Plan', 'explainable'], ['Policy', 'deny-by-default'], ['Event', 'append-only']] },
     ]
   : [
-      ['model', 'Model Package', 'Types, relations, projections, retrieval, and actions.', 'Vocabulary'],
-      ['compile', 'Compile', 'Parse, validate, emit, and bind content digests.', 'Build'],
-      ['snapshot', 'Verified Snapshot', 'A reproducible, addressable runtime input.', 'State'],
-      ['serve', 'Query & Action', 'Query, plan, and execute through one contract.', 'Interface'],
+      { id: 'model', label: 'Model Package', title: 'The domain owner defines the vocabulary.', body: 'Types, relations, projections, retrieval, and actions arrive from an external Model Package. The Engine reads declarations; it does not guess domain objects.', facts: [['Input', 'types.yaml + relations.yaml'], ['Output', 'SchemaIR + model.lock'], ['Change', 'publish a new domain version']], tokens: [['Type', 'Ticket'], ['Relation', 'blocks'], ['Action', 'resolve']] },
+      { id: 'compile', label: 'Compiler', title: 'Declarations become a reproducible build.', body: 'Parser, IR, and Compiler combine the model with source units to emit projections, an index, a manifest, and content digests.', facts: [['Checks', 'schema · relation · licence'], ['Output', 'Unit artifacts + _index.xml'], ['Guarantee', 'same input, same bytes']], tokens: [['IR', '2.0'], ['Digest', 'sha256'], ['Index', 'deterministic']] },
+      { id: 'snapshot', label: 'Verified Snapshot', title: 'Runtime accepts complete snapshots only.', body: 'Snapshot identity binds Model, Corpus, Release, and Digest. A changed file, index, or signature is refused before serving.', facts: [['Identity', 'tenant · corpus · release'], ['Checks', 'manifest + content digest'], ['State', 'immutable / addressable']], tokens: [['Model', 'locked'], ['Corpus', 'verified'], ['Release', 'active']] },
+      { id: 'serve', label: 'Query & Action', title: 'Reads and writes take different paths.', body: 'Query produces a constrained Selection Plan. Action additionally requires a Principal, Capability, Policy, Approval, Idempotency, and Evidence.', facts: [['Read', 'SDK · MCP · HTTP'], ['Plan', 'constraints + budget'], ['Execute', 'policy-gated effects']], tokens: [['Plan', 'explainable'], ['Policy', 'deny-by-default'], ['Event', 'append-only']] },
     ];
 ---
 
 <section class="architecture section" aria-labelledby="architecture-title">
   <div class="section-inner">
     <div class="architecture-head">
-      <div>
-        <p class="section-eyebrow">{isZh ? '运行时结构' : 'Runtime shape'}</p>
-        <h2 id="architecture-title" class="architecture-title">
-          {isZh ? '一个 Runtime，四个边界。' : 'One runtime. Four boundaries.'}
-        </h2>
-        <p class="section-lede">
-          {isZh ? '选择一个边界，观察它在整套系统中的位置。' : 'Select a boundary and see where it sits in the system.'}
-        </p>
-      </div>
+      <div><p class="section-eyebrow">{isZh ? '运行时结构' : 'Runtime shape'}</p><h2 id="architecture-title" class="architecture-title">{isZh ? '一个 Runtime，四个边界。' : 'One runtime. Four boundaries.'}</h2></div>
       <div class="architecture-badge"><span class="pulse-dot"></span> {isZh ? '可验证状态' : 'Verified state'}</div>
     </div>
+    <p class="architecture-intro">{isZh ? '选择一个边界，查看它实际拥有的输入、产出与保证。' : 'Select a boundary to inspect the inputs, outputs, and guarantees it owns.'}</p>
 
     <div class="architecture-grid">
-      <div class="architecture-steps" role="tablist" aria-label={isZh ? '运行时边界' : 'Runtime boundaries'}>
-        {steps.map(([id, title, text, label], index) => (
-          <button class:list={{ 'architecture-step': true, active: index === 0 }} type="button" role="tab" aria-selected={index === 0 ? 'true' : 'false'} data-stage={id}>
-            <span class="step-index">0{index + 1}</span>
-            <span><strong>{title}</strong><small>{text}</small></span>
-            <span class="step-label">{label}</span>
-          </button>
-        ))}
-        <div class="architecture-note" id="architecture-note" aria-live="polite">{steps[0][2]}</div>
-      </div>
+      <nav class="architecture-steps" aria-label={isZh ? '运行时边界' : 'Runtime boundaries'}>
+        {details.map((detail, index) => <button class:list={{ 'architecture-step': true, active: index === 0 }} type="button" aria-selected={index === 0 ? 'true' : 'false'} data-stage={detail.id}><span class="step-index">0{index + 1}</span><span><strong>{detail.label}</strong><small>{detail.facts[0][1]}</small></span><span class="step-arrow">↗</span></button>)}
+      </nav>
 
-      <div class="runtime-layers" aria-label={isZh ? 'AOE 分层运行时' : 'AOE layered runtime'}>
-        <div class="runtime-layers-head"><span>aoe / runtime</span><span>{isZh ? '结构视图' : 'Layer view'}</span></div>
-        <div class="runtime-stack">
-          <div class="runtime-layer layer-interface" data-layer="serve"><span class="layer-index">04</span><span><b>Query · Action</b><small>{isZh ? 'SDK · MCP · HTTP' : 'SDK · MCP · HTTP'}</small></span><em></em></div>
-          <div class="runtime-layer layer-state" data-layer="snapshot"><span class="layer-index">03</span><span><b>Verified Snapshot</b><small>{isZh ? 'identity · digest · release' : 'identity · digest · release'}</small></span><em></em></div>
-          <div class="runtime-layer layer-build" data-layer="compile"><span class="layer-index">02</span><span><b>Compiler + Checks</b><small>{isZh ? 'IR · projections · index' : 'IR · projections · index'}</small></span><em></em></div>
-          <div class="runtime-layer layer-vocabulary active" data-layer="model"><span class="layer-index">01</span><span><b>Model + Corpus</b><small>{isZh ? 'external package data' : 'external package data'}</small></span><em></em></div>
-        </div>
-        <div class="runtime-foot"><span class="runtime-dot"></span>{isZh ? '领域语义来自外部 Package' : 'Domain semantics arrive from external packages'}</div>
+      <div class="architecture-detail" aria-live="polite">
+        {details.map((detail, index) => <article class:list={{ 'detail-panel': true, active: index === 0 }} data-detail={detail.id}>
+          <div class="detail-top"><span>{detail.label}</span><span class="detail-index">0{index + 1} / 04</span></div>
+          <h3>{detail.title}</h3><p class="detail-body">{detail.body}</p>
+          <div class="detail-columns"><dl>{detail.facts.map(([key, value]) => <div><dt>{key}</dt><dd>{value}</dd></div>)}</dl><div class="detail-tokens" aria-label={isZh ? '阶段内容' : 'Stage contents'}>{detail.tokens.map(([key, value]) => <div class="detail-token"><span>{key}</span><b>{value}</b></div>)}</div></div>
+        </article>)}
       </div>
     </div>
   </div>
@@ -62,58 +53,24 @@ const steps = isZh
 <script>
   const root = document.querySelector('.architecture');
   if (root) {
-    const note = root.querySelector('#architecture-note');
     const steps = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-stage]'));
-    const layers = Array.from(root.querySelectorAll<HTMLElement>('[data-layer]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-detail]'));
     steps.forEach((step) => step.addEventListener('click', () => {
-      steps.forEach((item) => {
-        const active = item === step;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-selected', String(active));
-      });
-      const text = step.querySelector('small')?.textContent;
-      if (note && text) note.textContent = text;
-      layers.forEach((layer) => layer.classList.toggle('active', layer.dataset.layer === step.dataset.stage));
+      const selected = step.dataset.stage;
+      steps.forEach((item) => { const active = item === step; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); });
+      panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.detail === selected));
     }));
   }
 </script>
 
 <style>
-  .architecture { --arch-paper: #f5f2ed; --arch-surface: rgba(255,255,255,.38); --arch-fg: #11131b; --arch-muted: #77736e; --arch-line: rgba(17,19,27,.16); --arch-cyan: #11a4ba; --arch-violet: #7569f6; background: var(--arch-paper); border-top: 1px solid var(--arch-line); }
-  :global(:root[data-theme="dark"]) .architecture { --arch-paper: #0d1017; --arch-surface: #151923; --arch-fg: #f0f1f4; --arch-muted: #a0a5b1; --arch-line: rgba(255,255,255,.16); --arch-cyan: #65d9e8; --arch-violet: #9b93ff; }
-  .architecture-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
-  .architecture-title { margin: 0 0 16px; color: var(--arch-fg); font: 400 clamp(38px, 5vw, 68px)/.98 Georgia, 'Times New Roman', serif; letter-spacing: -.05em; }
-  .architecture .section-lede { color: var(--arch-muted); }
-  .architecture-badge { flex: none; border: 1px solid var(--arch-line); border-radius: 999px; padding: 8px 12px; color: var(--arch-muted); font: 12px var(--font-mono); }
-  .pulse-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #57c879; box-shadow: 0 0 0 4px rgba(87,200,121,.15); animation: aoe-pulse 2s ease-in-out infinite; }
-  .architecture-grid { display: grid; grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr); gap: 24px; align-items: stretch; margin-top: 42px; }
-  .architecture-steps { display: flex; flex-direction: column; gap: 8px; }
-  .architecture-step { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; border: 1px solid var(--arch-line); border-radius: 4px; padding: 16px; color: var(--arch-fg); background: var(--arch-surface); text-align: left; cursor: pointer; transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; }
-  .architecture-step:hover, .architecture-step.active { border-color: var(--arch-cyan); background: color-mix(in srgb, var(--arch-cyan) 9%, var(--arch-surface)); transform: translateX(3px); }
-  .architecture-step strong { display: block; font-size: 14px; }
-  .architecture-step small { display: block; margin-top: 4px; color: var(--arch-muted); font-size: 12px; line-height: 1.45; }
-  .step-index { color: var(--arch-cyan); font: 12px var(--font-mono); }
-  .step-label { color: var(--arch-muted); font: 10px var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
-  .architecture-note { min-height: 44px; padding: 13px 16px; color: var(--arch-muted); font-size: 13px; line-height: 1.55; border-left: 2px solid var(--arch-cyan); }
-  .runtime-layers { display: flex; flex-direction: column; min-height: 360px; border: 1px solid var(--arch-line); border-radius: 5px; background: var(--arch-surface); overflow: hidden; }
-  .runtime-layers-head { display: flex; justify-content: space-between; padding: 13px 17px; border-bottom: 1px solid var(--arch-line); color: var(--arch-muted); font: 11px var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
-  .runtime-stack { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 8px; padding: 28px clamp(18px, 4vw, 54px); }
-  .runtime-layer { display: grid; grid-template-columns: 34px minmax(0, 1fr) 26px; gap: 13px; align-items: center; min-height: 52px; padding: 11px 14px; border: 1px solid var(--arch-line); background: var(--arch-paper); color: var(--arch-fg); opacity: .68; transition: opacity 220ms ease, transform 220ms ease, box-shadow 220ms ease, background 220ms ease; }
-  .runtime-layer.active { opacity: 1; background: color-mix(in srgb, var(--arch-cyan) 7%, var(--arch-paper)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--arch-cyan) 22%, transparent); }
-  .runtime-layer:nth-child(1) { border-color: color-mix(in srgb, var(--arch-violet) 65%, var(--arch-line)); transform: translateX(26px); }
-  .runtime-layer:nth-child(2) { border-color: color-mix(in srgb, var(--arch-cyan) 58%, var(--arch-line)); transform: translateX(8px); }
-  .runtime-layer:nth-child(3) { border-color: color-mix(in srgb, #e8a77f 60%, var(--arch-line)); transform: translateX(-10px); }
-  .runtime-layer:nth-child(4) { border-color: color-mix(in srgb, #63bf9b 60%, var(--arch-line)); transform: translateX(-28px); }
-  .layer-index { color: var(--arch-muted); font: 11px var(--font-mono); }
-  .runtime-layer b { display: block; font: 14px var(--font-mono); }
-  .runtime-layer small { display: block; margin-top: 3px; color: var(--arch-muted); font-size: 11px; }
-  .runtime-layer em { width: 8px; height: 8px; border-radius: 50%; background: var(--arch-cyan); box-shadow: 0 0 0 5px color-mix(in srgb, var(--arch-cyan) 12%, transparent); }
-  .layer-interface em { background: var(--arch-violet); box-shadow: 0 0 0 5px color-mix(in srgb, var(--arch-violet) 14%, transparent); }
-  .layer-build em { background: #e8a77f; box-shadow: 0 0 0 5px color-mix(in srgb, #e8a77f 14%, transparent); }
-  .layer-vocabulary em { background: #63bf9b; box-shadow: 0 0 0 5px color-mix(in srgb, #63bf9b 14%, transparent); }
-  .runtime-foot { display: flex; align-items: center; gap: 8px; padding: 13px 17px; border-top: 1px solid var(--arch-line); color: var(--arch-muted); font: 11px var(--font-mono); }
-  .runtime-dot { width: 6px; height: 6px; border-radius: 50%; background: #57c879; }
-  @keyframes aoe-pulse { 0%,100% { opacity: .6; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.15); } }
-  @media (max-width: 760px) { .architecture-head { align-items: start; flex-direction: column; } .architecture-grid { grid-template-columns: 1fr; } .runtime-layers { min-height: 330px; } .runtime-layer:nth-child(1) { transform: translateX(12px); } .runtime-layer:nth-child(2) { transform: translateX(4px); } .runtime-layer:nth-child(3) { transform: translateX(-4px); } .runtime-layer:nth-child(4) { transform: translateX(-12px); } }
-  @media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; } .architecture-step, .runtime-layer { transition: none; } }
+  .architecture { --arch-paper: var(--home-paper, #f5f2ed); --arch-surface: var(--home-card, rgba(255,255,255,.35)); --arch-fg: var(--home-fg, #11131b); --arch-muted: var(--home-muted, #77736e); --arch-line: var(--home-line, rgba(17,19,27,.16)); --arch-cyan: #11a4ba; --arch-violet: #7569f6; background: var(--arch-paper); border-top: 1px solid var(--arch-line); }
+  :global(:root[data-theme="dark"]) .architecture { --arch-paper: var(--home-paper, #0d1017); --arch-surface: var(--home-card, #151923); --arch-fg: var(--home-fg, #f0f1f4); --arch-muted: var(--home-muted, #a0a5b1); --arch-line: var(--home-line, rgba(255,255,255,.16)); --arch-cyan: #65d9e8; --arch-violet: #9b93ff; }
+  .architecture-head { display:flex; justify-content:space-between; align-items:end; gap:24px; } .architecture-title { margin:0; color:var(--arch-fg); font:400 clamp(38px,5vw,68px)/.98 Georgia,'Times New Roman',serif; letter-spacing:-.05em; } .architecture .section-eyebrow { color:var(--arch-violet); } .architecture-badge { flex:none; border:1px solid var(--arch-line); border-radius:999px; padding:8px 12px; color:var(--arch-muted); font:12px var(--font-mono); } .pulse-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#57c879; box-shadow:0 0 0 4px rgba(87,200,121,.15); animation:aoe-pulse 2s ease-in-out infinite; }
+  .architecture-intro { margin:20px 0 0; color:var(--arch-muted); font-size:17px; line-height:1.55; }
+  .architecture-grid { display:grid; grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr); gap:36px; align-items:start; margin-top:42px; } .architecture-steps { display:flex; flex-direction:column; gap:8px; } .architecture-step { display:grid; grid-template-columns:32px minmax(0,1fr) 18px; gap:12px; align-items:center; width:100%; padding:17px 16px; border:1px solid var(--arch-line); border-radius:4px; color:var(--arch-fg); background:transparent; text-align:left; cursor:pointer; transition:border-color 180ms ease,background 180ms ease,transform 180ms ease; } .architecture-step:hover,.architecture-step.active { border-color:var(--arch-cyan); background:color-mix(in srgb,var(--arch-cyan) 8%,var(--arch-paper)); transform:translateX(3px); } .architecture-step strong { display:block; font-size:14px; } .architecture-step small { display:block; margin-top:4px; color:var(--arch-muted); font-size:11px; line-height:1.45; } .step-index { color:var(--arch-cyan); font:12px var(--font-mono); } .step-arrow { color:var(--arch-muted); transition:transform 180ms ease,color 180ms ease; } .architecture-step.active .step-arrow { color:var(--arch-cyan); transform:translate(2px,-2px); }
+  .architecture-detail { min-height:370px; border:1px solid var(--arch-line); border-radius:4px; background:var(--arch-surface); overflow:hidden; } .detail-panel { display:none; padding:26px 30px 30px; animation:detail-enter 240ms ease both; } .detail-panel.active { display:block; } .detail-top { display:flex; justify-content:space-between; color:var(--arch-muted); font:11px var(--font-mono); letter-spacing:.07em; text-transform:uppercase; } .detail-index { color:var(--arch-cyan); } .detail-panel h3 { max-width:620px; margin:62px 0 17px; color:var(--arch-fg); font:400 clamp(30px,3.5vw,48px)/1 Georgia,serif; letter-spacing:-.045em; } .detail-body { max-width:620px; margin:0; color:var(--arch-muted); font-size:16px; line-height:1.6; } .detail-columns { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:46px; padding-top:20px; border-top:1px solid var(--arch-line); } .detail-columns dl { margin:0; } .detail-columns dl > div { display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid var(--arch-line); font:11px var(--font-mono); } .detail-columns dt { color:var(--arch-muted); } .detail-columns dd { margin:0; color:var(--arch-fg); text-align:right; } .detail-tokens { display:flex; flex-wrap:wrap; align-content:start; gap:7px; } .detail-token { display:flex; flex-direction:column; min-width:105px; padding:10px 11px; border:1px solid var(--arch-line); border-radius:3px; background:color-mix(in srgb,var(--arch-paper) 70%,transparent); } .detail-token span { color:var(--arch-muted); font:10px var(--font-mono); text-transform:uppercase; } .detail-token b { margin-top:5px; color:var(--arch-fg); font:12px var(--font-mono); font-weight:500; }
+  @keyframes detail-enter { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } } @keyframes aoe-pulse { 0%,100% { opacity:.6; transform:scale(.9); } 50% { opacity:1; transform:scale(1.15); } }
+  @media (max-width:760px) { .architecture-head { align-items:start; flex-direction:column; } .architecture-grid { grid-template-columns:1fr; gap:20px; } .architecture-detail { min-height:0; } .detail-panel { padding:22px 18px 20px; } .detail-panel h3 { margin-top:42px; font-size:32px; } .detail-columns { grid-template-columns:1fr; margin-top:34px; } }
+  @media (prefers-reduced-motion:reduce) { .pulse-dot,.detail-panel { animation:none; } .architecture-step,.step-arrow { transition:none; } }
 </style>

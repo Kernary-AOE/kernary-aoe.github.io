@@ -1,16 +1,18 @@
 ---
 import type { HomeCopy } from '../../data/home-copy';
+import { HOME_PREVIEW } from '../../data/home-preview';
 
 interface Props { copy: HomeCopy; lang: 'en' | 'zh'; version: string; prefix: (path: string) => string }
 const { copy, prefix, version } = Astro.props;
 const isZh = Astro.props.lang === 'zh';
+const previews = HOME_PREVIEW[Astro.props.lang];
 ---
 
 <section class="aoe-hero">
   <div class="hero-noise" aria-hidden="true"></div>
+  <div class="hero-banner"><span class="announcement-dot"></span><span>{copy.announcement}</span><a href={prefix('/blog')}>{isZh ? '查看更新' : 'Read the update'} ↗</a></div>
   <div class="hero-inner aoe-hero-inner">
     <div class="hero-copy" data-reveal>
-      <a class="announcement" href={prefix('/blog')}><span class="announcement-dot"></span>{copy.announcement}<span>↗</span></a>
       <p class="hero-eyebrow"><span class="hero-kicker">{copy.eyebrow}</span></p>
       <h1>{copy.title}</h1>
       <p class="lede">{copy.lede}</p>
@@ -21,18 +23,34 @@ const isZh = Astro.props.lang === 'zh';
       <div class="hero-trail"><span>External Model</span><i>·</i><span>Verified Snapshot</span><i>·</i><span>Governed Action</span></div>
     </div>
 
-    <div class="hero-console" data-reveal aria-label={isZh ? 'AOE Runtime 状态' : 'AOE runtime status'}>
-      <div class="console-head"><span class="console-brand"><i></i> aoe / runtime</span><span>v{version}</span></div>
-      <div class="console-body">
-        <div class="console-status"><span class="status-light"></span><span>{copy.signal}</span><span class="status-time">00:02.84</span></div>
-        <div class="console-orbit" aria-hidden="true">
-          <span class="orbit-ring ring-a"></span><span class="orbit-ring ring-b"></span><span class="orbit-ring ring-c"></span>
-          <span class="orbit-node orbit-model">MODEL</span><span class="orbit-node orbit-corpus">CORPUS</span><span class="orbit-node orbit-snapshot">SNAPSHOT</span><span class="orbit-node orbit-agent">AGENT</span>
-          <span class="orbit-core"><img src="/aoe-mark.svg" alt="" width="28" height="28" /></span>
-        </div>
-        <div class="console-foot"><span>{copy.signalFoot}</span><span class="console-check">✓ verified</span></div>
+    <div class="package-preview" data-reveal aria-label={isZh ? 'AOE Package 预览' : 'AOE package preview'}>
+      <div class="preview-head"><span class="preview-brand"><i></i> aoe / package</span><span>v{version}</span></div>
+      <div class="preview-tabs" role="tablist" aria-label={isZh ? 'Package 类型' : 'Package types'}>
+        {previews.map((view, index) => <button class:list={{ active: index === 0 }} type="button" role="tab" aria-selected={index === 0 ? 'true' : 'false'} data-preview-tab={view.id}>{view.label}</button>)}
       </div>
+      <div class="preview-content">
+        {previews.map((view, index) => (
+          <div class:list={{ 'preview-panel': true, active: index === 0 }} data-preview-panel={view.id}>
+            <div class="preview-kicker"><span>{view.kicker}</span><span class="preview-status">✓ {view.status}</span></div>
+            <div class="preview-rows">{view.rows.map(([label, value]) => <div class="preview-row"><span>{label}</span><b>{value}</b></div>)}</div>
+          </div>
+        ))}
+      </div>
+      <div class="preview-foot"><span>{copy.signalFoot}</span><span class="preview-caret">_</span></div>
     </div>
   </div>
   <div class="hero-edge"><span>AOE / 0.2</span><span>{isZh ? '面向领域本体的基础设施' : 'Infrastructure for domain ontologies'}</span><span>↓</span></div>
 </section>
+
+<script>
+  const preview = document.querySelector('.package-preview');
+  if (preview) {
+    const tabs = Array.from(preview.querySelectorAll<HTMLButtonElement>('[data-preview-tab]'));
+    const panels = Array.from(preview.querySelectorAll<HTMLElement>('[data-preview-panel]'));
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+      const selected = tab.dataset.previewTab;
+      tabs.forEach((item) => { const active = item === tab; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); });
+      panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.previewPanel === selected));
+    }));
+  }
+</script>
