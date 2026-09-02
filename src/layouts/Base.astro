@@ -113,7 +113,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   </head>
-  <body>
+  <body class:list={{ 'aoe-home-body': current === 'home' }}>
     <a class="skip" href="#main">Skip to content</a>
     <header class="gh-header">
       <div class="gh-header-inner">
@@ -140,7 +140,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
       </div>
     </header>
 
-    <main id="main"><slot /></main>
+    <main id="main" class:list={{ 'aoe-home-main': current === 'home' }}><slot /></main>
 
     <footer class="gh-footer">
       <div class="gh-footer-inner">
@@ -191,7 +191,7 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
       const labels = document.documentElement.lang.startsWith('zh')
         ? { copy: '复制', copied: '已复制' }
         : { copy: 'Copy', copied: 'Copied' };
-      document.querySelectorAll<HTMLPreElement>('pre:not(.mermaid):not([data-mermaid-src])').forEach((pre) => {
+      document.querySelectorAll<HTMLPreElement>('pre:not(.mermaid):not(.no-copy):not([data-mermaid-src])').forEach((pre) => {
         if (pre.querySelector(':scope > .copy-btn') || pre.closest('.mermaid-wrapper')) return;
         const button = document.createElement('button');
         button.type = 'button';
