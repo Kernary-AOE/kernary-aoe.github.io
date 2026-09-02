@@ -1,36 +1,20 @@
 ---
-import Mermaid from './Mermaid.astro';
-
 interface Props { lang?: 'en' | 'zh' }
 const { lang = 'en' } = Astro.props;
 const isZh = lang === 'zh';
-const graph = `flowchart LR
-  M[Model Package] --> C[Compiler]
-  U[Corpus Package] --> C
-  C --> S[Verified Snapshot]
-  S --> Q[Query / Selection Plan]
-  S --> A[Action / Execution Plan]
-  Q --> H[SDK · MCP · HTTP]
-  A --> H
-  classDef input fill:#17202a,stroke:#2bb3cc,color:#e8eaed
-  classDef core fill:#17202a,stroke:#6f7bf7,color:#e8eaed
-  classDef output fill:#17202a,stroke:#52d273,color:#e8eaed
-  class M,U input
-  class C,S core
-  class Q,A,H output`;
 
 const steps = isZh
   ? [
-      ['model', 'Model Package', '类型、关系、投影、检索与 Action 的声明。'],
-      ['compile', 'Compile', '解析、校验、生成并绑定内容摘要。'],
-      ['snapshot', 'Verified Snapshot', '可定位、可复现、可验证的运行时输入。'],
-      ['serve', 'Query & Action', '按同一契约查询、规划并执行受控操作。'],
+      ['model', 'Model Package', '类型、关系、投影、检索与 Action 的声明。', 'Vocabulary'],
+      ['compile', 'Compile', '解析、校验、生成并绑定内容摘要。', 'Build'],
+      ['snapshot', 'Verified Snapshot', '可定位、可复现、可验证的运行时输入。', 'State'],
+      ['serve', 'Query & Action', '按同一契约查询、规划并执行受控操作。', 'Interface'],
     ]
   : [
-      ['model', 'Model Package', 'Types, relations, projections, retrieval, and actions.'],
-      ['compile', 'Compile', 'Parse, validate, emit, and bind content digests.'],
-      ['snapshot', 'Verified Snapshot', 'A reproducible, addressable runtime input.'],
-      ['serve', 'Query & Action', 'Query, plan, and execute through one contract.'],
+      ['model', 'Model Package', 'Types, relations, projections, retrieval, and actions.', 'Vocabulary'],
+      ['compile', 'Compile', 'Parse, validate, emit, and bind content digests.', 'Build'],
+      ['snapshot', 'Verified Snapshot', 'A reproducible, addressable runtime input.', 'State'],
+      ['serve', 'Query & Action', 'Query, plan, and execute through one contract.', 'Interface'],
     ];
 ---
 
@@ -39,32 +23,37 @@ const steps = isZh
     <div class="architecture-head">
       <div>
         <p class="section-eyebrow">{isZh ? '运行时结构' : 'Runtime shape'}</p>
-        <h2 id="architecture-title" class="section-title" style="border: 0; padding: 0; margin-top: 0;">
-          {isZh ? '从领域声明到可调用 Runtime' : 'From domain declarations to a callable runtime'}
+        <h2 id="architecture-title" class="architecture-title">
+          {isZh ? '一个 Runtime，四个边界。' : 'One runtime. Four boundaries.'}
         </h2>
         <p class="section-lede">
-          {isZh ? '点击阶段，查看每一步在 AOE 中承担的边界。' : 'Select a stage to see the boundary it owns in AOE.'}
+          {isZh ? '选择一个边界，观察它在整套系统中的位置。' : 'Select a boundary and see where it sits in the system.'}
         </p>
       </div>
-      <div class="architecture-badge"><span class="pulse-dot"></span> {isZh ? '可验证数据流' : 'Verified data flow'}</div>
+      <div class="architecture-badge"><span class="pulse-dot"></span> {isZh ? '可验证状态' : 'Verified state'}</div>
     </div>
 
     <div class="architecture-grid">
-      <div class="architecture-steps" role="tablist" aria-label={isZh ? '运行时阶段' : 'Runtime stages'}>
-        {steps.map(([id, title, text], index) => (
+      <div class="architecture-steps" role="tablist" aria-label={isZh ? '运行时边界' : 'Runtime boundaries'}>
+        {steps.map(([id, title, text, label], index) => (
           <button class:list={{ 'architecture-step': true, active: index === 0 }} type="button" role="tab" aria-selected={index === 0 ? 'true' : 'false'} data-stage={id}>
             <span class="step-index">0{index + 1}</span>
             <span><strong>{title}</strong><small>{text}</small></span>
-            <span class="step-arrow">↗</span>
+            <span class="step-label">{label}</span>
           </button>
         ))}
-        <div class="architecture-note" id="architecture-note" aria-live="polite">
-          {steps[0][2]}
-        </div>
+        <div class="architecture-note" id="architecture-note" aria-live="polite">{steps[0][2]}</div>
       </div>
-      <div class="architecture-diagram">
-        <div class="diagram-toolbar"><span>aoe / runtime</span><span>{isZh ? '拖动页面继续探索' : 'Scroll to explore'}</span></div>
-        <Mermaid>{graph}</Mermaid>
+
+      <div class="runtime-layers" aria-label={isZh ? 'AOE 分层运行时' : 'AOE layered runtime'}>
+        <div class="runtime-layers-head"><span>aoe / runtime</span><span>{isZh ? '结构视图' : 'Layer view'}</span></div>
+        <div class="runtime-stack">
+          <div class="runtime-layer layer-interface"><span class="layer-index">04</span><span><b>Query · Action</b><small>{isZh ? 'SDK · MCP · HTTP' : 'SDK · MCP · HTTP'}</small></span><em></em></div>
+          <div class="runtime-layer layer-state"><span class="layer-index">03</span><span><b>Verified Snapshot</b><small>{isZh ? 'identity · digest · release' : 'identity · digest · release'}</small></span><em></em></div>
+          <div class="runtime-layer layer-build"><span class="layer-index">02</span><span><b>Compiler + Checks</b><small>{isZh ? 'IR · projections · index' : 'IR · projections · index'}</small></span><em></em></div>
+          <div class="runtime-layer layer-vocabulary"><span class="layer-index">01</span><span><b>Model + Corpus</b><small>{isZh ? 'external package data' : 'external package data'}</small></span><em></em></div>
+        </div>
+        <div class="runtime-foot"><span class="runtime-dot"></span>{isZh ? '领域语义来自外部 Package' : 'Domain semantics arrive from external packages'}</div>
       </div>
     </div>
   </div>
@@ -88,24 +77,40 @@ const steps = isZh
 </script>
 
 <style>
-  .architecture { border-top: 1px solid var(--border-muted); }
+  .architecture { --arch-paper: #f5f2ed; --arch-surface: rgba(255,255,255,.38); --arch-fg: #11131b; --arch-muted: #77736e; --arch-line: rgba(17,19,27,.16); --arch-cyan: #11a4ba; --arch-violet: #7569f6; background: var(--arch-paper); border-top: 1px solid var(--arch-line); }
+  :global(:root[data-theme="dark"]) .architecture { --arch-paper: #0d1017; --arch-surface: #151923; --arch-fg: #f0f1f4; --arch-muted: #a0a5b1; --arch-line: rgba(255,255,255,.16); --arch-cyan: #65d9e8; --arch-violet: #9b93ff; }
   .architecture-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
-  .architecture-badge { flex: none; border: 1px solid var(--border-default); border-radius: 999px; padding: 8px 12px; color: var(--fg-muted); font: 12px var(--font-mono); }
-  .pulse-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--success-fg); box-shadow: 0 0 0 4px color-mix(in srgb, var(--success-fg) 18%, transparent); animation: aoe-pulse 2s ease-in-out infinite; }
-  .architecture-grid { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr); gap: 24px; align-items: stretch; margin-top: 28px; }
+  .architecture-title { margin: 0 0 16px; color: var(--arch-fg); font: 400 clamp(38px, 5vw, 68px)/.98 Georgia, 'Times New Roman', serif; letter-spacing: -.05em; }
+  .architecture .section-lede { color: var(--arch-muted); }
+  .architecture-badge { flex: none; border: 1px solid var(--arch-line); border-radius: 999px; padding: 8px 12px; color: var(--arch-muted); font: 12px var(--font-mono); }
+  .pulse-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #57c879; box-shadow: 0 0 0 4px rgba(87,200,121,.15); animation: aoe-pulse 2s ease-in-out infinite; }
+  .architecture-grid { display: grid; grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr); gap: 24px; align-items: stretch; margin-top: 42px; }
   .architecture-steps { display: flex; flex-direction: column; gap: 8px; }
-  .architecture-step { display: grid; grid-template-columns: 34px 1fr 20px; gap: 12px; align-items: center; width: 100%; border: 1px solid var(--border-default); border-radius: var(--r-2); padding: 14px 16px; color: var(--fg-default); background: var(--bg-canvas); text-align: left; cursor: pointer; transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; }
-  .architecture-step:hover, .architecture-step.active { border-color: var(--accent-emphasis); background: var(--accent-subtle); transform: translateX(3px); }
+  .architecture-step { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; border: 1px solid var(--arch-line); border-radius: 4px; padding: 16px; color: var(--arch-fg); background: var(--arch-surface); text-align: left; cursor: pointer; transition: border-color 180ms ease, transform 180ms ease, background 180ms ease; }
+  .architecture-step:hover, .architecture-step.active { border-color: var(--arch-cyan); background: color-mix(in srgb, var(--arch-cyan) 9%, var(--arch-surface)); transform: translateX(3px); }
   .architecture-step strong { display: block; font-size: 14px; }
-  .architecture-step small { display: block; margin-top: 3px; color: var(--fg-muted); font-size: 12px; line-height: 1.45; }
-  .step-index { color: var(--accent-fg); font: 12px var(--font-mono); }
-  .step-arrow { color: var(--accent-fg); text-align: right; opacity: .7; }
-  .architecture-note { min-height: 44px; padding: 12px 16px; color: var(--fg-muted); font-size: 13px; line-height: 1.55; border-left: 2px solid var(--accent-emphasis); }
-  .architecture-diagram { min-height: 330px; border: 1px solid var(--border-default); border-radius: var(--r-2); background: var(--bg-subtle); overflow: hidden; }
-  .diagram-toolbar { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border-muted); color: var(--fg-muted); font: 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
-  .architecture-diagram .mermaid-wrapper { display: grid; min-height: 275px; place-items: center; padding: 20px; }
-  .architecture-diagram :global(svg) { max-width: 100%; height: auto; }
-  @keyframes aoe-pulse { 0%, 100% { opacity: .55; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.15); } }
-  @media (max-width: 760px) { .architecture-head { align-items: start; flex-direction: column; } .architecture-grid { grid-template-columns: 1fr; } .architecture-diagram { min-height: 280px; } }
+  .architecture-step small { display: block; margin-top: 4px; color: var(--arch-muted); font-size: 12px; line-height: 1.45; }
+  .step-index { color: var(--arch-cyan); font: 12px var(--font-mono); }
+  .step-label { color: var(--arch-muted); font: 10px var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
+  .architecture-note { min-height: 44px; padding: 13px 16px; color: var(--arch-muted); font-size: 13px; line-height: 1.55; border-left: 2px solid var(--arch-cyan); }
+  .runtime-layers { display: flex; flex-direction: column; min-height: 360px; border: 1px solid var(--arch-line); border-radius: 5px; background: var(--arch-surface); overflow: hidden; }
+  .runtime-layers-head { display: flex; justify-content: space-between; padding: 13px 17px; border-bottom: 1px solid var(--arch-line); color: var(--arch-muted); font: 11px var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
+  .runtime-stack { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 8px; padding: 28px clamp(18px, 4vw, 54px); }
+  .runtime-layer { display: grid; grid-template-columns: 34px minmax(0, 1fr) 26px; gap: 13px; align-items: center; min-height: 52px; padding: 11px 14px; border: 1px solid var(--arch-line); background: var(--arch-paper); color: var(--arch-fg); }
+  .runtime-layer:nth-child(1) { border-color: color-mix(in srgb, var(--arch-violet) 65%, var(--arch-line)); transform: translateX(26px); }
+  .runtime-layer:nth-child(2) { border-color: color-mix(in srgb, var(--arch-cyan) 58%, var(--arch-line)); transform: translateX(8px); }
+  .runtime-layer:nth-child(3) { border-color: color-mix(in srgb, #e8a77f 60%, var(--arch-line)); transform: translateX(-10px); }
+  .runtime-layer:nth-child(4) { border-color: color-mix(in srgb, #63bf9b 60%, var(--arch-line)); transform: translateX(-28px); }
+  .layer-index { color: var(--arch-muted); font: 11px var(--font-mono); }
+  .runtime-layer b { display: block; font: 14px var(--font-mono); }
+  .runtime-layer small { display: block; margin-top: 3px; color: var(--arch-muted); font-size: 11px; }
+  .runtime-layer em { width: 8px; height: 8px; border-radius: 50%; background: var(--arch-cyan); box-shadow: 0 0 0 5px color-mix(in srgb, var(--arch-cyan) 12%, transparent); }
+  .layer-interface em { background: var(--arch-violet); box-shadow: 0 0 0 5px color-mix(in srgb, var(--arch-violet) 14%, transparent); }
+  .layer-build em { background: #e8a77f; box-shadow: 0 0 0 5px color-mix(in srgb, #e8a77f 14%, transparent); }
+  .layer-vocabulary em { background: #63bf9b; box-shadow: 0 0 0 5px color-mix(in srgb, #63bf9b 14%, transparent); }
+  .runtime-foot { display: flex; align-items: center; gap: 8px; padding: 13px 17px; border-top: 1px solid var(--arch-line); color: var(--arch-muted); font: 11px var(--font-mono); }
+  .runtime-dot { width: 6px; height: 6px; border-radius: 50%; background: #57c879; }
+  @keyframes aoe-pulse { 0%,100% { opacity: .6; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.15); } }
+  @media (max-width: 760px) { .architecture-head { align-items: start; flex-direction: column; } .architecture-grid { grid-template-columns: 1fr; } .runtime-layers { min-height: 330px; } .runtime-layer:nth-child(1) { transform: translateX(12px); } .runtime-layer:nth-child(2) { transform: translateX(4px); } .runtime-layer:nth-child(3) { transform: translateX(-4px); } .runtime-layer:nth-child(4) { transform: translateX(-12px); } }
   @media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; } .architecture-step { transition: none; } }
 </style>
