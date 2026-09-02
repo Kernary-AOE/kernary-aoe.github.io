@@ -1,0 +1,16 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy; prefix: (path: string) => string; github: string }
+const { copy, prefix, github } = Astro.props;
+---
+
+<section class="aoe-cta-section">
+  <div class="cta-glow" aria-hidden="true"></div>
+  <div class="cta-inner" data-reveal>
+    <p class="section-eyebrow">{copy.ctaKicker}</p>
+    <h2>{copy.ctaTitle}</h2>
+    <p>{copy.ctaText}</p>
+    <div class="cta-actions"><a class="btn btn-primary btn-large" href={prefix('/docs')}>{copy.ctaPrimary} <span>↗</span></a><a class="btn btn-dark-ghost btn-large" href={github} rel="noopener">{copy.ctaSecondary} <span>↗</span></a></div>
+  </div>
+</section>

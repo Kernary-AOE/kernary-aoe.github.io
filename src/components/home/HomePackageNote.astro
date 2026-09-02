@@ -1,0 +1,12 @@
+---
+interface Props { lang: 'en' | 'zh'; prefix: (path: string) => string }
+const { lang, prefix } = Astro.props;
+const isZh = lang === 'zh';
+---
+
+<section class="home-section package-section">
+  <div class="section-inner package-inner" data-reveal>
+    <div><p class="section-eyebrow">{isZh ? '外部 Package' : 'External packages'}</p><h2>{isZh ? '模型属于领域 Owner。' : 'The model belongs to its domain owner.'}</h2></div>
+    <div><p>{isZh ? 'AOE 不携带一套生产本体。Ticket、Recipe、Security 和 Frontend Design 都是可替换的外部 Package；它们只共享 Engine 契约。' : 'AOE does not ship a production ontology. Ticket, Recipe, Security, and Frontend Design are replaceable external packages; they share the Engine contract, not a built-in vocabulary.'}</p><a class="text-link" href={prefix('/marketplace')}>{isZh ? '浏览全部 Package' : 'Explore all packages'} <span>↗</span></a></div>
+  </div>
+</section>

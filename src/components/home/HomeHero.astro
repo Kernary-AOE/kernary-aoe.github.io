@@ -1,0 +1,38 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy; lang: 'en' | 'zh'; version: string; prefix: (path: string) => string }
+const { copy, prefix, version } = Astro.props;
+const isZh = Astro.props.lang === 'zh';
+---
+
+<section class="aoe-hero">
+  <div class="hero-noise" aria-hidden="true"></div>
+  <div class="hero-inner aoe-hero-inner">
+    <div class="hero-copy" data-reveal>
+      <a class="announcement" href={prefix('/blog')}><span class="announcement-dot"></span>{copy.announcement}<span>↗</span></a>
+      <p class="hero-eyebrow"><span class="hero-kicker">{copy.eyebrow}</span></p>
+      <h1>{copy.title}</h1>
+      <p class="lede">{copy.lede}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-large" href={prefix('/docs')}>{copy.primary} <span>↗</span></a>
+        <a class="btn btn-dark-ghost btn-large" href={prefix('/marketplace')}>{copy.secondary}</a>
+      </div>
+      <div class="hero-trail"><span>External Model</span><i>·</i><span>Verified Snapshot</span><i>·</i><span>Governed Action</span></div>
+    </div>
+
+    <div class="hero-console" data-reveal aria-label={isZh ? 'AOE Runtime 状态' : 'AOE runtime status'}>
+      <div class="console-head"><span class="console-brand"><i></i> aoe / runtime</span><span>v{version}</span></div>
+      <div class="console-body">
+        <div class="console-status"><span class="status-light"></span><span>{copy.signal}</span><span class="status-time">00:02.84</span></div>
+        <div class="console-orbit" aria-hidden="true">
+          <span class="orbit-ring ring-a"></span><span class="orbit-ring ring-b"></span><span class="orbit-ring ring-c"></span>
+          <span class="orbit-node orbit-model">MODEL</span><span class="orbit-node orbit-corpus">CORPUS</span><span class="orbit-node orbit-snapshot">SNAPSHOT</span><span class="orbit-node orbit-agent">AGENT</span>
+          <span class="orbit-core"><img src="/aoe-mark.svg" alt="" width="28" height="28" /></span>
+        </div>
+        <div class="console-foot"><span>{copy.signalFoot}</span><span class="console-check">✓ verified</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-edge"><span>AOE / 0.2</span><span>{isZh ? '面向领域本体的基础设施' : 'Infrastructure for domain ontologies'}</span><span>↓</span></div>
+</section>

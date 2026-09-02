@@ -1,0 +1,26 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy }
+const { copy } = Astro.props;
+---
+
+<section class="home-section intro-section">
+  <div class="section-inner">
+    <div class="section-lead" data-reveal>
+      <p class="section-eyebrow">{copy.introKicker}</p>
+      <h2>{copy.introTitle}</h2>
+      <p>{copy.introText}</p>
+    </div>
+    <div class="boundary-grid">
+      {copy.cards.map(([number, title, text, label], index) => (
+        <article class:list={{ 'boundary-card': true, 'boundary-card-featured': index === 1 }} data-reveal>
+          <div class="boundary-top"><span>{number}</span><span>{label}</span></div>
+          <div class="boundary-mark">{index === 0 ? '◇' : index === 1 ? '◌' : '↗'}</div>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
