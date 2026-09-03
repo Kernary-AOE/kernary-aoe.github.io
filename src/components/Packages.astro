@@ -1,17 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
-import { loadAll } from '../lib/corpus';
+import { loadAll, loadPackageInventory } from '../lib/corpus';
 
 interface Props { lang?: 'en' | 'zh' }
 const { lang = 'en' } = Astro.props;
 const isZh = lang === 'zh';
 const { corpora: packages } = loadAll();
-const ordered = [...packages].sort((a, b) => b.total - a.total);
 const fmt = new Intl.NumberFormat(isZh ? 'zh-CN' : 'en-US');
 const prefix = (path: string) => isZh ? `/zh${path}` : path;
 const totalUnits = packages.reduce((sum, p) => sum + p.total, 0);
 const totalTypes = new Set(packages.flatMap((p) => p.atoms.map((a) => a.kind))).size;
-const flagship = ordered[0];
+
+// The inventory declares its own order, and its first entry is the reference
+// release. Deriving the flagship from unit counts would promote whichever
+// package happens to be largest in a given build.
+const blurbs = new Map(loadPackageInventory().map((entry) => [entry.slug, entry.description]));
+const inventoryOrder = loadPackageInventory().map((entry) => entry.slug);
+const flagship = packages.find((entry) => entry.slug === inventoryOrder[0]);
+const ordered = packages
+  .filter((entry) => entry !== flagship)
+  .sort((a, b) => b.total - a.total);
+const describe = (entry: (typeof packages)[number]) =>
+  entry.domain?.description || blurbs.get(entry.slug) || (isZh ? `${fmt.format(entry.total)} 个编译 Unit。` : `${fmt.format(entry.total)} compiled Units.`);
 ---
 <Base
   title="Packages"
@@ -45,7 +55,7 @@ const flagship = ordered[0];
           <div class="flagship-copy">
             <p class="section-eyebrow">{isZh ? '参考 Package' : 'Reference package'}</p>
             <h2>{flagship.slug}</h2>
-            <p>{flagship.domain?.description || (isZh ? '完整的参考 Corpus：Model、Corpus、Adapter 与 MCP 工具。' : 'The complete reference corpus: Model, Corpus, adapters, and MCP tools.')}</p>
+            <p>{describe(flagship)}</p>
             <div class="flagship-meta">
               <span class="pill">{fmt.format(flagship.total)} {isZh ? 'unit' : 'units'}</span>
               <span class="pill">{new Set(flagship.atoms.map((a) => a.kind)).size} {isZh ? '种 type' : 'types'}</span>
@@ -80,7 +90,7 @@ const flagship = ordered[0];
                 <h3 class="pack-name">{entry.slug}</h3>
                 <span class="pack-pill">corpus</span>
               </div>
-              <p class="pack-desc">{entry.domain?.description || (isZh ? `${fmt.format(entry.total)} 个编译 Unit。` : `${fmt.format(entry.total)} compiled Units.`)}</p>
+              <p class="pack-desc">{describe(entry)}</p>
               <div class="pack-stats">
                 <span>{fmt.format(entry.total)} {isZh ? 'unit' : 'units'}</span>
                 <span>{typeCount} {isZh ? '种 type' : 'types'}</span>

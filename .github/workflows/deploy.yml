@@ -76,11 +76,46 @@ jobs:
       - name: Install
         run: bun install --frozen-lockfile
 
+      # Compiled corpora are build outputs, so the owning repositories keep
+      # them out of Git. Without this step the site still builds, but every
+      # package whose artifacts live in `aoe-engine` or `aoe-frontend-design`
+      # silently disappears from the registry, browse, and atom routes.
+      - name: Compile vendored corpora
+        run: |
+          set -euo pipefail
+          bun install --cwd external/aoe-engine --frozen-lockfile
+          bun run --cwd external/aoe-engine compile-examples
+          bun run --cwd external/aoe-frontend-design corpus:build
+
+      - name: Verify compiled corpora
+        run: |
+          set -euo pipefail
+          for index in \
+            external/aoe-frontend-design/corpus/dist/_index.xml \
+            external/aoe-engine/examples/hello-world/primes/compiled/_index.xml \
+            external/aoe-engine/examples/recipes/primes/compiled/_index.xml \
+            external/aoe-engine/examples/coding-style/primes/compiled/_index.xml; do
+            test -f "$index" || { echo "missing compiled index: $index"; exit 1; }
+          done
+
       - name: Build
         env:
           AOE_ENGINE_ROOT: external/aoe-engine
           AOE_FRONTEND_DESIGN_ROOT: external/aoe-frontend-design
         run: bun run build
+
+      # The registry is data-driven, so a vendoring or compilation regression
+      # would otherwise ship as a quietly smaller site.
+      - name: Verify published registry
+        run: |
+          set -euo pipefail
+          missing=0
+          while read -r slug; do
+            [ -z "$slug" ] && continue
+            grep -q "$slug" dist/marketplace/index.html || { echo "package absent from registry page: $slug"; missing=1; }
+          done < <(awk '/^[[:space:]]*-[[:space:]]*slug:/ { sub(/^[[:space:]]*-[[:space:]]*slug:[[:space:]]*/, ""); print }' data/packages.yaml)
+          test -d dist/atom/frontend-design || { echo "reference corpus produced no atom routes"; missing=1; }
+          exit "$missing"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
