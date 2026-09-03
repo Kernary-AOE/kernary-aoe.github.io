@@ -1,54 +1,140 @@
 ---
 import type { HomeCopy } from '../../data/home-copy';
-import { HOME_PREVIEW } from '../../data/home-preview';
 
-interface Props { copy: HomeCopy; lang: 'en' | 'zh'; version: string; prefix: (path: string) => string }
-const { copy, prefix, version } = Astro.props;
-const isZh = Astro.props.lang === 'zh';
-const previews = HOME_PREVIEW[Astro.props.lang];
+interface Props { copy: HomeCopy['hero']; prefix: (path: string) => string }
+const { copy, prefix } = Astro.props;
+const { pipeline } = copy;
+
+// Geometry for the pipeline diagram (viewBox 1280 × 440).
+const SRC_X = 40, SRC_W = 190, SRC_Y = [110, 220, 330];
+const HUB = { x: 560, y: 220, r: 92 };
+const OUT_X = 850, OUT_W = 170, OUT_Y = [110, 220, 330];
+const SINK = { x: 1100, w: 150, y: 220 };
+const STEPS_Y = 392;
+
+const sourcePaths = SRC_Y.map((y) => `M${SRC_X + SRC_W} ${y} C ${SRC_X + SRC_W + 120} ${y}, ${HUB.x - HUB.r - 110} ${HUB.y}, ${HUB.x - HUB.r} ${HUB.y}`);
+const outputPaths = OUT_Y.map((y) => `M${HUB.x + HUB.r} ${HUB.y} C ${HUB.x + HUB.r + 90} ${HUB.y}, ${OUT_X - 90} ${y}, ${OUT_X} ${y}`);
+const sinkPaths = OUT_Y.map((y) => `M${OUT_X + OUT_W} ${y} C ${OUT_X + OUT_W + 40} ${y}, ${SINK.x - 40} ${SINK.y}, ${SINK.x} ${SINK.y}`);
 ---
 
-<section class="aoe-hero">
-  <div class="hero-noise" aria-hidden="true"></div>
-  <div class="hero-inner aoe-hero-inner">
-    <div class="hero-copy" data-reveal>
-      <p class="hero-eyebrow"><span class="hero-kicker">{copy.eyebrow}</span></p>
-      <h1>{copy.title}</h1>
-      <p class="lede">{copy.lede}</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary btn-large" href={prefix('/docs')}>{copy.primary} <span>↗</span></a>
-        <a class="btn btn-dark-ghost btn-large" href={prefix('/marketplace')}>{copy.secondary}</a>
-      </div>
-    </div>
-
-    <div class="package-preview" data-reveal aria-label={isZh ? 'AOE Package 预览' : 'AOE package preview'}>
-      <div class="preview-head"><span class="preview-brand"><i></i> aoe / package</span><span>v{version}</span></div>
-      <div class="preview-tabs" role="tablist" aria-label={isZh ? 'Package 类型' : 'Package types'}>
-        {previews.map((view, index) => <button class:list={{ active: index === 0 }} type="button" role="tab" aria-selected={index === 0 ? 'true' : 'false'} data-preview-tab={view.id}>{view.label}</button>)}
-      </div>
-      <div class="preview-content">
-        {previews.map((view, index) => (
-          <div class:list={{ 'preview-panel': true, active: index === 0 }} data-preview-panel={view.id}>
-            <div class="preview-kicker"><span>{view.kicker}</span><span class="preview-status">✓ {view.status}</span></div>
-            <div class="preview-rows">{view.rows.map(([label, value]) => <div class="preview-row"><span>{label}</span><b>{value}</b></div>)}</div>
-          </div>
-        ))}
-      </div>
-      <div class="preview-foot"><span>{copy.signalFoot}</span><span class="preview-caret">_</span></div>
+<section class="hero-home" id="hero">
+  <div class="hero-home-inner">
+    <p class="hero-eyebrow section-eyebrow" data-hero="eyebrow">{copy.eyebrow}</p>
+    <h1 class="hero-title" aria-label={copy.title.join(' ')}>
+      <span class="hero-line"><span data-hero="line">{copy.title[0]}</span></span>
+      <span class="hero-line"><span data-hero="line"><em>{copy.title[1]}</em></span></span>
+    </h1>
+    <p class="hero-lede" data-hero="fade">{copy.lede}</p>
+    <div class="hero-cta" data-hero="fade">
+      <a class="btn btn-accent btn-large" href={prefix('/docs')}>{copy.primary} <span class="arrow">→</span></a>
+      <a class="btn btn-ghost btn-large" href={prefix('/marketplace')}>{copy.secondary}</a>
     </div>
   </div>
-  <div class="hero-edge"><span>AOE / 0.2</span><span>{isZh ? '面向领域本体的基础设施' : 'Infrastructure for domain ontologies'}</span><span>↓</span></div>
-</section>
 
-<script>
-  const preview = document.querySelector('.package-preview');
-  if (preview) {
-    const tabs = Array.from(preview.querySelectorAll<HTMLButtonElement>('[data-preview-tab]'));
-    const panels = Array.from(preview.querySelectorAll<HTMLElement>('[data-preview-panel]'));
-    tabs.forEach((tab) => tab.addEventListener('click', () => {
-      const selected = tab.dataset.previewTab;
-      tabs.forEach((item) => { const active = item === tab; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); });
-      panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.previewPanel === selected));
-    }));
-  }
-</script>
+  <figure class="pipeline" data-hero="pipeline" aria-label={pipeline.caption}>
+    <div class="pipeline-wash pipeline-wash-a" aria-hidden="true"></div>
+    <div class="pipeline-wash pipeline-wash-b" aria-hidden="true"></div>
+
+    <svg class="pipeline-svg" viewBox="0 0 1280 440" role="img" aria-hidden="true">
+      <defs>
+        <radialGradient id="hub-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="var(--wash-mint)" stop-opacity=".9"/>
+          <stop offset="55%" stop-color="var(--wash-sky)" stop-opacity=".35"/>
+          <stop offset="100%" stop-color="var(--wash-sky)" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+      </defs>
+
+      {/* base hairlines */}
+      <g class="pipe-lines">
+        {sourcePaths.map((d, i) => <path class="pipe pipe-src" data-src={i} d={d}/>)}
+        {outputPaths.map((d, i) => <path class="pipe pipe-out" data-out={i} d={d}/>)}
+        {sinkPaths.map((d, i) => <path class="pipe pipe-sink" data-out={i} d={d}/>)}
+      </g>
+      {/* flowing dashes */}
+      <g class="pipe-flows">
+        {sourcePaths.map((d) => <path class="flow" d={d}/>)}
+        {outputPaths.map((d) => <path class="flow" d={d}/>)}
+        {sinkPaths.map((d) => <path class="flow" d={d}/>)}
+      </g>
+      {/* motion paths for packets (hidden) */}
+      <g class="pipe-tracks" opacity="0">
+        {sourcePaths.map((d, i) => <path id={`track-src-${i}`} d={d}/>)}
+        {outputPaths.map((d, i) => <path id={`track-out-${i}`} d={d}/>)}
+        {sinkPaths.map((d, i) => <path id={`track-sink-${i}`} d={d}/>)}
+      </g>
+
+      {/* hub */}
+      <g class="hub" transform={`translate(${HUB.x} ${HUB.y})`}>
+        <circle r="150" fill="url(#hub-glow)" filter="url(#soft)" class="hub-glow"/>
+        <circle r={HUB.r} class="hub-ring"/>
+        <circle r={HUB.r - 14} class="hub-ring hub-ring-dash"/>
+        <circle r={HUB.r - 30} class="hub-core"/>
+        <text class="hub-title" y="-2" text-anchor="middle">AOE</text>
+        <text class="hub-sub" y="22" text-anchor="middle">{pipeline.hub.replace('AOE ', '')}</text>
+        <circle class="hub-pulse" r={HUB.r} />
+      </g>
+
+      {/* step chips under hub */}
+      <g class="steps" transform={`translate(${HUB.x} ${STEPS_Y})`}>
+        {pipeline.hubSteps.map((step, i) => {
+          const w = 108, gap = 14, total = w * 3 + gap * 2, x = -total / 2 + i * (w + gap);
+          return (
+            <g class="step" data-step={i} transform={`translate(${x} -16)`}>
+              <rect width={w} height="32" rx="16" class="node-rect"/>
+              <circle cx="18" cy="16" r="3.5" class="step-dot"/>
+              <text x="32" y="20.5" class="node-text">{step}</text>
+              {i < 2 && <text x={w + 3} y="20" class="step-arrow">→</text>}
+            </g>
+          );
+        })}
+      </g>
+
+      {/* source nodes */}
+      {pipeline.sources.map((label, i) => (
+        <g class="node node-src" data-src={i} transform={`translate(${SRC_X} ${SRC_Y[i] - 22})`}>
+          <rect width={SRC_W} height="44" rx="22" class="node-rect"/>
+          <g transform="translate(18 14)" class="node-icon">
+            {i === 0 && <path d="M2 2h12v12H2zM5 6h6M5 9h6" />}
+            {i === 1 && <path d="M3 3h10v11H3zM6 1v3M10 1v3M5.5 8h5M5.5 11h3" />}
+            {i === 2 && <path d="M2 8h5M9 8h5M7 8a1 1 0 1 0 2 0a1 1 0 1 0-2 0M8 2v4M8 10v4" />}
+          </g>
+          <text x="44" y="27" class="node-text">{label}</text>
+          <circle class="node-port" cx={SRC_W} cy="22" r="3"/>
+        </g>
+      ))}
+
+      {/* output nodes */}
+      {pipeline.outputs.map((label, i) => (
+        <g class="node node-out" data-out={i} transform={`translate(${OUT_X} ${OUT_Y[i] - 22})`}>
+          <rect width={OUT_W} height="44" rx="22" class="node-rect"/>
+          <circle class="node-port" cx="0" cy="22" r="3"/>
+          <text x="22" y="27" class="node-text">{label}</text>
+          <circle class="node-port" cx={OUT_W} cy="22" r="3"/>
+        </g>
+      ))}
+
+      {/* sink */}
+      <g class="node node-sink" transform={`translate(${SINK.x} ${SINK.y - 24})`}>
+        <rect width={SINK.w} height="48" rx="24" class="sink-rect"/>
+        <circle class="node-port" cx="0" cy="24" r="3"/>
+        <g transform="translate(20 15)" class="sink-icon"><circle cx="9" cy="9" r="8"/><circle cx="9" cy="9" r="2.5"/></g>
+        <text x="50" y="29" class="sink-text">{pipeline.sink}</text>
+      </g>
+
+      {/* packets — positioned by GSAP */}
+      <g class="packets">
+        {Array.from({ length: 9 }).map((_, i) => <circle class="packet" data-packet={i} r="4"/>)}
+      </g>
+    </svg>
+
+    <ol class="pipeline-mobile" aria-hidden="true">
+      <li><span class="label">{pipeline.sources.join(' · ')}</span></li>
+      <li class="pipeline-mobile-hub"><span>{pipeline.hub}</span><small>{pipeline.hubSteps.join(' → ')}</small></li>
+      <li><span class="label">{pipeline.outputs.join(' · ')}</span></li>
+      <li><span class="pill"><i></i>{pipeline.sink}</span></li>
+    </ol>
+
+    <figcaption class="pipeline-caption"><span>{pipeline.caption}</span><span class="pipeline-status"><i></i>snapshot verified</span></figcaption>
+  </figure>
+</section>

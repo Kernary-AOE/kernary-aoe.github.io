@@ -1,0 +1,126 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy['stages'] }
+const { copy } = Astro.props;
+const total = copy.items.length;
+---
+
+<section class="section stages" id="stages">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">{copy.kicker}</p>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-lede">{copy.lede}</p>
+    </div>
+
+    <div class="stages-grid">
+      <ol class="stages-list">
+        {copy.items.map((stage, i) => (
+          <li class="stage" data-stage={i} id={`stage-${stage.id}`}>
+            <div class="stage-meta">
+              <span class="label stage-index">0{i + 1} <span class="stage-of">/ 0{total}</span></span>
+              <span class="label">{stage.label}</span>
+            </div>
+            <h3>{stage.title}</h3>
+            <p>{stage.body}</p>
+            <dl class="stage-facts">
+              {stage.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+            </dl>
+          </li>
+        ))}
+      </ol>
+
+      <div class="stages-visual">
+        <div class="viz" aria-hidden="true">
+          <div class="viz-frame">
+            <div class="viz-chrome"><span class="label viz-title">runtime</span><span class="label viz-step" data-viz-step>01 / 0{total}</span></div>
+
+            <svg class="viz-layer" data-layer="declare" viewBox="0 0 480 360">
+              <g class="doc" transform="translate(48 56)">
+                <rect width="176" height="224" rx="22" class="viz-card"/>
+                <text x="24" y="38" class="viz-mono">model/</text>
+                <g class="viz-rows" transform="translate(24 66)">
+                  <rect width="92" height="8" rx="4"/><rect y="24" width="124" height="8" rx="4"/><rect y="48" width="72" height="8" rx="4"/><rect y="72" width="110" height="8" rx="4"/><rect y="96" width="84" height="8" rx="4"/>
+                </g>
+                <g class="viz-chips" transform="translate(24 190)"><rect width="46" height="20" rx="10"/><text x="23" y="14">type</text><rect x="54" width="70" height="20" rx="10"/><text x="89" y="14">relation</text></g>
+              </g>
+              <g class="doc doc-2" transform="translate(256 88)">
+                <rect width="176" height="224" rx="22" class="viz-card"/>
+                <text x="24" y="38" class="viz-mono">corpus/</text>
+                <g class="viz-rows" transform="translate(24 66)">
+                  <rect width="110" height="8" rx="4"/><rect y="24" width="80" height="8" rx="4"/><rect y="48" width="124" height="8" rx="4"/><rect y="72" width="66" height="8" rx="4"/><rect y="96" width="100" height="8" rx="4"/>
+                </g>
+                <g class="viz-chips" transform="translate(24 190)"><rect width="46" height="20" rx="10"/><text x="23" y="14">unit</text><rect x="54" width="70" height="20" rx="10"/><text x="89" y="14">source</text></g>
+              </g>
+              <g class="viz-cursor"><rect width="2" height="18" rx="1"/></g>
+            </svg>
+
+            <svg class="viz-layer" data-layer="compile" viewBox="0 0 480 360">
+              <g class="viz-funnel-lines">
+                <path d="M100 80 C 180 80, 200 180, 240 180"/><path d="M100 180 H 240"/><path d="M100 280 C 180 280, 200 180, 240 180"/>
+                <path d="M240 180 H 330"/>
+              </g>
+              <g class="viz-inputs">
+                <rect x="40" y="62" width="60" height="36" rx="18" class="viz-card"/><text x="70" y="85" class="viz-mono viz-center">type</text>
+                <rect x="40" y="162" width="60" height="36" rx="18" class="viz-card"/><text x="70" y="185" class="viz-mono viz-center">unit</text>
+                <rect x="40" y="262" width="60" height="36" rx="18" class="viz-card"/><text x="70" y="285" class="viz-mono viz-center">src</text>
+              </g>
+              <g class="viz-compiler" transform="translate(240 180)">
+                <circle r="44" class="viz-hub"/><circle r="30" class="viz-hub-dash"/>
+                <text y="5" class="viz-mono viz-center viz-strong">compile</text>
+              </g>
+              <g class="viz-artifacts" transform="translate(330 96)">
+                {[0, 1, 2, 3, 4, 5].map((i) => <rect x={(i % 2) * 58} y={Math.floor(i / 2) * 58} width="48" height="48" rx="14" class="viz-artifact" style={`--i:${i}`}/>)}
+                <text x="52" y="188" class="viz-mono viz-center">_index.xml</text>
+              </g>
+            </svg>
+
+            <svg class="viz-layer" data-layer="verify" viewBox="0 0 480 360">
+              <g transform="translate(240 168)">
+                <circle r="118" class="viz-seal-outer"/>
+                <circle r="96" class="viz-seal-dash"/>
+                <circle r="74" class="viz-hub"/>
+                <path class="viz-check" d="M-26 4 L-8 22 L30 -18"/>
+                <text y="-34" class="viz-mono viz-center viz-tiny">manifest</text>
+                <text y="52" class="viz-mono viz-center viz-tiny">sha256 · locked</text>
+              </g>
+              <g class="viz-digest" transform="translate(240 318)">
+                <rect x="-124" y="-16" width="248" height="32" rx="16" class="viz-card"/>
+                <text y="5" class="viz-mono viz-center">tenant / corpus @ 2026.08.31</text>
+              </g>
+              <g class="viz-ticks">
+                {Array.from({ length: 36 }).map((_, i) => <line x1="240" y1="42" x2="240" y2="50" transform={`rotate(${i * 10} 240 168)`}/>)}
+              </g>
+            </svg>
+
+            <svg class="viz-layer" data-layer="serve" viewBox="0 0 480 360">
+              <g class="viz-lines">
+                <path class="viz-road viz-road-read" d="M110 180 C 170 180, 180 110, 240 110 H 330"/>
+                <path class="viz-road viz-road-write" d="M110 180 C 170 180, 180 250, 240 250 H 330"/>
+              </g>
+              <g transform="translate(70 180)">
+                <circle r="40" class="viz-hub"/><text y="5" class="viz-mono viz-center viz-strong">agent</text>
+              </g>
+              <g class="viz-gates" transform="translate(196 236)">
+                <rect width="26" height="28" rx="8"/><rect x="34" width="26" height="28" rx="8"/><rect x="68" width="26" height="28" rx="8"/>
+              </g>
+              <g transform="translate(330 88)">
+                <rect width="118" height="44" rx="22" class="viz-card viz-card-strong"/><text x="59" y="27" class="viz-mono viz-center">plan</text>
+              </g>
+              <g transform="translate(330 228)">
+                <rect width="118" height="44" rx="22" class="viz-card"/><text x="59" y="27" class="viz-mono viz-center">event</text>
+              </g>
+              <text x="240" y="92" class="viz-mono viz-center viz-tiny">query · read</text>
+              <text x="240" y="290" class="viz-mono viz-center viz-tiny">action · policy · approval</text>
+              <g class="viz-riders"><circle r="4" class="viz-rider viz-rider-read"/><circle r="4" class="viz-rider viz-rider-write"/></g>
+            </svg>
+          </div>
+          <div class="viz-rail">
+            {copy.items.map((s, i) => <span class="viz-rail-dot" data-rail={i}><b>{s.label}</b></span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -8,14 +8,16 @@ const posts = loadPosts().filter((p) => p.lang === 'zh');
   title="日志"
   current="blog"
   lang="zh"
-  description="发布日志、设计笔记与一线实践 —— 关于为 AI 代理构建类型化知识图谱的过程记录。"
+  description="发布日志、设计笔记与一线实践 —— 关于构建 Agent Ontology Engine 的过程记录。"
 >
   <div class="blog-list-wrap">
     <header class="blog-list-head">
-      <p class="blog-list-eyebrow">日志 · {posts.length} 篇</p>
-      <h1 class="blog-list-title">来自协议的笔记。</h1>
-      <p class="blog-list-lede">
-        发布说明、设计笔记、一线实战 —— 关于为 AI agent 构建类型化知识图的过程。
+      <div data-reveal>
+        <p class="blog-list-eyebrow label">日志 · {posts.length} 篇</p>
+        <h1 class="blog-list-title">来自引擎的笔记。</h1>
+      </div>
+      <p class="blog-list-lede" data-reveal>
+        发布说明、设计笔记与一线实践 —— 关于为领域、Agent 与应用构建 Agent Ontology Engine 的过程。
       </p>
     </header>
 
@@ -25,15 +27,16 @@ const posts = loadPosts().filter((p) => p.lang === 'zh');
       </p>
     ) : (
       <div class="blog-list">
-        {posts.map((p) => (
-          <a class="blog-row" href={`/zh/blog/${p.slug}`}>
+        {posts.map((p, i) => (
+          <a class="blog-row" href={`/zh/blog/${p.slug}`} data-reveal style={`--reveal-delay:${i * 60}ms`}>
             <div class="blog-row-meta">
               <span class="blog-row-date">{p.date}</span>
-              <span class="blog-row-dot">·</span>
               <span class="blog-row-reading">{p.reading}</span>
             </div>
-            <h2 class="blog-row-title">{p.title}</h2>
-            <p class="blog-row-excerpt">{p.excerpt}</p>
+            <div>
+              <h2 class="blog-row-title">{p.title}</h2>
+              <p class="blog-row-excerpt">{p.excerpt}</p>
+            </div>
             <span class="blog-row-cta">阅读 →</span>
           </a>
         ))}
@@ -41,51 +44,3 @@ const posts = loadPosts().filter((p) => p.lang === 'zh');
     )}
   </div>
 </Base>
-
-<style>
-  .blog-list-wrap {
-    max-width: var(--max-w-narrow);
-    margin: 0 auto;
-    padding: 64px var(--s-4) 80px;
-  }
-  .blog-list-head { margin-bottom: 56px; max-width: 60ch; }
-  .blog-list-eyebrow {
-    font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--fg-muted); font-weight: 600; margin: 0 0 12px;
-  }
-  .blog-list-title {
-    font-size: clamp(36px, 5vw, 56px); font-weight: 700;
-    letter-spacing: -0.03em; line-height: 1.05;
-    margin: 0 0 16px; border: 0; padding: 0;
-  }
-  .blog-list-lede {
-    font-size: 17px; color: var(--fg-muted);
-    line-height: 1.55; margin: 0; letter-spacing: -0.005em;
-  }
-  .blog-list { display: flex; flex-direction: column; }
-  .blog-row {
-    display: block; padding: 32px 0;
-    border-top: 1px solid var(--border-muted);
-    text-decoration: none; color: inherit;
-    transition: padding-left 200ms cubic-bezier(0.33, 1, 0.68, 1);
-  }
-  .blog-row:last-child { border-bottom: 1px solid var(--border-muted); }
-  .blog-row:hover { padding-left: 12px; text-decoration: none; }
-  .blog-row-meta {
-    display: flex; gap: 8px; font-family: var(--font-mono);
-    font-size: 12px; color: var(--fg-muted); margin-bottom: 12px;
-  }
-  .blog-row-dot { color: var(--border-default); }
-  .blog-row-title {
-    font-size: 24px; font-weight: 700;
-    letter-spacing: -0.02em; line-height: 1.25;
-    margin: 0 0 12px; color: var(--fg-default);
-    border: 0; padding: 0; transition: color 120ms ease;
-  }
-  .blog-row:hover .blog-row-title { color: var(--accent-fg); }
-  .blog-row-excerpt {
-    font-size: 15px; line-height: 1.6; color: var(--fg-muted);
-    margin: 0 0 16px; max-width: 70ch; letter-spacing: -0.005em;
-  }
-  .blog-row-cta { font-size: 13px; font-weight: 500; color: var(--accent-fg); }
-</style>

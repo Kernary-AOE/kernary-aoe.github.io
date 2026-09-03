@@ -1,0 +1,47 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy['faq'] }
+const { copy } = Astro.props;
+---
+
+<section class="section faq" id="faq">
+  <div class="section-inner faq-inner">
+    <div class="faq-head" data-reveal>
+      <p class="section-eyebrow">{copy.kicker}</p>
+      <h2 class="section-title">{copy.title}</h2>
+    </div>
+    <div class="faq-list" data-reveal>
+      {copy.items.map((item, i) => (
+        <details class="faq-item" name="faq">
+          <summary>
+            <span class="label faq-index">0{i + 1}</span>
+            <span class="faq-q">{item.q}</span>
+            <span class="faq-icon" aria-hidden="true"><i></i><i></i></span>
+          </summary>
+          <div class="faq-a"><div><p>{item.a}</p></div></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Animate the native <details> so the answer slides open instead of snapping.
+  document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach((item) => {
+    const summary = item.querySelector('summary');
+    const body = item.querySelector<HTMLElement>('.faq-a');
+    if (!summary || !body) return;
+    summary.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (item.open) {
+        body.style.gridTemplateRows = '0fr';
+        body.addEventListener('transitionend', () => { item.open = false; }, { once: true });
+      } else {
+        body.style.gridTemplateRows = '0fr';
+        item.open = true;
+        requestAnimationFrame(() => { body.style.gridTemplateRows = '1fr'; });
+      }
+    });
+  });
+</script>

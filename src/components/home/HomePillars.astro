@@ -1,0 +1,87 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy['pillars'] }
+const { copy } = Astro.props;
+---
+
+<section class="section pillars" id="pillars">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">{copy.kicker}</p>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-lede">{copy.lede}</p>
+    </div>
+
+    <div class="pillar-grid">
+      {copy.cards.map((card, i) => (
+        <a class:list={['pillar', { 'pillar-featured': card.id === 'corpus' }]} href={card.href} data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <div class="pillar-top">
+            <span class="label">{card.kicker}</span>
+            <span class="pillar-index label">0{i + 1}</span>
+          </div>
+
+          <div class="pillar-art" aria-hidden="true">
+            {card.id === 'model' && (
+              <svg viewBox="0 0 240 140" class="art art-model">
+                <g class="art-lines">
+                  <path d="M40 40 L120 70 L200 40"/><path d="M40 100 L120 70 L200 100"/>
+                </g>
+                <g class="art-nodes">
+                  <rect x="12" y="26" width="56" height="28" rx="14"/><rect x="172" y="26" width="56" height="28" rx="14"/>
+                  <rect x="12" y="86" width="56" height="28" rx="14"/><rect x="172" y="86" width="56" height="28" rx="14"/>
+                  <rect x="92" y="56" width="56" height="28" rx="14" class="art-node-strong"/>
+                </g>
+                <g class="art-text">
+                  <text x="40" y="44">type</text><text x="200" y="44">field</text><text x="40" y="104">relation</text><text x="200" y="104">action</text>
+                  <text x="120" y="74" class="art-text-strong">model</text>
+                </g>
+              </svg>
+            )}
+            {card.id === 'corpus' && (
+              <svg viewBox="0 0 240 140" class="art art-corpus">
+                <defs>
+                  <linearGradient id="g-corpus-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--wash-coral)"/><stop offset="1" stop-color="var(--wash-sky)"/></linearGradient>
+                  <linearGradient id="g-corpus-b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="var(--wash-sky)"/><stop offset="1" stop-color="var(--wash-mint)"/></linearGradient>
+                  <linearGradient id="g-corpus-c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--wash-gold)"/><stop offset="1" stop-color="var(--wash-coral)"/></linearGradient>
+                </defs>
+                <g class="art-shapes">
+                  <rect x="26" y="18" width="92" height="104" rx="30" fill="url(#g-corpus-a)" opacity=".92"/>
+                  <circle cx="150" cy="70" r="52" fill="url(#g-corpus-b)" opacity=".9"/>
+                  <rect x="116" y="42" width="104" height="56" rx="28" fill="url(#g-corpus-c)" opacity=".85"/>
+                </g>
+                <g class="art-stamp">
+                  <rect x="150" y="100" width="76" height="26" rx="13"/>
+                  <circle cx="165" cy="113" r="3.5"/>
+                  <text x="175" y="117">sha256</text>
+                </g>
+              </svg>
+            )}
+            {card.id === 'connect' && (
+              <svg viewBox="0 0 240 140" class="art art-connect">
+                <g class="art-lines">
+                  <path d="M60 70 C 100 70, 100 30, 140 30 H 200"/>
+                  <path d="M60 70 H 200"/>
+                  <path d="M60 70 C 100 70, 100 110, 140 110 H 200"/>
+                </g>
+                <g class="art-nodes">
+                  <circle cx="60" cy="70" r="22" class="art-node-strong"/>
+                  <rect x="176" y="16" width="52" height="28" rx="14"/><rect x="176" y="56" width="52" height="28" rx="14"/><rect x="176" y="96" width="52" height="28" rx="14"/>
+                </g>
+                <g class="art-text">
+                  <text x="60" y="74" class="art-text-strong">aoe</text>
+                  <text x="202" y="34">sdk</text><text x="202" y="74">mcp</text><text x="202" y="114">http</text>
+                </g>
+                <g class="art-packets"><circle r="3.5"/><circle r="3.5"/><circle r="3.5"/></g>
+              </svg>
+            )}
+          </div>
+
+          <h3>{card.title}</h3>
+          <p>{card.body}</p>
+          <span class="text-link">{card.link} <span class="arrow">→</span></span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

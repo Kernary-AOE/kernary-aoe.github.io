@@ -4,42 +4,62 @@ import { SITE } from '../config/site';
 interface Props { lang?: 'en' | 'zh' }
 const { lang = 'en' } = Astro.props;
 const isZh = lang === 'zh';
+const prefix = (path: string) => isZh ? `/zh${path}` : path;
+
+const sections = isZh ? [
+  ['引擎拥有的边界', 'AOE Core 提供声明 meta-schema、稳定 IR、本体与语料 Compiler、Snapshot 验证、Query/Constraint Runtime、Action/Policy/Event Runtime、SDK、Transport 与 Conformance。'],
+  ['留在引擎外的内容', '领域本体中的 Type、Field、Relation、Projection、Retrieval Profile、Action、Validator，以及 Corpus 中的 Unit、Asset 和 License Policy 都由外部 Package 提供。Frontend Design 是一个完整参考案例。'],
+  ['你可以用它做什么', '用 AOE 构建能理解领域对象的客服助手、合规审查工具、运维知识库、数据目录或内部工作流。Model Package 定义你的世界，Corpus Package 提供内容，Engine 负责编译、查询和受控执行。'],
+  ['从哪里开始', '先看 Package 模型，了解如何组织 Model、Corpus 与 Adapter；然后用五分钟指南构建一个 Snapshot，再选择 SDK、MCP 或 HTTP 接入你的应用。'],
+] : [
+  ['What the engine owns', 'AOE Core provides the declaration meta-schema, stable IR, ontology-and-corpus compiler, snapshot verification, query and constraint runtime, action, policy, and event runtime, SDKs, transports, and conformance.'],
+  ['What stays outside', 'Domain ontology types, fields, relations, projections, retrieval profiles, actions, validators, plus Corpus Units, assets, and licence policy come from external packages. Frontend Design is a complete reference case.'],
+  ['What you can build', 'Use AOE for a support assistant, compliance review tool, operations knowledge base, data catalogue, or internal workflow that needs to understand domain objects. Your Model Package defines the world, your Corpus Package supplies the material, and the Engine compiles, queries, and governs it.'],
+  ['Start here', 'Begin with the Package model to see how Model, Corpus, and Adapter pieces fit together. Then follow the five-minute guide to build a Snapshot and choose SDK, MCP, or HTTP for your application.'],
+];
 ---
 <Base title={isZh ? '关于 AOE' : 'About AOE'} current="about" lang={lang}>
-  <article class="article">
-    <p class="article-meta">{SITE.category}</p>
-    <h1>{isZh ? '知识不该只是一组塞进 Prompt 的文件。' : 'Knowledge should be more than files loaded into a prompt.'}</h1>
-
-    <p style="font-size: 18px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 32px;">
+  <article class="article about">
+    <p class="article-meta" data-reveal>{SITE.category}</p>
+    <h1 data-reveal>{isZh ? '知识不该只是一组塞进 Prompt 的文件。' : 'Knowledge should be more than files loaded into a prompt.'}</h1>
+    <p class="lede" data-reveal>
       {isZh
         ? 'AOE 把外部领域本体和语料编译成带版本与 identity 的 Runtime。Agent 或应用可以查询它、获得可解释的 Selection Plan，也可以通过独立授权路径调用 Action。'
         : 'AOE compiles external domain ontologies and corpora into identified, versioned runtimes. An Agent or application can query them, receive an explainable Selection Plan, and call Actions through a separate authorization path.'}
     </p>
 
-    <h2>{isZh ? '引擎拥有的边界' : 'What the engine owns'}</h2>
-    <p>{isZh
-      ? 'AOE Core 提供声明 meta-schema、稳定 IR、本体与语料 Compiler、Snapshot 验证、Query/Constraint Runtime、Action/Policy/Event Runtime、SDK、Transport 与 Conformance。'
-      : 'AOE Core provides the declaration meta-schema, stable IR, ontology-and-corpus compiler, snapshot verification, query and constraint runtime, action, policy, and event runtime, SDKs, transports, and conformance.'}</p>
+    <dl class="about-list">
+      {sections.map(([title, body], i) => (
+        <div class="about-row" data-reveal>
+          <dt><span class="label">0{i + 1}</span><h2>{title}</h2></dt>
+          <dd>{body}</dd>
+        </div>
+      ))}
+    </dl>
 
-    <h2>{isZh ? '留在引擎外的内容' : 'What stays outside'}</h2>
-    <p>{isZh
-      ? '领域本体中的 Type、Field、Relation、Projection、Retrieval Profile、Action、Validator，以及 Corpus 中的 Unit、Asset 和 License Policy 都由外部 Package 提供。Frontend Design 是一个完整参考案例。'
-      : 'Domain ontology types, fields, relations, projections, retrieval profiles, actions, validators, plus Corpus Units, assets, and licence policy come from external packages. Frontend Design is a complete reference case.'}</p>
-
-    <h2>{isZh ? '你可以用它做什么' : 'What you can build'}</h2>
-    <p>{isZh
-      ? '用 AOE 构建能理解领域对象的客服助手、合规审查工具、运维知识库、数据目录或内部工作流。Model Package 定义你的世界，Corpus Package 提供内容，Engine 负责编译、查询和受控执行。'
-      : 'Use AOE for a support assistant, compliance review tool, operations knowledge base, data catalogue, or internal workflow that needs to understand domain objects. Your Model Package defines the world, your Corpus Package supplies the material, and the Engine compiles, queries, and governs it.'}</p>
-
-    <h2>{isZh ? '从哪里开始' : 'Start here'}</h2>
-    <p>{isZh
-      ? '先看 Package 模型，了解如何组织 Model、Corpus 与 Adapter；然后用五分钟指南构建一个 Snapshot，再选择 SDK、MCP 或 HTTP 接入你的应用。'
-      : 'Begin with the Package model to see how Model, Corpus, and Adapter pieces fit together. Then follow the five-minute guide to build a Snapshot and choose SDK, MCP, or HTTP for your application.'}</p>
-
-    <h2>{isZh ? '开源与参与' : 'Open source and contribution'}</h2>
-    <p>
-      {isZh ? 'AOE 使用 Apache-2.0。代码与问题追踪位于 Kernary-AOE 组织：' : 'AOE is Apache-2.0 licensed. Source code and issues live in the Kernary-AOE organization: '}
-      <a href={SITE.github} rel="noopener">{SITE.github.replace('https://', '')}</a>.
-    </p>
+    <div class="about-foot" data-reveal>
+      <h2>{isZh ? '开源与参与' : 'Open source and contribution'}</h2>
+      <p>
+        {isZh ? 'AOE 使用 Apache-2.0。代码与问题追踪位于 Kernary-AOE 组织。' : 'AOE is Apache-2.0 licensed. Source code and issues live in the Kernary-AOE organization.'}
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href={SITE.github} rel="noopener">GitHub <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href={prefix('/docs')}>{isZh ? '阅读文档' : 'Read the docs'}</a>
+      </div>
+    </div>
   </article>
 </Base>
+
+<style>
+  .about { max-width: 880px; }
+  .about-list { margin: 24px 0 0; padding: 0; border-top: 1px solid var(--border-default); }
+  .about-row { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--border-muted); }
+  .about-row dt { display: flex; flex-direction: column; gap: 14px; }
+  .about-row h2 { margin: 0; font-size: 28px; }
+  .about-row dd { margin: 0; font-size: 16px; line-height: 1.7; color: var(--fg-muted); }
+  .about-foot { margin-top: 56px; }
+  .about-foot h2 { font-size: 28px; margin: 0 0 12px; }
+  .about-foot p { color: var(--fg-muted); }
+  .about-foot .hero-cta { margin-top: 20px; }
+  @media (max-width: 720px) { .about-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; } }
+</style>

@@ -6,56 +6,88 @@ interface Props { lang?: 'en' | 'zh' }
 const { lang = 'en' } = Astro.props;
 const isZh = lang === 'zh';
 const { corpora: packages } = loadAll();
-const ordered = [...packages].sort((a, b) => a.slug.localeCompare(b.slug));
+const ordered = [...packages].sort((a, b) => b.total - a.total);
 const fmt = new Intl.NumberFormat(isZh ? 'zh-CN' : 'en-US');
 const prefix = (path: string) => isZh ? `/zh${path}` : path;
+const totalUnits = packages.reduce((sum, p) => sum + p.total, 0);
+const totalTypes = new Set(packages.flatMap((p) => p.atoms.map((a) => a.kind))).size;
+const flagship = ordered[0];
 ---
 <Base
-  title={isZh ? 'Packages' : 'Packages'}
+  title="Packages"
   current="marketplace"
   lang={lang}
   description={isZh ? '浏览 AOE 的 Model、Corpus、Adapter 与 Domain Package。' : 'Discover Model, Corpus, Adapter, and Domain Packages for AOE.'}
 >
-  <section class="hero" style="padding: var(--s-7) var(--s-4) var(--s-6);">
-    <div class="hero-inner" style="grid-template-columns: 1fr; gap: 0;">
-      <div>
-        <p class="hero-eyebrow"><span class="pill">AOE Packages</span> {packages.length} {isZh ? '个公开示例 Package' : 'public example packages'}</p>
-        <h1>{isZh ? '找到一个 Package，从真实领域开始。' : 'Start from a package that owns a real domain.'}</h1>
+  <section class="hero">
+    <div class="hero-inner">
+      <div data-reveal>
+        <p class="hero-eyebrow"><span class="pill"><i></i>{isZh ? '公开注册表' : 'Public registry'}</span></p>
+        <h1>{isZh ? '从一个拥有真实领域的 Package 开始。' : 'Start from a package that owns a real domain.'}</h1>
         <p class="lede">
           {isZh
-            ? '这里展示可以直接阅读和运行的外部 Package。每个条目都有自己的 Model、Corpus、来源与发布责任。'
-            : 'Browse external packages you can read and run. Each package owns its Model, Corpus, sources, and release responsibility.'}
+            ? '这里的每个 Package 都有自己的 Model、Corpus、来源与发布责任。先浏览内容和来源，再按 README 在本地编译或接入。'
+            : 'Every package here owns its Model, Corpus, sources, and release responsibility. Browse the content first, then compile or connect it locally from its README.'}
         </p>
-        <p class="lede" style="margin-bottom: 0;">
-          {isZh
-            ? '先浏览内容和来源，再按条目 README 中的方式在本地编译或接入。'
-            : 'Browse the content and sources first, then use the package README to compile or connect it locally.'}
-        </p>
+      </div>
+      <div class="kpi kpi-compact" data-reveal>
+        <div><div class="lbl">{isZh ? 'Package' : 'Packages'}</div><div class="n">{packages.length}</div></div>
+        <div><div class="lbl">{isZh ? 'Unit' : 'Units'}</div><div class="n">{fmt.format(totalUnits)}</div></div>
+        <div><div class="lbl">{isZh ? '外部 Type' : 'Types'}</div><div class="n">{totalTypes}</div></div>
       </div>
     </div>
   </section>
 
+  {flagship && (
+    <section class="section flagship-section">
+      <div class="section-inner">
+        <a class="flagship" href={`/browse?corpus=${flagship.slug}`} data-reveal>
+          <div class="flagship-copy">
+            <p class="section-eyebrow">{isZh ? '参考 Package' : 'Reference package'}</p>
+            <h2>{flagship.slug}</h2>
+            <p>{flagship.domain?.description || (isZh ? '完整的参考 Corpus：Model、Corpus、Adapter 与 MCP 工具。' : 'The complete reference corpus: Model, Corpus, adapters, and MCP tools.')}</p>
+            <div class="flagship-meta">
+              <span class="pill">{fmt.format(flagship.total)} {isZh ? 'unit' : 'units'}</span>
+              <span class="pill">{new Set(flagship.atoms.map((a) => a.kind)).size} {isZh ? '种 type' : 'types'}</span>
+              <span class="pill">sha256 · verified</span>
+            </div>
+            <span class="text-link">{isZh ? '检查内容' : 'Inspect contents'} <span class="arrow">→</span></span>
+          </div>
+          <div class="flagship-art" aria-hidden="true">
+            <div class="flagship-blob flagship-blob-a"></div>
+            <div class="flagship-blob flagship-blob-b"></div>
+            <div class="flagship-grid">
+              {Array.from({ length: 24 }).map((_, i) => <span style={`--i:${i}`}></span>)}
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
+
   <section class="section">
     <div class="section-inner">
-      <p class="section-eyebrow">Corpus packages</p>
-      <h2 class="section-title" style="border: 0; padding: 0; margin-top: 0;">{isZh ? '当前可检查的 Snapshot' : 'Snapshots available for inspection'}</h2>
+      <div class="section-head" data-reveal>
+        <p class="section-eyebrow">{isZh ? 'Corpus Package' : 'Corpus packages'}</p>
+        <h2 class="section-title">{isZh ? '可检查的 Snapshot。' : 'Snapshots you can inspect.'}</h2>
+      </div>
       <div class="pack-grid">
-        {ordered.map((entry) => {
+        {ordered.map((entry, i) => {
           const typeCount = new Set(entry.atoms.map((unit) => unit.kind)).size;
           return (
-            <article class="pack-card" id={entry.slug}>
+            <article class="pack-card" id={entry.slug} data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
               <div class="pack-head">
                 <h3 class="pack-name">{entry.slug}</h3>
                 <span class="pack-pill">corpus</span>
               </div>
               <p class="pack-desc">{entry.domain?.description || (isZh ? `${fmt.format(entry.total)} 个编译 Unit。` : `${fmt.format(entry.total)} compiled Units.`)}</p>
               <div class="pack-stats">
-                <span>{fmt.format(entry.total)} {isZh ? '个 Unit' : 'Units'}</span>
-                <span>{typeCount} {isZh ? '种外部 Type' : 'external types'}</span>
+                <span>{fmt.format(entry.total)} {isZh ? 'unit' : 'units'}</span>
+                <span>{typeCount} {isZh ? '种 type' : 'types'}</span>
               </div>
-              <div class="hero-cta" style="margin-top: 16px;">
-                <a class="btn" href={`/browse?corpus=${entry.slug}`}>{isZh ? '检查内容' : 'Inspect contents'}</a>
-                {entry.slug === 'frontend-design' && <a class="btn" href={prefix('/docs/examples/frontend-design')}>{isZh ? '阅读案例' : 'Read case study'}</a>}
+              <div class="hero-cta">
+                <a class="btn" href={`/browse?corpus=${entry.slug}`}>{isZh ? '检查内容' : 'Inspect'} <span class="arrow">→</span></a>
+                {entry.slug === 'frontend-design' && <a class="btn" href={prefix('/docs/examples/frontend-design')}>{isZh ? '阅读案例' : 'Case study'}</a>}
               </div>
             </article>
           );
@@ -64,3 +96,32 @@ const prefix = (path: string) => isZh ? `/zh${path}` : path;
     </div>
   </section>
 </Base>
+
+<style>
+  .kpi-compact { grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border-default); }
+  .kpi-compact .n { font-size: 40px; }
+  .flagship-section { padding-top: 0; border-top: 0 !important; }
+  .flagship {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px;
+    border-radius: var(--r-4); background: var(--tint); color: var(--tint-fg); text-decoration: none;
+    overflow: hidden; min-height: 380px; transition: transform 360ms var(--ease-out);
+  }
+  .flagship:hover { transform: translateY(-3px); text-decoration: none; }
+  .flagship-copy { padding: 40px; display: flex; flex-direction: column; }
+  .flagship-copy .section-eyebrow, .flagship-copy p { color: color-mix(in srgb, var(--tint-fg) 72%, transparent); }
+  .flagship-copy h2 { font-size: clamp(36px, 4vw, 56px); letter-spacing: -0.03em; margin: 0 0 14px; color: var(--tint-fg); overflow-wrap: anywhere; }
+  .flagship-copy > p { font-size: 16px; line-height: 1.55; max-width: 44ch; margin: 0 0 24px; }
+  .flagship-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .flagship-meta .pill { background: transparent; color: var(--tint-fg); border-color: color-mix(in srgb, var(--tint-fg) 30%, transparent); }
+  .flagship-copy .text-link { margin-top: auto; align-self: flex-start; color: var(--tint-fg); border-color: color-mix(in srgb, var(--tint-fg) 30%, transparent); }
+  .flagship:hover .text-link .arrow { transform: translateX(3px); }
+  .flagship-art { position: relative; overflow: hidden; }
+  .flagship-blob { position: absolute; border-radius: 50%; filter: blur(48px); opacity: .85; }
+  .flagship-blob-a { width: 60%; aspect-ratio: 1; left: 5%; top: 10%; background: radial-gradient(circle, var(--wash-coral), var(--wash-gold) 60%, transparent 75%); }
+  .flagship-blob-b { width: 62%; aspect-ratio: 1; right: -5%; bottom: -10%; background: radial-gradient(circle, var(--wash-mint), var(--wash-sky) 60%, transparent 75%); }
+  .flagship-grid { position: absolute; inset: 40px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; align-content: center; }
+  .flagship-grid span { aspect-ratio: 1; border-radius: 14px; background: color-mix(in srgb, var(--paper) 70%, transparent); border: 1px solid color-mix(in srgb, var(--tint-fg) 12%, transparent); animation: tile 6s var(--ease-in-out) infinite; animation-delay: calc(var(--i) * -.25s); }
+  @keyframes tile { 0%, 100% { opacity: .55; transform: scale(.96); } 50% { opacity: 1; transform: scale(1); } }
+  @media (max-width: 860px) { .flagship { grid-template-columns: 1fr; min-height: 0; } .flagship-art { min-height: 220px; } .flagship-copy { padding: 28px; } .kpi-compact { margin-top: 8px; } }
+  @media (prefers-reduced-motion: reduce) { .flagship-grid span { animation: none; } }
+</style>

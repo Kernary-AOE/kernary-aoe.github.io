@@ -1,0 +1,79 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+import { highlight } from '../../lib/highlight';
+
+interface Props { copy: HomeCopy['connect']; lang: 'en' | 'zh'; prefix: (path: string) => string }
+const { copy, lang, prefix } = Astro.props;
+const isZh = lang === 'zh';
+---
+
+<section class="section connect" id="connect">
+  <div class="section-inner connect-inner">
+    <div class="connect-copy" data-reveal>
+      <p class="section-eyebrow">{copy.kicker}</p>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-lede">{copy.lede}</p>
+      <a class="text-link" href={prefix('/docs/start/connect-agent')}>{copy.link} <span class="arrow">→</span></a>
+    </div>
+
+    <div class="terminal" data-reveal>
+      <div class="terminal-tabs" role="tablist" aria-label={isZh ? '接入方式' : 'Integration methods'}>
+        {copy.tabs.map((tab, i) => (
+          <button class:list={{ active: i === 0 }} type="button" role="tab" id={`tab-${tab.id}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`panel-${tab.id}`} data-tab={tab.id}>
+            <span>{tab.label}</span><small>{tab.description}</small>
+          </button>
+        ))}
+        <span class="terminal-ink" aria-hidden="true"></span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-chrome">
+          <span class="terminal-dots"><i></i><i></i><i></i></span>
+          <span class="label terminal-file" data-terminal-label>{copy.tabs[0].label}</span>
+          <button type="button" class="terminal-copy" data-terminal-copy>{isZh ? '复制' : 'Copy'}</button>
+        </div>
+        {copy.tabs.map((tab, i) => (
+          <pre class:list={['terminal-code', 'no-copy', { active: i === 0 }]} role="tabpanel" id={`panel-${tab.id}`} aria-labelledby={`tab-${tab.id}`} data-panel={tab.id} hidden={i !== 0}><code set:html={highlight(tab.code)} /></pre>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('.terminal');
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'));
+    const label = root.querySelector<HTMLElement>('[data-terminal-label]');
+    const ink = root.querySelector<HTMLElement>('.terminal-ink');
+    const copyButton = root.querySelector<HTMLButtonElement>('[data-terminal-copy]');
+
+    const moveInk = (tab: HTMLElement) => {
+      if (!ink) return;
+      ink.style.transform = `translateX(${tab.offsetLeft}px)`;
+      ink.style.width = `${tab.offsetWidth}px`;
+    };
+
+    const select = (tab: HTMLButtonElement) => {
+      const id = tab.dataset.tab;
+      tabs.forEach((item) => { const active = item === tab; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); });
+      panels.forEach((panel) => { const active = panel.dataset.panel === id; panel.classList.toggle('active', active); panel.hidden = !active; });
+      if (label) label.textContent = tab.querySelector('span')?.textContent ?? '';
+      moveInk(tab);
+    };
+
+    tabs.forEach((tab) => tab.addEventListener('click', () => select(tab)));
+    const initial = tabs.find((t) => t.classList.contains('active')) ?? tabs[0];
+    if (initial) moveInk(initial);
+    window.addEventListener('resize', () => { const active = tabs.find((t) => t.classList.contains('active')); if (active) moveInk(active); });
+
+    copyButton?.addEventListener('click', async () => {
+      const active = panels.find((p) => p.classList.contains('active'));
+      if (!active) return;
+      await navigator.clipboard.writeText(active.textContent ?? '');
+      const original = copyButton.textContent;
+      copyButton.textContent = document.documentElement.lang.startsWith('zh') ? '已复制' : 'Copied';
+      window.setTimeout(() => { copyButton.textContent = original; }, 1200);
+    });
+  }
+</script>

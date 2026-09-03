@@ -1,0 +1,39 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props {
+  copy: HomeCopy['proof'];
+  lang: 'en' | 'zh';
+  stats: { packages: number; units: number; types: number; transports: number };
+  packages: readonly { slug: string; units: number }[];
+}
+const { copy, lang, stats, packages } = Astro.props;
+const fmt = new Intl.NumberFormat(lang === 'zh' ? 'zh-CN' : 'en-US');
+const values = [stats.packages, stats.units, stats.types, stats.transports];
+const items = [...packages, ...packages];
+---
+
+<section class="proof" aria-label={copy.kicker}>
+  <div class="section-inner">
+    <div class="kpi" data-reveal>
+      {copy.stats.map(([label, sub], i) => (
+        <div>
+          <div class="lbl">{label}</div>
+          <div class="n" data-count={values[i]}>{fmt.format(values[i])}</div>
+          <div class="sub">{sub}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="marquee" data-reveal>
+    <span class="marquee-kicker">{copy.marqueeKicker}</span>
+    <div class="marquee-track" aria-hidden="true">
+      {items.map((p) => (
+        <a class="pill marquee-item" href={`/browse?corpus=${p.slug}`} tabindex="-1">
+          <i></i>{p.slug}<span class="marquee-count">{fmt.format(p.units)}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

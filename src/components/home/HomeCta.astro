@@ -1,16 +1,20 @@
 ---
 import type { HomeCopy } from '../../data/home-copy';
 
-interface Props { copy: HomeCopy; prefix: (path: string) => string; github: string }
+interface Props { copy: HomeCopy['cta']; prefix: (path: string) => string; github: string }
 const { copy, prefix, github } = Astro.props;
 ---
 
-<section class="aoe-cta-section">
-  <div class="cta-glow" aria-hidden="true"></div>
+<section class="cta" id="cta">
+  <div class="cta-wash cta-wash-a" aria-hidden="true"></div>
+  <div class="cta-wash cta-wash-b" aria-hidden="true"></div>
   <div class="cta-inner" data-reveal>
-    <p class="section-eyebrow">{copy.ctaKicker}</p>
-    <h2>{copy.ctaTitle}</h2>
-    <p>{copy.ctaText}</p>
-    <div class="cta-actions"><a class="btn btn-primary btn-large" href={prefix('/docs')}>{copy.ctaPrimary} <span>↗</span></a><a class="btn btn-dark-ghost btn-large" href={github} rel="noopener">{copy.ctaSecondary} <span>↗</span></a></div>
+    <p class="section-eyebrow">{copy.kicker}</p>
+    <h2>{copy.title}</h2>
+    <p>{copy.text}</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary btn-large" href={prefix('/docs')}>{copy.primary} <span class="arrow">→</span></a>
+      <a class="btn btn-ghost btn-large" href={github} rel="noopener">{copy.secondary}</a>
+    </div>
   </div>
 </section>
