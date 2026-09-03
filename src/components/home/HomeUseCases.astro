@@ -1,0 +1,30 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy['useCases'] }
+const { copy } = Astro.props;
+---
+
+<section class="section use-cases" id="use-cases">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">{copy.kicker}</p>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-lede">{copy.lede}</p>
+    </div>
+
+    <ul class="case-list">
+      {copy.items.map((item, i) => (
+        <li class="case-row" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <span class="case-index label">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="case-title">{item.title}</h3>
+          <p class="case-body">{item.body}</p>
+          <p class="case-ask">
+            <span class="label">{copy.asksLabel}</span>
+            <span class="case-quote">{item.asks}</span>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

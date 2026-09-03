@@ -3,9 +3,11 @@ import '../styles/home.css';
 import Base from '../layouts/Base.astro';
 import HomeHero from './home/HomeHero.astro';
 import HomeProof from './home/HomeProof.astro';
-import HomePillars from './home/HomePillars.astro';
+import HomeIntro from './home/HomeIntro.astro';
+import HomePackages from './home/HomePackages.astro';
 import HomeStages from './home/HomeStages.astro';
 import HomeConnect from './home/HomeConnect.astro';
+import HomeUseCases from './home/HomeUseCases.astro';
 import HomeSteps from './home/HomeSteps.astro';
 import HomeFaq from './home/HomeFaq.astro';
 import HomeCta from './home/HomeCta.astro';
@@ -34,9 +36,11 @@ const stats = {
   <div class="home">
     <HomeHero copy={copy.hero} prefix={prefix} />
     <HomeProof copy={copy.proof} lang={lang} stats={stats} packages={packages} />
-    <HomePillars copy={copy.pillars} />
+    <HomeIntro copy={copy.intro} prefix={prefix} />
+    <HomePackages copy={copy.packages} />
     <HomeStages copy={copy.stages} />
     <HomeConnect copy={copy.connect} lang={lang} prefix={prefix} />
+    <HomeUseCases copy={copy.useCases} />
     <HomeSteps copy={copy.steps} prefix={prefix} />
     <HomeFaq copy={copy.faq} />
     <HomeCta copy={copy.cta} prefix={prefix} github={SITE.github} />

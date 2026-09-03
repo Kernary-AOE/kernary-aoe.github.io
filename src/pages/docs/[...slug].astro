@@ -3,7 +3,10 @@ import RepoDoc from '../../components/RepoDoc.astro';
 
 export function getStaticPaths() {
   return [
+    { slug: 'concepts/what-is-aoe', title: 'What AOE is', source: 'docs/concepts/what-is-aoe.md' },
     { slug: 'start/connect-agent', title: 'Connect an Agent', source: 'docs/guides/connect-agent.md' },
+    { slug: 'start/use-cases', title: 'What you can build', source: 'docs/guides/use-cases.md' },
+    { slug: 'reference/glossary', title: 'Glossary', source: 'docs/reference/glossary.md' },
     { slug: 'concepts/package-model', title: 'Package model', source: 'docs/concepts/package-model.md' },
     { slug: 'concepts/compilation-snapshots', title: 'Compilation and snapshots', source: 'docs/concepts/compilation-and-snapshots.md' },
     { slug: 'concepts/selection-execution', title: 'Selection and execution', source: 'docs/concepts/selection-and-execution.md' },

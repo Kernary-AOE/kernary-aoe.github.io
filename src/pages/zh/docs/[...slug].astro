@@ -3,7 +3,10 @@ import RepoDoc from '../../../components/RepoDoc.astro';
 
 export function getStaticPaths() {
   return [
+    { slug: 'concepts/what-is-aoe', title: 'AOE 是什么', source: 'docs/concepts/what-is-aoe.zh-CN.md' },
     { slug: 'start/connect-agent', title: '连接 Agent', source: 'docs/guides/connect-agent.zh-CN.md' },
+    { slug: 'start/use-cases', title: '可以构建什么', source: 'docs/guides/use-cases.zh-CN.md' },
+    { slug: 'reference/glossary', title: '术语表', source: 'docs/reference/glossary.zh-CN.md' },
     { slug: 'concepts/package-model', title: 'Package 模型', source: 'docs/concepts/package-model.zh-CN.md' },
     { slug: 'concepts/compilation-snapshots', title: '编译与 Snapshot', source: 'docs/concepts/compilation-and-snapshots.zh-CN.md' },
     { slug: 'concepts/selection-execution', title: 'Selection 与 Execution', source: 'docs/concepts/selection-and-execution.zh-CN.md' },

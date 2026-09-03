@@ -17,8 +17,10 @@ export const DOCS_TREE: DocSection[] = [
     heading: 'Start',
     zhHeading: '开始',
     pages: [
+      { slug: 'concepts/what-is-aoe', title: 'What AOE is', zhTitle: 'AOE 是什么' },
       { slug: '', title: 'Build your first domain runtime', zhTitle: '构建你的第一个领域 Runtime' },
       { slug: 'start/connect-agent', title: 'Connect an Agent', zhTitle: '连接 Agent' },
+      { slug: 'start/use-cases', title: 'What you can build', zhTitle: '可以构建什么' },
     ],
   },
   {
@@ -48,6 +50,7 @@ export const DOCS_TREE: DocSection[] = [
     heading: 'Reference',
     zhHeading: '参考',
     pages: [
+      { slug: 'reference/glossary', title: 'Glossary', zhTitle: '术语表' },
       { slug: 'reference/cli', title: 'CLI', zhTitle: 'CLI' },
       { slug: 'reference/mcp', title: 'MCP transport', zhTitle: 'MCP Transport' },
       { slug: 'reference/http-registry', title: 'HTTP and registry', zhTitle: 'HTTP 与 Registry' },

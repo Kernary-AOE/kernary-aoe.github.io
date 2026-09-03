@@ -169,9 +169,18 @@ function stages() {
 
 function sectionParallax() {
   if (reduced()) return;
-  gsap.utils.toArray<HTMLElement>('.pillar-art svg').forEach((art) => {
-    gsap.fromTo(art, { y: 18 }, { y: -18, ease: 'none', scrollTrigger: { trigger: art, start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.utils.toArray<HTMLElement>('.pkg-art svg').forEach((art) => {
+    gsap.fromTo(art, { y: 12 }, { y: -12, ease: 'none', scrollTrigger: { trigger: art, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
+
+  // Reveal the plan fields in sequence so the response reads as a list being filled in.
+  const rows = gsap.utils.toArray<HTMLElement>('.plan-row');
+  if (rows.length) {
+    gsap.fromTo(rows, { opacity: 0, x: 10 }, {
+      opacity: 1, x: 0, duration: .5, stagger: .07, ease: 'power2.out',
+      scrollTrigger: { trigger: '.exchange', start: 'top 72%', once: true },
+    });
+  }
 }
 
 export function initHomeMotion() {

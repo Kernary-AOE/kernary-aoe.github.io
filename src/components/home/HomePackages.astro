@@ -1,0 +1,115 @@
+---
+import type { HomeCopy } from '../../data/home-copy';
+
+interface Props { copy: HomeCopy['packages'] }
+const { copy } = Astro.props;
+---
+
+<section class="section packages" id="packages">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">{copy.kicker}</p>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-lede">{copy.lede}</p>
+    </div>
+
+    <div class="pkg-grid">
+      {copy.cards.map((card, i) => (
+        <a class:list={['pkg', `pkg-${card.id}`, { 'pkg-featured': card.id === 'domain' }]} href={card.href} data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <div class="pkg-top">
+            <span class="label">{card.kicker}</span>
+            <span class="label pkg-index">0{i + 1}</span>
+          </div>
+
+          <div class="pkg-art" aria-hidden="true">
+            {card.id === 'model' && (
+              <svg viewBox="0 0 260 132" class="art">
+                <g class="art-edges">
+                  <path d="M82 40 C 122 40, 132 28, 176 28"/>
+                  <path d="M82 40 C 122 40, 132 92, 176 92"/>
+                </g>
+                <g class="art-nodes">
+                  <rect x="8" y="26" width="74" height="28" rx="14" class="art-node-strong"/>
+                  <rect x="176" y="14" width="76" height="28" rx="14"/>
+                  <rect x="176" y="78" width="76" height="28" rx="14"/>
+                </g>
+                <g class="art-text">
+                  <text x="45" y="44" class="art-on-strong">Incident</text>
+                  <text x="214" y="32">Service</text>
+                  <text x="214" y="96">Team</text>
+                  <text x="130" y="26" class="art-verb">affects</text>
+                  <text x="130" y="118" class="art-verb">owned-by</text>
+                </g>
+              </svg>
+            )}
+            {card.id === 'corpus' && (
+              <svg viewBox="0 0 260 132" class="art">
+                <defs>
+                  <linearGradient id="g-unit" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="var(--wash-coral)"/><stop offset="1" stop-color="var(--wash-sky)"/>
+                  </linearGradient>
+                </defs>
+                <g class="art-stack">
+                  <rect x="8" y="26" width="104" height="104" rx="26" class="art-sheet art-sheet-3"/>
+                  <rect x="20" y="16" width="104" height="104" rx="26" class="art-sheet art-sheet-2"/>
+                  <rect x="32" y="6" width="104" height="104" rx="26" fill="url(#g-unit)"/>
+                </g>
+                <g class="art-seal">
+                  <rect x="156" y="40" width="96" height="30" rx="15"/>
+                  <circle cx="173" cy="55" r="4"/>
+                  <text x="185" y="59">sha256</text>
+                </g>
+                <text x="156" y="92" class="art-caption">release 2026-08-31</text>
+              </svg>
+            )}
+            {card.id === 'adapter' && (
+              <svg viewBox="0 0 260 132" class="art">
+                <g class="art-edges">
+                  <path d="M76 62 H104"/><path d="M156 62 H184"/>
+                </g>
+                <g class="art-nodes">
+                  <rect x="8" y="48" width="68" height="28" rx="14"/>
+                  <rect x="184" y="48" width="68" height="28" rx="14" class="art-node-strong"/>
+                  <rect x="104" y="42" width="52" height="40" rx="14" class="art-plug"/>
+                </g>
+                <g class="art-plug-pins">
+                  <path d="M118 42 V28M142 42 V28"/>
+                </g>
+                <g class="art-text">
+                  <text x="42" y="66">source</text>
+                  <text x="218" y="66" class="art-on-strong">model</text>
+                  <text x="130" y="106" class="art-verb">adapter</text>
+                </g>
+              </svg>
+            )}
+            {card.id === 'domain' && (
+              <svg viewBox="0 0 260 132" class="art">
+                <g class="art-crate">
+                  <rect x="20" y="8" width="220" height="116" rx="26"/>
+                </g>
+                <g class="art-layers">
+                  {['model', 'corpus', 'adapters', 'tools'].map((name, j) => (
+                    <g style={`--j:${j}`} class="art-layer">
+                      <rect x="40" y={22 + j * 24} width="180" height="18" rx="9"/>
+                      <text x="54" y={35 + j * 24}>{name}</text>
+                    </g>
+                  ))}
+                </g>
+              </svg>
+            )}
+          </div>
+
+          <h3>{card.title}</h3>
+          <p>{card.body}</p>
+
+          <div class="pkg-owns">
+            <span class="label pkg-owns-label">{copy.ownsLabel}</span>
+            <span class="pkg-chips">{card.owns.map((item) => <code>{item}</code>)}</span>
+          </div>
+
+          <span class="text-link">{card.link} <span class="arrow">→</span></span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
